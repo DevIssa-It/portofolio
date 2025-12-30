@@ -40,9 +40,9 @@ export function ProjectTimeline({ projects }: ProjectTimelineProps) {
                   description={project.description}
                   image={project.image}
                   technologies={project.technologies}
+                  tags={[]}
                   liveUrl={project.demo}
                   githubUrl={project.github}
-                  isReversed={index % 2 !== 0}
                 />
               </div>
             </motion.div>
