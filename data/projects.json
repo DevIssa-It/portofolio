@@ -1,0 +1,86 @@
+[
+  {
+    "id": "1",
+    "title": "CampusHub - Moments Sharing Platform",
+    "description": "Intuitive web platform for campus community with authentication, photo gallery, and integrated storage system. Improved upload and access efficiency by 35%.",
+    "image": "https://images.unsplash.com/photo-1523240795612-9a054b0db644?q=80&w=800&auto=format&fit=crop",
+    "technologies": [
+      "React.js",
+      "Tailwind CSS",
+      "Firebase"
+    ],
+    "tags": [
+      "Web App",
+      "Community"
+    ],
+    "github": "https://github.com/DevIssa-It",
+    "demo": "#"
+  },
+  {
+    "id": "2",
+    "title": "CampusHub - Event Management",
+    "description": "Web application for campus event management (workshops, seminars, webinars) with authentication, participant registration, and organizer dashboard. Reduced administration time by 40%.",
+    "image": "https://images.unsplash.com/photo-1540575467063-178a50c2df87?q=80&w=800&auto=format&fit=crop",
+    "technologies": [
+      "React.js",
+      "Tailwind CSS"
+    ],
+    "tags": [
+      "Event Management",
+      "Dashboard"
+    ],
+    "github": "https://github.com/DevIssa-It",
+    "demo": "#"
+  },
+  {
+    "id": "3",
+    "title": "TalentHunt - Recruitment Management",
+    "description": "Recruitment process management web with role-based access control, HR admin dashboard, applicant portal with job search & filters, resume upload, and real-time status tracking.",
+    "image": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=800&auto=format&fit=crop",
+    "technologies": [
+      "React.js",
+      "Tailwind CSS",
+      "Supabase"
+    ],
+    "tags": [
+      "HR Management",
+      "Real-time"
+    ],
+    "github": "https://github.com/DevIssa-It",
+    "demo": "#"
+  },
+  {
+    "id": "4",
+    "title": "E-Commerce Catalog",
+    "description": "E-commerce product catalog with mobile-friendly design, product search & filtering, and responsive grid layout. Developed during internship at Core Initiative x Rakamin Academy.",
+    "image": "https://images.unsplash.com/photo-1472851294608-062f824d29cc?q=80&w=800&auto=format&fit=crop",
+    "technologies": [
+      "Vue.js",
+      "Tailwind CSS",
+      "JavaScript"
+    ],
+    "tags": [
+      "E-Commerce",
+      "Responsive"
+    ],
+    "github": "https://github.com/DevIssa-It/ecommerce-catalog",
+    "demo": "https://ecommerce-catalog-orpin.vercel.app/"
+  },
+  {
+    "id": "5",
+    "title": "GreenImpact – SDG Activity Platform",
+    "description": "Platform for tracking Sustainable Development Goals (SDG) activities with individual contribution tracking, data visualization dashboard, and focus on social & environmental impact.",
+    "image": "https://images.unsplash.com/photo-1532996122724-e3c354a0b15b?q=80&w=800&auto=format&fit=crop",
+    "technologies": [
+      "React.js",
+      "Tailwind CSS",
+      "Chart.js"
+    ],
+    "tags": [
+      "Dashboard",
+      "Social Impact"
+    ],
+    "github": "https://github.com/DevIssa-It",
+    "demo": "#"
+  }
+]
