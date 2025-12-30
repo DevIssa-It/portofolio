@@ -27,11 +27,11 @@ export default function About() {
             
             <div className="mt-8 flex gap-4">
               <div className="px-4 py-3 bg-zinc-900 border border-zinc-800 rounded-lg">
-                <h4 className="text-primary font-bold text-2xl mb-1">2025</h4>
+                <h4 className="text-primary font-bold text-2xl mb-1">2027</h4>
                 <span className="text-zinc-500 text-xs uppercase tracking-wider">Expected Graduate</span>
               </div>
               <div className="px-4 py-3 bg-zinc-900 border border-zinc-800 rounded-lg">
-                <h4 className="text-primary font-bold text-2xl mb-1">3+</h4>
+                <h4 className="text-primary font-bold text-2xl mb-1">5+</h4>
                 <span className="text-zinc-500 text-xs uppercase tracking-wider">Major Projects</span>
               </div>
             </div>
