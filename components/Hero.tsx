@@ -8,7 +8,7 @@ export default function Hero() {
   const [text, setText] = useState('')
   const [isDeleting, setIsDeleting] = useState(false)
   const [loopNum, setLoopNum] = useState(0)
-  const texts = ['Frontend Developer', 'React Developer', 'Vue.js Developer']
+  const texts = ['A. Issadurrofiq Jaya Utama', 'Frontend Developer']
   const typingSpeed = 100
   const deletingSpeed = 50
   const pauseTime = 2000
@@ -46,15 +46,20 @@ export default function Hero() {
             <span className="text-xs font-mono text-primary uppercase tracking-widest">Available for hire</span>
           </div>
           
-          <motion.h1 
+          <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
-            className="text-6xl md:text-8xl font-bold text-white leading-[1] tracking-tighter mb-8"
+            className="mb-8"
           >
-            {text}<span className="animate-pulse">|</span> <br />
-            <span className="text-zinc-600">Aspiring Fullstack.</span>
-          </motion.h1>
+            <p className="text-lg md:text-xl text-zinc-500 font-mono mb-6">Hi, I'm</p>
+            <h1 className="text-5xl md:text-7xl font-bold text-white leading-[1.1] tracking-tight mb-4 min-h-[1.2em]">
+              {text}<span className="animate-pulse text-primary">|</span>
+            </h1>
+             <h2 className="text-4xl md:text-6xl font-bold text-white leading-[1.2] tracking-tighter">
+              <span className="text-zinc-600">Aspiring Fullstack.</span>
+            </h2>
+          </motion.div>
           
           <motion.p 
             initial={{ opacity: 0, y: 20 }}

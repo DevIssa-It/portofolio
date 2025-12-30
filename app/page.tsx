@@ -1,29 +1,29 @@
 import Navbar from '@/components/Navbar'
 import Hero from '@/components/Hero'
-import Projects from '@/components/Projects'
-import TechStackScroll from '@/components/TechStackScroll'
-import Experience from '@/components/Experience'
-import Education from '@/components/Education'
 import About from '@/components/About'
+import Skills from '@/components/Skills'
+import InfiniteScroll from '@/components/InfiniteScroll'
+import Projects from '@/components/Projects'
+import ParallaxSection from '@/components/ParallaxSection'
+import TestimonialsCarousel from '@/components/TestimonialsCarousel'
 import Contact from '@/components/Contact'
-import LoadingScreen from '@/components/LoadingScreen'
+import Footer from '@/components/Footer'
+import ScrollProgress from '@/components/ScrollProgress'
 
 export default function Home() {
   return (
-    <>
-      <LoadingScreen />
-      <div className="bg-black text-zinc-300 font-sans selection:bg-primary selection:text-black">
-        <Navbar />
-        <main className="relative z-10">
-          <Hero />
-          <About />
-          <Projects />
-          <TechStackScroll />
-          <Experience />
-          <Education />
-          <Contact />
-        </main>
-      </div>
-    </>
+    <main className="min-h-screen">
+      <ScrollProgress />
+      <Navbar />
+      <Hero />
+      <About />
+      <Skills />
+      <InfiniteScroll />
+      <Projects />
+      <ParallaxSection />
+      <TestimonialsCarousel />
+      <Contact />
+      <Footer />
+    </main>
   )
 }
