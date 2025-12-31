@@ -6,8 +6,7 @@
     "image": "https://images.unsplash.com/photo-1523240795612-9a054b0db644?q=80&w=800&auto=format&fit=crop",
     "technologies": [
       "React.js",
-      "Tailwind CSS",
-      "Firebase"
+      "Tailwind CSS"
     ],
     "tags": [
       "Web App",

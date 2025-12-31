@@ -91,7 +91,8 @@ export function ProjectFormDialog({ project, open, onOpenChange, onSave }: Proje
       const projectToSave = {
         ...formData,
         image: imageUrl,
-        id: formData.id || Date.now().toString(),
+        // Untuk edit: gunakan ID asli dari project prop, untuk baru: generate ID baru
+        id: project?.id || formData.id || Date.now().toString(),
       }
       
       onSave(projectToSave)

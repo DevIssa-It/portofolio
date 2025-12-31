@@ -119,12 +119,11 @@ export async function updateProject(project: Project): Promise<ApiResponse<Proje
  */
 export async function deleteProject(id: string): Promise<ApiResponse<void>> {
   try {
-    const response = await fetch(API_ENDPOINTS.PROJECTS.BASE, {
+    const response = await fetch(`${API_ENDPOINTS.PROJECTS.BASE}?id=${id}`, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ id }),
     })
 
     if (!response.ok) {
