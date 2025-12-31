@@ -1,17 +1,40 @@
 'use client'
+import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { GraduationCap } from 'lucide-react'
 import { Section } from '@/components/micro/Section'
+import { getEducation, Education as EducationType } from '@/lib/services/education.service'
 
 export default function Education() {
-  const education = [
-    {
-      school: "Brawijaya University",
-      degree: "Bachelor of Computer Science",
-      year: "Aug 2023 - Present",
-      desc: "Concentration: Software Development. Relevant coursework: Web Programming, Mobile Application Programming, Database Systems."
+  const [education, setEducation] = useState<EducationType[]>([])
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    loadEducation()
+  }, [])
+
+  const loadEducation = async () => {
+    try {
+      const result = await getEducation()
+      if (result.success && result.data) {
+        setEducation(result.data)
+      }
+    } catch (error) {
+      console.error('Error loading education:', error)
+    } finally {
+      setLoading(false)
     }
-  ]
+  }
+
+  if (loading) {
+    return (
+      <Section id="education" className="border-t border-zinc-900">
+        <div className="flex justify-center items-center min-h-[400px]">
+          <div className="w-8 h-8 border-4 border-primary border-t-transparent rounded-full animate-spin" />
+        </div>
+      </Section>
+    )
+  }
 
   return (
     <Section id="education" className="border-t border-zinc-900">
@@ -46,7 +69,7 @@ export default function Education() {
                 <span className="text-zinc-500 text-base font-mono">{edu.year}</span>
               </div>
               <p className="text-zinc-400 text-base max-w-lg leading-relaxed">
-                {edu.desc}
+                {edu.description}
               </p>
             </motion.div>
           ))}

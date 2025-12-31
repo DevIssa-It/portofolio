@@ -1,5 +1,5 @@
 'use client'
-import { LogOut, User, Settings, LayoutDashboard } from 'lucide-react'
+import { LogOut, User, Settings, LayoutDashboard, GraduationCap } from 'lucide-react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { cn } from '@/lib/utils'
@@ -18,6 +18,11 @@ export function AdminSidebar({ onLogout }: AdminSidebarProps) {
       label: 'Dashboard',
       icon: LayoutDashboard,
       href: ROUTES.ADMIN_DASHBOARD,
+    },
+    {
+      label: 'Profile',
+      icon: GraduationCap,
+      href: '/admin-dashboard/profile',
     },
     {
       label: 'Settings',

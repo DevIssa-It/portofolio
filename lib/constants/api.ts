@@ -16,6 +16,16 @@ export const API_ENDPOINTS = {
     BASE: '/api/projects',
     UPLOAD_IMAGE: '/api/projects/upload',
   },
+  
+  // Education endpoints
+  EDUCATION: {
+    BASE: '/api/education',
+  },
+  
+  // Experience endpoints
+  EXPERIENCE: {
+    BASE: '/api/experience',
+  },
 } as const
 
 // API Routes

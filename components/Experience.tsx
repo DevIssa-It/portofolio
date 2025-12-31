@@ -1,17 +1,40 @@
 'use client'
+import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { Briefcase } from 'lucide-react'
 import { Section } from '@/components/micro/Section'
+import { getExperience, Experience as ExperienceType } from '@/lib/services/experience.service'
 
 export default function Experience() {
-  const experience = [
-    {
-      company: "Core Initiative x Rakamin Academy",
-      role: "Frontend Developer Intern",
-      year: "Sep 2025",
-      desc: "Developed responsive web applications using Vue.js with deployment and unit testing implementation. Achieved Excellent grade (score 87.7) reflecting technical competencies and soft skills aligned with industry needs."
+  const [experience, setExperience] = useState<ExperienceType[]>([])
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    loadExperience()
+  }, [])
+
+  const loadExperience = async () => {
+    try {
+      const result = await getExperience()
+      if (result.success && result.data) {
+        setExperience(result.data)
+      }
+    } catch (error) {
+      console.error('Error loading experience:', error)
+    } finally {
+      setLoading(false)
     }
-  ]
+  }
+
+  if (loading) {
+    return (
+      <Section id="experience" className="border-t border-zinc-900">
+        <div className="flex justify-center items-center min-h-[400px]">
+          <div className="w-8 h-8 border-4 border-primary border-t-transparent rounded-full animate-spin" />
+        </div>
+      </Section>
+    )
+  }
 
   return (
     <Section id="experience" className="border-t border-zinc-900">
@@ -46,7 +69,7 @@ export default function Experience() {
                 <span className="text-zinc-500 text-sm font-mono bg-zinc-900 px-2 py-0.5 rounded border border-zinc-800">{exp.year}</span>
               </div>
               <p className="text-zinc-400 text-base leading-relaxed">
-                {exp.desc}
+                {exp.description}
               </p>
             </motion.div>
           ))}
