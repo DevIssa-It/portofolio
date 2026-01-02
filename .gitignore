@@ -40,3 +40,5 @@ next-env.d.ts
 # uploads - user uploaded images (exclude from git)
 /public/images/projects/*
 !/public/images/projects/.gitkeep
+
+/lib/generated/prisma
