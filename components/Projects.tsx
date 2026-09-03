@@ -5,16 +5,7 @@ import { Section } from '@/components/micro/Section'
 import { ProjectCard } from '@/components/micro/ProjectCard'
 import { ChevronDown, ChevronUp, Search, Filter } from 'lucide-react'
 
-interface Project {
-  id: string
-  title: string
-  description: string
-  image: string
-  technologies: string[]
-  tags: string[]
-  github: string
-  demo: string
-}
+import { Project } from '@/types/project'
 
 export default function Projects() {
   const [projects, setProjects] = useState<Project[]>([])

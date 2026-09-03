@@ -5,15 +5,7 @@ import { Edit, Trash2, ExternalLink, Github } from 'lucide-react'
 import Image from 'next/image'
 import { motion } from 'framer-motion'
 
-interface Project {
-  id: string
-  title: string
-  description: string
-  image: string
-  technologies: string[]
-  github: string
-  demo: string
-}
+import { Project } from '@/types/project'
 
 interface ProjectCardProps {
   project: Project

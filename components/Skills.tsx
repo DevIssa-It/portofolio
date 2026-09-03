@@ -13,7 +13,7 @@ import {
   SiVuedotjs,
   SiJavascript,
   SiHtml5,
-  SiCss3,
+  SiCss,
   SiExpress,
   SiFirebase,
   SiAndroidstudio,
@@ -34,7 +34,7 @@ export default function Skills() {
         { name: 'JavaScript', icon: <SiJavascript style={{ color: '#F7DF1E' }} /> },
         { name: 'Tailwind CSS', icon: <SiTailwindcss style={{ color: '#06B6D4' }} /> },
         { name: 'HTML5', icon: <SiHtml5 style={{ color: '#E34F26' }} /> },
-        { name: 'CSS3', icon: <SiCss3 style={{ color: '#1572B6' }} /> },
+        { name: 'CSS3', icon: <SiCss style={{ color: '#1572B6' }} /> },
       ],
     },
     {

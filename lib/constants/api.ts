@@ -16,6 +16,12 @@ export const API_ENDPOINTS = {
     BASE: '/api/projects',
     UPLOAD_IMAGE: '/api/projects/upload',
   },
+
+  // GitHub endpoints
+  GITHUB: {
+    SYNC: '/api/github/sync',
+    WEBHOOK: '/api/webhooks/github',
+  },
   
   // Education endpoints
   EDUCATION: {
