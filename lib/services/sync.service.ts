@@ -43,6 +43,8 @@ export class SyncService {
       })
     }
 
+    const autoImage = this.generateAutoImage(repo)
+
     return {
       title: formattedTitle,
       description: repo.description || 'Open source project on GitHub.',
@@ -50,7 +52,26 @@ export class SyncService {
       demo: repo.homepage || '',
       technologies,
       tags,
+      image: autoImage,
     }
+  }
+
+  /**
+   * Determine the best automatic preview image:
+   * Priority 1: Website screenshot if live demo URL exists
+   * Priority 2: Official GitHub OpenGraph repository card
+   */
+  private generateAutoImage(repo: GitHubRepo): string {
+    const homepage = repo.homepage?.trim()
+    if (homepage && (homepage.startsWith('http://') || homepage.startsWith('https://'))) {
+      return `https://s0.wp.com/mshots/v1/${encodeURIComponent(homepage)}?w=800&h=500`
+    }
+
+    if (repo.full_name) {
+      return `https://opengraph.githubassets.com/1/${repo.full_name}`
+    }
+
+    return ''
   }
 
   /**
