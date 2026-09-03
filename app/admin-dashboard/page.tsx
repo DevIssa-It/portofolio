@@ -4,12 +4,11 @@ import { useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { useSession } from 'next-auth/react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { FolderGit2, TrendingUp, Eye } from 'lucide-react'
 import { AdminSidebar } from '@/components/admin/AdminSidebar'
-import { StatCard } from '@/components/admin/StatCard'
 import { ProjectCard } from '@/components/admin/ProjectCard'
 import { ProjectFormDialog } from '@/components/admin/ProjectFormDialog'
 import { DashboardHeader } from '@/components/admin/DashboardHeader'
+import { DashboardStats } from '@/components/admin/DashboardStats'
 import { SyncStatusBanner } from '@/components/admin/SyncStatusBanner'
 import { EmptyProjectsState } from '@/components/admin/EmptyProjectsState'
 import { useAdminProjects } from '@/lib/hooks/useAdminProjects'
@@ -56,9 +55,7 @@ export default function AdminDashboard() {
     )
   }
 
-  const uniqueTechnologiesCount = new Set(
-    projects.flatMap((p) => p.technologies)
-  ).size
+  const techCount = new Set(projects.flatMap((p) => p.technologies)).size
 
   return (
     <div className="flex min-h-screen bg-zinc-950">
@@ -78,31 +75,10 @@ export default function AdminDashboard() {
             onDismiss={clearSyncFeedback}
           />
 
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.1 }}
-            className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8"
-          >
-            <StatCard
-              title="Total Projects"
-              value={projects.length}
-              icon={FolderGit2}
-              trend={{ value: 12, isPositive: true }}
-            />
-            <StatCard
-              title="Technologies"
-              value={uniqueTechnologiesCount}
-              icon={TrendingUp}
-              trend={{ value: 8, isPositive: true }}
-            />
-            <StatCard
-              title="Portfolio Views"
-              value="2.4K"
-              icon={Eye}
-              trend={{ value: 23, isPositive: true }}
-            />
-          </motion.div>
+          <DashboardStats
+            totalProjects={projects.length}
+            totalTechnologies={techCount}
+          />
 
           <motion.div
             initial={{ opacity: 0 }}

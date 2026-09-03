@@ -14,11 +14,11 @@ import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
 import { Label } from '@/components/ui/label'
 import { Sparkles } from 'lucide-react'
-import { uploadProjectImage } from '@/lib/services/project.service'
 import { Project } from '@/types/project'
 import { ImageUploadField } from '@/components/admin/ImageUploadField'
 import { TechnologyTagInput } from '@/components/admin/TechnologyTagInput'
 import { ProjectUrlFields } from '@/components/admin/ProjectUrlFields'
+import { useProjectForm } from '@/lib/hooks/useProjectForm'
 
 interface ProjectFormDialogProps {
   project: Project | null
@@ -27,63 +27,21 @@ interface ProjectFormDialogProps {
   onSave: (project: Project) => void
 }
 
-const emptyProject: Project = {
-  id: '',
-  title: '',
-  description: '',
-  image: '',
-  technologies: [],
-  tags: [],
-  github: '',
-  demo: '',
-}
-
 export function ProjectFormDialog({
   project,
   open,
   onOpenChange,
   onSave,
 }: ProjectFormDialogProps) {
-  const [formData, setFormData] = React.useState<Project>(project || emptyProject)
-  const [imageFile, setImageFile] = React.useState<File | null>(null)
-  const [uploading, setUploading] = React.useState(false)
-
-  React.useEffect(() => {
-    setFormData(project ? { ...project } : { ...emptyProject })
-    setImageFile(null)
-  }, [project, open])
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setUploading(true)
-
-    try {
-      let imageUrl = formData.image
-
-      if (imageFile) {
-        const result = await uploadProjectImage(imageFile)
-        if (result.success && result.data) {
-          imageUrl = result.data
-        } else {
-          alert('Failed to upload image: ' + (result.error || 'Unknown error'))
-          setUploading(false)
-          return
-        }
-      }
-
-      onSave({
-        ...formData,
-        image: imageUrl,
-        id: project?.id || formData.id || Date.now().toString(),
-      })
-      onOpenChange(false)
-    } catch (error) {
-      console.error('Error saving project:', error)
-      alert('Failed to save project')
-    } finally {
-      setUploading(false)
-    }
-  }
+  const {
+    formData,
+    imageFile,
+    uploading,
+    handleImageFileChange,
+    handleImageUrlChange,
+    updateField,
+    handleSubmit,
+  } = useProjectForm(project, open, onSave, () => onOpenChange(false))
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -106,9 +64,7 @@ export function ProjectFormDialog({
             <Input
               id="title"
               value={formData.title}
-              onChange={(e) =>
-                setFormData((prev) => ({ ...prev, title: e.target.value }))
-              }
+              onChange={(e) => updateField('title', e.target.value)}
               placeholder="My Awesome Project"
               required
             />
@@ -119,9 +75,7 @@ export function ProjectFormDialog({
             <Textarea
               id="description"
               value={formData.description}
-              onChange={(e) =>
-                setFormData((prev) => ({ ...prev, description: e.target.value }))
-              }
+              onChange={(e) => updateField('description', e.target.value)}
               placeholder="A brief description of your project..."
               rows={4}
               required
@@ -131,29 +85,19 @@ export function ProjectFormDialog({
           <ImageUploadField
             value={formData.image}
             imageFile={imageFile}
-            onFileChange={(file, previewUrl) => {
-              setImageFile(file)
-              setFormData((prev) => ({ ...prev, image: previewUrl }))
-            }}
-            onUrlChange={(url) => {
-              setImageFile(null)
-              setFormData((prev) => ({ ...prev, image: url }))
-            }}
+            onFileChange={handleImageFileChange}
+            onUrlChange={handleImageUrlChange}
           />
 
           <TechnologyTagInput
             technologies={formData.technologies}
-            onChange={(technologies) =>
-              setFormData((prev) => ({ ...prev, technologies }))
-            }
+            onChange={(techs) => updateField('technologies', techs)}
           />
 
           <ProjectUrlFields
             github={formData.github}
             demo={formData.demo}
-            onChange={(field, value) =>
-              setFormData((prev) => ({ ...prev, [field]: value }))
-            }
+            onChange={(field, value) => updateField(field, value)}
           />
 
           <DialogFooter>
