@@ -3,6 +3,30 @@
  */
 
 import { neon } from '@neondatabase/serverless';
+import fs from 'fs';
+import path from 'path';
+
+// Load .env.local if not already in environment
+function loadEnv() {
+  const envPath = path.join(process.cwd(), '.env.local');
+  if (fs.existsSync(envPath)) {
+    const lines = fs.readFileSync(envPath, 'utf8').split('\n');
+    for (const line of lines) {
+      const match = line.match(/^\s*([\w.-]+)\s*=\s*(.*)?\s*$/);
+      if (match) {
+        let value = match[2] || '';
+        if ((value.startsWith('"') && value.endsWith('"')) || (value.startsWith("'") && value.endsWith("'"))) {
+          value = value.slice(1, -1);
+        }
+        if (!process.env[match[1]]) {
+          process.env[match[1]] = value.trim();
+        }
+      }
+    }
+  }
+}
+
+loadEnv();
 
 if (!process.env.DATABASE_URL) {
   console.error('[ERROR] DATABASE_URL is not set in environment variables');
