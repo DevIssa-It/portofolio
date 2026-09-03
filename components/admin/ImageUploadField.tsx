@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Image as ImageIcon, Upload } from 'lucide-react'
+import { ProjectImage } from '@/components/micro/ProjectImage'
 
 interface ImageUploadFieldProps {
   value: string
@@ -79,7 +80,7 @@ export function ImageUploadField({
         {/* Image Preview */}
         {value && (
           <div className="relative w-full h-48 rounded-lg overflow-hidden bg-zinc-900 border border-zinc-800">
-            <img
+            <ProjectImage
               src={value}
               alt="Project preview"
               className="w-full h-full object-cover"

@@ -2,7 +2,7 @@
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Edit, Trash2, ExternalLink, Github } from 'lucide-react'
-import Image from 'next/image'
+import { ProjectImage } from '@/components/micro/ProjectImage'
 import { motion } from 'framer-motion'
 
 import { Project } from '@/types/project'
@@ -24,7 +24,7 @@ export function ProjectCard({ project, onEdit, onDelete }: ProjectCardProps) {
     >
       <Card className="overflow-hidden h-full flex flex-col">
         <div className="relative h-48 w-full overflow-hidden bg-zinc-950">
-          <img
+          <ProjectImage
             src={project.image}
             alt={project.title}
             className="object-cover w-full h-full"

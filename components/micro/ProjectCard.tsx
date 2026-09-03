@@ -2,7 +2,7 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { ArrowUpRight, Github } from "lucide-react"
-import Image from "next/image"
+import { ProjectImage } from "@/components/micro/ProjectImage"
 
 interface ProjectCardProps {
   title: string
@@ -29,11 +29,9 @@ export function ProjectCard({
       <div className="w-full h-48 overflow-hidden border-b border-zinc-800/50 relative">
         <div className="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-all duration-500 z-10" />
         
-        <Image
+        <ProjectImage
           src={image}
           alt={title}
-          width={500}
-          height={300}
           className="w-full h-full object-cover transform transition-all duration-700 grayscale group-hover:grayscale-0 group-hover:scale-105 opacity-80 group-hover:opacity-100"
         />
         
