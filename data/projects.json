@@ -1,69 +1,227 @@
 [
   {
-    "id": "1",
-    "title": "CampusHub - Moments Sharing Platform",
-    "description": "Intuitive web platform for campus community with authentication, photo gallery, and integrated storage system. Improved upload and access efficiency by 35%.",
-    "image": "https://images.unsplash.com/photo-1523240795612-9a054b0db644?q=80&w=800&auto=format&fit=crop",
+    "id": "1788453624840",
+    "title": "MyContactApp",
+    "description": "Open source project on GitHub.",
+    "image": "https://opengraph.githubassets.com/1/DevIssa-It/MyContactApp",
     "technologies": [
-      "React.js",
-      "Tailwind CSS"
+      "Java"
     ],
     "tags": [
-      "Web App",
-      "Community"
+      "Open Source"
     ],
-    "github": "https://github.com/DevIssa-It",
-    "demo": "#"
+    "github": "https://github.com/DevIssa-It/MyContactApp",
+    "demo": "",
+    "createdAt": "2026-09-03T09:40:24.521Z",
+    "updatedAt": "2026-09-03T09:40:24.521Z"
   },
   {
-    "id": "2",
-    "title": "CampusHub - Event Management",
-    "description": "Web application for campus event management (workshops, seminars, webinars) with authentication, participant registration, and organizer dashboard. Reduced administration time by 40%.",
-    "image": "https://images.unsplash.com/photo-1540575467063-178a50c2df87?q=80&w=800&auto=format&fit=crop",
+    "id": "1788453623586",
+    "title": "Gemini Flash Api",
+    "description": "Open source project on GitHub.",
+    "image": "https://opengraph.githubassets.com/1/DevIssa-It/gemini-flash-api",
     "technologies": [
-      "React.js",
-      "Tailwind CSS"
-    ],
-    "tags": [
-      "Event Management",
-      "Dashboard"
-    ],
-    "github": "https://github.com/DevIssa-It",
-    "demo": "#"
-  },
-  {
-    "id": "3",
-    "title": "TalentHunt - Recruitment Management",
-    "description": "Recruitment process management web with role-based access control, HR admin dashboard, applicant portal with job search & filters, resume upload, and real-time status tracking.",
-    "image": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=800&auto=format&fit=crop",
-    "technologies": [
-      "React.js",
-      "Tailwind CSS",
-      "Supabase"
-    ],
-    "tags": [
-      "HR Management",
-      "Real-time"
-    ],
-    "github": "https://github.com/DevIssa-It",
-    "demo": "#"
-  },
-  {
-    "id": "4",
-    "title": "E-Commerce Catalog",
-    "description": "E-commerce product catalog with mobile-friendly design, product search & filtering, and responsive grid layout. Developed during internship at Core Initiative x Rakamin Academy.",
-    "image": "https://images.unsplash.com/photo-1472851294608-062f824d29cc?q=80&w=800&auto=format&fit=crop",
-    "technologies": [
-      "Vue.js",
-      "Tailwind CSS",
       "JavaScript"
     ],
     "tags": [
-      "E-Commerce",
-      "Responsive"
+      "Open Source"
     ],
-    "github": "https://github.com/DevIssa-It/ecommerce-catalog",
-    "demo": "https://ecommerce-catalog-orpin.vercel.app/"
+    "github": "https://github.com/DevIssa-It/gemini-flash-api",
+    "demo": "",
+    "createdAt": "2026-09-03T09:40:23.265Z",
+    "updatedAt": "2026-09-03T09:40:23.265Z"
+  },
+  {
+    "id": "1788453623272",
+    "title": "Gemini Chatbot API",
+    "description": "Open source project on GitHub.",
+    "image": "https://opengraph.githubassets.com/1/DevIssa-It/Gemini-Chatbot-API",
+    "technologies": [
+      "JavaScript"
+    ],
+    "tags": [
+      "Open Source"
+    ],
+    "github": "https://github.com/DevIssa-It/Gemini-Chatbot-API",
+    "demo": "",
+    "createdAt": "2026-09-03T09:40:22.951Z",
+    "updatedAt": "2026-09-03T09:40:22.951Z"
+  },
+  {
+    "id": "1788453621080",
+    "title": "Notes App",
+    "description": "Open source project on GitHub.",
+    "image": "https://s0.wp.com/mshots/v1/https%3A%2F%2Fnotes-app-psi-tan.vercel.app?w=800&h=500",
+    "technologies": [
+      "JavaScript"
+    ],
+    "tags": [
+      "Open Source"
+    ],
+    "github": "https://github.com/DevIssa-It/Notes-App",
+    "demo": "https://notes-app-psi-tan.vercel.app",
+    "createdAt": "2026-09-03T09:40:20.759Z",
+    "updatedAt": "2026-09-03T09:40:20.759Z"
+  },
+  {
+    "id": "1788453620871",
+    "title": "Hiring Management App",
+    "description": "Open source project on GitHub.",
+    "image": "https://s0.wp.com/mshots/v1/https%3A%2F%2Fhiring-management-app-jet.vercel.app?w=800&h=500",
+    "technologies": [
+      "TypeScript"
+    ],
+    "tags": [
+      "Open Source"
+    ],
+    "github": "https://github.com/DevIssa-It/hiring-management-app",
+    "demo": "https://hiring-management-app-jet.vercel.app",
+    "createdAt": "2026-09-03T09:40:20.549Z",
+    "updatedAt": "2026-09-03T09:40:20.549Z"
+  },
+  {
+    "id": "1788453620557",
+    "title": "Sporton Fe",
+    "description": "Open source project on GitHub.",
+    "image": "https://s0.wp.com/mshots/v1/https%3A%2F%2Fsporton-fe-azure.vercel.app?w=800&h=500",
+    "technologies": [
+      "TypeScript"
+    ],
+    "tags": [
+      "Open Source"
+    ],
+    "github": "https://github.com/DevIssa-It/sporton-fe",
+    "demo": "https://sporton-fe-azure.vercel.app",
+    "createdAt": "2026-09-03T09:40:20.236Z",
+    "updatedAt": "2026-09-03T09:40:20.236Z"
+  },
+  {
+    "id": "1788453620246",
+    "title": "Sporton Be",
+    "description": "Open source project on GitHub.",
+    "image": "https://opengraph.githubassets.com/1/DevIssa-It/sporton-be",
+    "technologies": [
+      "TypeScript"
+    ],
+    "tags": [
+      "Open Source"
+    ],
+    "github": "https://github.com/DevIssa-It/sporton-be",
+    "demo": "",
+    "createdAt": "2026-09-03T09:40:19.926Z",
+    "updatedAt": "2026-09-03T09:40:19.926Z"
+  },
+  {
+    "id": "1788453619226",
+    "title": "Monkey Coffe",
+    "description": "Open source project on GitHub.",
+    "image": "https://s0.wp.com/mshots/v1/https%3A%2F%2Fmonkey-coffe.vercel.app?w=800&h=500",
+    "technologies": [
+      "TypeScript"
+    ],
+    "tags": [
+      "Open Source"
+    ],
+    "github": "https://github.com/DevIssa-It/monkey-coffe",
+    "demo": "https://monkey-coffe.vercel.app",
+    "createdAt": "2026-09-03T09:40:18.906Z",
+    "updatedAt": "2026-09-03T09:40:18.906Z"
+  },
+  {
+    "id": "1788453618990",
+    "title": "Berita Kini",
+    "description": "Open source project on GitHub.",
+    "image": "https://s0.wp.com/mshots/v1/https%3A%2F%2Fberita-kini-three.vercel.app?w=800&h=500",
+    "technologies": [
+      "HTML"
+    ],
+    "tags": [
+      "Open Source"
+    ],
+    "github": "https://github.com/DevIssa-It/berita-kini",
+    "demo": "https://berita-kini-three.vercel.app",
+    "createdAt": "2026-09-03T09:40:18.671Z",
+    "updatedAt": "2026-09-03T09:40:18.671Z"
+  },
+  {
+    "id": "1788453618729",
+    "title": "Arcline",
+    "description": "Open source project on GitHub.",
+    "image": "https://s0.wp.com/mshots/v1/https%3A%2F%2Farcline-beta.vercel.app?w=800&h=500",
+    "technologies": [
+      "TypeScript"
+    ],
+    "tags": [
+      "Open Source"
+    ],
+    "github": "https://github.com/DevIssa-It/Arcline",
+    "demo": "https://arcline-beta.vercel.app",
+    "createdAt": "2026-09-03T09:40:18.409Z",
+    "updatedAt": "2026-09-03T09:40:18.409Z"
+  },
+  {
+    "id": "1788453618261",
+    "title": "Estafet Usaha",
+    "description": "Open source project on GitHub.",
+    "image": "https://s0.wp.com/mshots/v1/https%3A%2F%2Festafet-usaha-ten.vercel.app?w=800&h=500",
+    "technologies": [
+      "TypeScript"
+    ],
+    "tags": [
+      "Open Source"
+    ],
+    "github": "https://github.com/DevIssa-It/estafet-usaha",
+    "demo": "https://estafet-usaha-ten.vercel.app",
+    "createdAt": "2026-09-03T09:40:17.940Z",
+    "updatedAt": "2026-09-03T09:40:17.940Z"
+  },
+  {
+    "id": "1788453618052",
+    "title": "Mini Sales",
+    "description": "Open source project on GitHub.",
+    "image": "https://s0.wp.com/mshots/v1/https%3A%2F%2Fmini-sales-eight.vercel.app?w=800&h=500",
+    "technologies": [
+      "TypeScript"
+    ],
+    "tags": [
+      "Open Source"
+    ],
+    "github": "https://github.com/DevIssa-It/mini-sales",
+    "demo": "https://mini-sales-eight.vercel.app",
+    "createdAt": "2026-09-03T09:40:17.730Z",
+    "updatedAt": "2026-09-03T09:40:17.730Z"
+  },
+  {
+    "id": "1788453617565",
+    "title": "Sbydev",
+    "description": "Open source project on GitHub.",
+    "image": "https://s0.wp.com/mshots/v1/https%3A%2F%2Fsbydev.vercel.app?w=800&h=500",
+    "technologies": [
+      "TypeScript"
+    ],
+    "tags": [
+      "Open Source"
+    ],
+    "github": "https://github.com/DevIssa-It/sbydev",
+    "demo": "https://sbydev.vercel.app",
+    "createdAt": "2026-09-03T09:40:17.245Z",
+    "updatedAt": "2026-09-03T09:40:17.245Z"
+  },
+  {
+    "id": "1788453617112",
+    "title": "Portofolio",
+    "description": "Open source project on GitHub.",
+    "image": "https://s0.wp.com/mshots/v1/https%3A%2F%2Fahmadissadurrofiq.vercel.app%2F?w=800&h=500",
+    "technologies": [
+      "TypeScript"
+    ],
+    "tags": [
+      "Open Source"
+    ],
+    "github": "https://github.com/DevIssa-It/portofolio",
+    "demo": "https://ahmadissadurrofiq.vercel.app/",
+    "createdAt": "2026-09-03T09:40:16.793Z",
+    "updatedAt": "2026-09-03T09:40:16.793Z"
   },
   {
     "id": "5",
@@ -79,7 +237,45 @@
       "Dashboard",
       "Social Impact"
     ],
-    "github": "https://github.com/DevIssa-It",
-    "demo": "#"
+    "github": "https://github.com/DevIssa-It/GreenImpact",
+    "demo": "#",
+    "createdAt": "2026-09-03T09:04:13.111Z",
+    "updatedAt": "2026-09-03T09:04:13.111Z"
+  },
+  {
+    "id": "4",
+    "title": "Ecommerce Catalog",
+    "description": "Open source project on GitHub.",
+    "image": "https://images.unsplash.com/photo-1472851294608-062f824d29cc?q=80&w=800&auto=format&fit=crop",
+    "technologies": [
+      "Vue"
+    ],
+    "tags": [
+      "E-Commerce",
+      "Responsive",
+      "Open Source"
+    ],
+    "github": "https://github.com/DevIssa-It/ecommerce-catalog",
+    "demo": "https://ecommerce-catalog-orpin.vercel.app",
+    "createdAt": "2026-09-03T09:04:13.068Z",
+    "updatedAt": "2026-09-03T09:40:21.751Z"
+  },
+  {
+    "id": "1",
+    "title": "CampusHub - Moments Sharing Platform",
+    "description": "Intuitive web platform for campus community with authentication, photo gallery, and integrated storage system. Improved upload and access efficiency by 35%.",
+    "image": "https://images.unsplash.com/photo-1523240795612-9a054b0db644?q=80&w=800&auto=format&fit=crop",
+    "technologies": [
+      "React.js",
+      "Tailwind CSS"
+    ],
+    "tags": [
+      "Web App",
+      "Community"
+    ],
+    "github": "https://github.com/DevIssa-It/CampusHub",
+    "demo": "#",
+    "createdAt": "2026-09-03T09:04:12.470Z",
+    "updatedAt": "2026-09-03T09:04:12.475Z"
   }
 ]

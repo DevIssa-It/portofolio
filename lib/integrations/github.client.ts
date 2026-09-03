@@ -67,6 +67,12 @@ export class GitHubClient {
         return false
       }
 
+      // Exclude specified trial, template, or course projects
+      const normalizedName = repo.name.toLowerCase().trim()
+      if (APP_CONFIG.github.excludedRepos.includes(normalizedName)) {
+        return false
+      }
+
       // Optional topic filtering if configured
       if (APP_CONFIG.github.requiredTopic) {
         const topics = repo.topics || []

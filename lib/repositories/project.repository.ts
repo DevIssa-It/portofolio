@@ -58,25 +58,34 @@ export class ProjectRepository {
   async upsertFromGithub(
     payload: GitHubSyncPayload
   ): Promise<{ action: 'created' | 'updated' | 'skipped'; project: Project }> {
-    const existing = await this.findByGithubUrl(payload.github)
+    let existing = await this.findByGithubUrl(payload.github)
+
+    if (!existing) {
+      const all = await this.findAll()
+      const normalizedPayload = payload.title.toLowerCase().replace(/[^a-z0-9]/g, '')
+      existing =
+        all.find((p) => {
+          const normalizedExisting = p.title.toLowerCase().replace(/[^a-z0-9]/g, '')
+          return (
+            normalizedExisting === normalizedPayload ||
+            normalizedExisting.startsWith(normalizedPayload) ||
+            normalizedPayload.startsWith(normalizedExisting)
+          )
+        }) || null
+    }
 
     if (existing) {
-      const needsUpdate =
-        existing.description !== payload.description ||
-        existing.demo !== payload.demo ||
-        existing.title !== payload.title ||
-        JSON.stringify(existing.technologies) !== JSON.stringify(payload.technologies)
-
-      if (!needsUpdate) {
-        return { action: 'skipped', project: existing }
-      }
-
       const updated = await this.update(existing.id, {
         id: existing.id,
-        title: payload.title,
-        description: payload.description,
-        demo: payload.demo || existing.demo,
-        technologies: payload.technologies.length > 0 ? payload.technologies : existing.technologies,
+        // Preserve rich manual title and description if already present
+        title: existing.title || payload.title,
+        description: existing.description || payload.description,
+        github: payload.github,
+        demo: existing.demo && existing.demo !== '#' ? existing.demo : payload.demo,
+        technologies:
+          existing.technologies.length > 0
+            ? existing.technologies
+            : payload.technologies,
         tags: Array.from(new Set([...existing.tags, ...payload.tags])),
         image: existing.image || payload.image || '',
       })

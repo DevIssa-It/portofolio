@@ -11,6 +11,7 @@ import {
 } from '@/lib/repositories/project.repository'
 import { GitHubRepo, GitHubWebhookPayload } from '@/types/github'
 import { GitHubSyncPayload, SyncResult } from '@/types/project'
+import { APP_CONFIG } from '@/lib/config'
 
 export class SyncService {
   constructor(
@@ -141,6 +142,12 @@ export class SyncService {
     // Strictly ignore private repositories
     if (repository.private) {
       return { status: 'ignored', message: 'Private repository skipped' }
+    }
+
+    // Strictly ignore excluded trial/template/assignment repositories
+    const normalizedName = repository.name.toLowerCase().trim()
+    if (APP_CONFIG.github.excludedRepos.includes(normalizedName)) {
+      return { status: 'ignored', message: `Repository ${repository.name} is excluded` }
     }
 
     // Handle repository deleted event
