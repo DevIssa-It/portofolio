@@ -277,5 +277,24 @@
     "demo": "#",
     "createdAt": "2026-09-03T09:04:12.470Z",
     "updatedAt": "2026-09-03T09:04:12.475Z"
+  },
+  {
+    "id": "2",
+    "title": "CampusHub - Event Management",
+    "description": "Comprehensive event management module with ticketing, schedule tracking, and automated reminder notifications for university student councils.",
+    "image": "https://images.unsplash.com/photo-1540575467063-178a50c2df87?q=80&w=800&auto=format&fit=crop",
+    "technologies": [
+      "Next.js",
+      "PostgreSQL",
+      "Prisma"
+    ],
+    "tags": [
+      "Full Stack",
+      "Education"
+    ],
+    "github": "https://github.com/DevIssa-It/CampusHub",
+    "demo": "#",
+    "createdAt": "2026-09-03T09:04:12.470Z",
+    "updatedAt": "2026-09-03T09:04:12.470Z"
   }
 ]
