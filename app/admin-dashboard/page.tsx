@@ -42,14 +42,14 @@ export default function AdminDashboard() {
 
   if (status === 'loading' || loading) {
     return (
-      <div className="min-h-screen bg-zinc-950 flex items-center justify-center">
+      <div className="min-h-screen bg-[#f8fafc] flex items-center justify-center">
         <motion.div
-          className="flex flex-col items-center gap-4"
+          className="flex flex-col items-center gap-4 p-8 brutal-card bg-white border-2 border-black shadow-[4px_4px_0px_0px_#000] rounded-xl"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
         >
-          <div className="w-12 h-12 border-4 border-primary border-t-transparent rounded-full animate-spin" />
-          <p className="text-zinc-400">Loading dashboard...</p>
+          <div className="w-10 h-10 border-4 border-black border-t-sky-400 rounded-full animate-spin" />
+          <p className="text-xs font-mono font-bold text-black uppercase">Loading dashboard...</p>
         </motion.div>
       </div>
     )
@@ -58,11 +58,11 @@ export default function AdminDashboard() {
   const techCount = new Set(projects.flatMap((p) => p.technologies)).size
 
   return (
-    <div className="flex min-h-screen bg-zinc-950">
-      <AdminSidebar onLogout={() => router.push('/api/auth/signout')} />
+    <div className="flex min-h-screen bg-[#f8fafc] text-black">
+      <AdminSidebar />
 
-      <main className="flex-1 p-8">
-        <div className="max-w-7xl mx-auto">
+      <main className="flex-1 p-6 sm:p-10 overflow-y-auto">
+        <div className="max-w-7xl mx-auto space-y-8">
           <DashboardHeader
             adminEmail={session?.user?.email}
             isSyncing={isSyncing}
@@ -83,11 +83,21 @@ export default function AdminDashboard() {
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ delay: 0.2 }}
+            transition={{ delay: 0.15 }}
+            className="space-y-6"
           >
-            <div className="flex items-center justify-between mb-6">
-              <h2 className="text-2xl font-bold text-white">Your Projects</h2>
-              <p className="text-zinc-400 text-sm">{projects.length} projects</p>
+            <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
+              <div>
+                <span className="brutal-badge inline-block bg-emerald-300 text-black px-2.5 py-0.5 text-xs font-mono uppercase mb-1">
+                  {'// Catalog'}
+                </span>
+                <h2 className="text-2xl sm:text-3xl font-black text-black uppercase tracking-tight">
+                  Registered Works
+                </h2>
+              </div>
+              <span className="brutal-badge bg-white text-black px-3 py-1 text-xs font-mono">
+                {projects.length} Repositories Registered
+              </span>
             </div>
 
             {projects.length === 0 ? (

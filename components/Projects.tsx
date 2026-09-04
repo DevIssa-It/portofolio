@@ -27,7 +27,7 @@ export default function Projects() {
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
           <div className="space-y-2">
             <span className="brutal-badge inline-block bg-emerald-300 text-black px-3 py-1 text-xs uppercase tracking-wider font-mono">
-              // 02. Selected Works
+              {'// 02. Selected Works'}
             </span>
             <h2 className="text-3xl sm:text-4xl font-black tracking-tight text-black uppercase">
               Web Applications & Repositories

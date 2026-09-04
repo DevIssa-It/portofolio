@@ -33,7 +33,7 @@ export default function TechCapabilities() {
         {/* Section Header */}
         <div className="border-b border-zinc-200 pb-4 space-y-1">
           <span className="text-xs font-mono uppercase tracking-wider text-zinc-400 block font-semibold">
-            // 03. Technical Capabilities
+            {'// 03. Technical Capabilities'}
           </span>
           <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-zinc-950">
             Architectural Layers & Production Stack

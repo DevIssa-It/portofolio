@@ -20,23 +20,23 @@ export function SyncStatusBanner({
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -10 }}
-          className={`mb-6 p-4 rounded-lg border flex items-center justify-between ${
+          className={`mb-6 p-4 rounded-xl border-2 border-black shadow-[3px_3px_0px_0px_#000] flex items-center justify-between ${
             feedback.type === 'success'
-              ? 'bg-emerald-950/40 border-emerald-800/60 text-emerald-300'
-              : 'bg-rose-950/40 border-rose-800/60 text-rose-300'
+              ? 'bg-emerald-100 text-emerald-950'
+              : 'bg-rose-100 text-rose-950'
           }`}
         >
           <div className="flex items-center gap-3">
             {feedback.type === 'success' ? (
-              <CheckCircle2 size={20} className="text-emerald-400 shrink-0" />
+              <CheckCircle2 size={18} className="text-emerald-700 shrink-0" />
             ) : (
-              <AlertCircle size={20} className="text-rose-400 shrink-0" />
+              <AlertCircle size={18} className="text-rose-700 shrink-0" />
             )}
-            <span className="text-sm font-medium">{feedback.message}</span>
+            <span className="text-xs font-mono font-bold">{feedback.message}</span>
           </div>
           <button
             onClick={onDismiss}
-            className="text-zinc-400 hover:text-white p-1 transition-colors"
+            className="text-black hover:bg-black/10 rounded p-1 transition-colors"
             aria-label="Dismiss notification"
           >
             <X size={16} />

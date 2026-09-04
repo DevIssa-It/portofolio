@@ -14,67 +14,89 @@ interface ProjectCardProps {
 }
 
 export function ProjectCard({ project, onEdit, onDelete }: ProjectCardProps) {
-  return (
-    <motion.div
-      initial={{ opacity: 0, scale: 0.95 }}
-      animate={{ opacity: 1, scale: 1 }}
-      exit={{ opacity: 0, scale: 0.95 }}
-      whileHover={{ y: -5 }}
-      transition={{ duration: 0.2 }}
-    >
-      <Card className="overflow-hidden h-full flex flex-col">
-        <div className="relative h-48 w-full overflow-hidden bg-zinc-950">
-          <ProjectImage
-            src={project.image}
-            alt={project.title}
-            className="object-cover w-full h-full"
-          />
-        </div>
-        
-        <CardHeader>
-          <CardTitle className="text-xl">{project.title}</CardTitle>
-          <CardDescription className="line-clamp-2">{project.description}</CardDescription>
-        </CardHeader>
+  const formattedDate = project.createdAt
+    ? new Date(project.createdAt).toLocaleDateString('en-US', {
+        month: 'short',
+        year: 'numeric',
+      })
+    : null
 
-        <CardContent className="flex-1">
-          <div className="flex flex-wrap gap-2">
-            {project.technologies.slice(0, 3).map((tech, idx) => (
+  return (
+    <motion.article
+      initial={{ opacity: 0, scale: 0.98 }}
+      animate={{ opacity: 1, scale: 1 }}
+      exit={{ opacity: 0, scale: 0.98 }}
+      whileHover={{ y: -3 }}
+      transition={{ duration: 0.15 }}
+      className="brutal-card brutal-card-hover bg-white border-2 border-black shadow-[4px_4px_0px_0px_#000] rounded-xl overflow-hidden flex flex-col h-full"
+    >
+      {/* Image Preview */}
+      <div className="relative h-44 w-full overflow-hidden border-b-2 border-black bg-zinc-100">
+        <ProjectImage
+          src={project.image}
+          alt={project.title}
+          className="object-cover w-full h-full"
+        />
+
+        {formattedDate && (
+          <div className="absolute top-2.5 right-2.5 z-10">
+            <span className="brutal-badge text-[10px] font-mono px-2 py-0.5 rounded bg-white text-black font-bold shadow-[1px_1px_0px_0px_#000]">
+              {formattedDate}
+            </span>
+          </div>
+        )}
+      </div>
+
+      {/* Details */}
+      <div className="p-5 flex-1 flex flex-col justify-between space-y-4">
+        <div className="space-y-1.5">
+          <h3 className="text-base font-black text-black leading-snug line-clamp-1">
+            {project.title}
+          </h3>
+          <p className="text-zinc-600 text-xs line-clamp-2 leading-relaxed font-medium">
+            {project.description}
+          </p>
+        </div>
+
+        <div className="space-y-3 pt-3 border-t-2 border-black/10">
+          {/* Tech Badges */}
+          <div className="flex flex-wrap gap-1.5">
+            {project.technologies.slice(0, 4).map((tech, idx) => (
               <span
                 key={idx}
-                className="text-xs px-2 py-1 bg-primary/10 text-primary rounded-md font-semibold"
+                className="text-[10px] font-mono px-2 py-0.5 rounded border border-black bg-zinc-100 text-black font-semibold"
               >
                 {tech}
               </span>
             ))}
-            {project.technologies.length > 3 && (
-              <span className="text-xs px-2 py-1 bg-zinc-800 text-zinc-400 rounded-md font-semibold">
-                +{project.technologies.length - 3}
+            {project.technologies.length > 4 && (
+              <span className="text-[10px] font-mono px-2 py-0.5 rounded border border-black bg-white text-zinc-600 font-semibold">
+                +{project.technologies.length - 4}
               </span>
             )}
           </div>
-        </CardContent>
 
-        <CardFooter className="flex gap-2">
-          <Button
-            variant="secondary"
-            size="sm"
-            className="flex-1"
-            onClick={() => onEdit(project)}
-          >
-            <Edit size={14} className="mr-2" />
-            Edit
-          </Button>
-          <Button
-            variant="destructive"
-            size="sm"
-            className="flex-1"
-            onClick={() => onDelete(project.id)}
-          >
-            <Trash2 size={14} className="mr-2" />
-            Delete
-          </Button>
-        </CardFooter>
-      </Card>
-    </motion.div>
+          {/* Actions */}
+          <div className="flex items-center gap-2 pt-1">
+            <button
+              type="button"
+              onClick={() => onEdit(project)}
+              className="brutal-btn flex-1 flex items-center justify-center gap-1.5 py-1.5 px-3 rounded-lg bg-sky-100 hover:bg-sky-200 text-black border-2 border-black text-xs font-mono font-bold"
+            >
+              <Edit size={13} />
+              <span>Edit</span>
+            </button>
+            <button
+              type="button"
+              onClick={() => onDelete(project.id)}
+              className="brutal-btn flex-1 flex items-center justify-center gap-1.5 py-1.5 px-3 rounded-lg bg-red-100 hover:bg-red-200 text-red-900 border-2 border-black text-xs font-mono font-bold"
+            >
+              <Trash2 size={13} />
+              <span>Delete</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </motion.article>
   )
 }

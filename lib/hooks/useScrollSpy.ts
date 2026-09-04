@@ -2,16 +2,30 @@ import { useState, useEffect } from 'react'
 
 /**
  * Custom hook to track the active section in the viewport using IntersectionObserver.
- * Replaces window.scrollY / scroll event listeners to prevent React state churn.
+ * Includes a scroll listener to reliably lock to the top section when at the page top.
  */
-export function useScrollSpy(sectionIds: string[], offsetRatio = 0.3): string {
+export function useScrollSpy(sectionIds: string[], offsetRatio = 0.25): string {
   const [activeId, setActiveId] = useState<string>(sectionIds[0] || '')
 
   useEffect(() => {
     if (typeof window === 'undefined' || sectionIds.length === 0) return
 
+    const handleScroll = () => {
+      if (window.scrollY < 120) {
+        setActiveId(sectionIds[0])
+      }
+    }
+
+    window.addEventListener('scroll', handleScroll, { passive: true })
+
     const observer = new IntersectionObserver(
       (entries) => {
+        // If we are at the top, prioritize the first section
+        if (window.scrollY < 120) {
+          setActiveId(sectionIds[0])
+          return
+        }
+
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             setActiveId(entry.target.id)
@@ -20,7 +34,7 @@ export function useScrollSpy(sectionIds: string[], offsetRatio = 0.3): string {
       },
       {
         rootMargin: `-${Math.round(offsetRatio * 100)}% 0px -40% 0px`,
-        threshold: 0,
+        threshold: 0.1,
       }
     )
 
@@ -29,8 +43,12 @@ export function useScrollSpy(sectionIds: string[], offsetRatio = 0.3): string {
       if (el) observer.observe(el)
     })
 
-    return () => observer.disconnect()
+    return () => {
+      window.removeEventListener('scroll', handleScroll)
+      observer.disconnect()
+    }
   }, [sectionIds, offsetRatio])
 
   return activeId
 }
+

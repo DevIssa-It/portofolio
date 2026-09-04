@@ -146,46 +146,51 @@ export default function ProfileManagement() {
 
   if (status === 'loading' || loading) {
     return (
-      <div className="min-h-screen bg-zinc-950 flex items-center justify-center">
+      <div className="min-h-screen bg-[#f8fafc] flex items-center justify-center">
         <motion.div
-          className="flex flex-col items-center gap-4"
+          className="flex flex-col items-center gap-4 p-8 brutal-card bg-white border-2 border-black shadow-[4px_4px_0px_0px_#000] rounded-xl"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
         >
-          <div className="w-12 h-12 border-4 border-primary border-t-transparent rounded-full animate-spin" />
-          <p className="text-zinc-400">Loading profile data...</p>
+          <div className="w-10 h-10 border-4 border-black border-t-sky-400 rounded-full animate-spin" />
+          <p className="text-xs font-mono font-bold text-black uppercase">Loading profile data...</p>
         </motion.div>
       </div>
     )
   }
 
   return (
-    <div className="flex min-h-screen bg-zinc-950">
-      <AdminSidebar onLogout={handleLogout} />
+    <div className="flex min-h-screen bg-[#f8fafc] text-black">
+      <AdminSidebar />
       
-      <main className="flex-1 p-8">
-        <div className="max-w-7xl mx-auto">
+      <main className="flex-1 p-6 sm:p-10 overflow-y-auto">
+        <div className="max-w-7xl mx-auto space-y-8">
           {/* Header */}
           <motion.div
-            initial={{ opacity: 0, y: -20 }}
+            initial={{ opacity: 0, y: -15 }}
             animate={{ opacity: 1, y: 0 }}
-            className="mb-8"
+            className="pb-6 border-b-2 border-black"
           >
-            <h1 className="text-4xl font-bold text-white mb-2">Profile Management</h1>
-            <p className="text-zinc-400">
-              Manage your education and professional experience
+            <span className="brutal-badge inline-block bg-sky-300 text-black px-2.5 py-0.5 text-[11px] font-mono font-bold uppercase mb-2">
+              {'// Credentials & History'}
+            </span>
+            <h1 className="text-3xl sm:text-4xl font-black text-black uppercase tracking-tight">
+              Profile Management
+            </h1>
+            <p className="text-xs font-mono text-zinc-600 mt-1">
+              Manage your formal education and verified industry work experiences.
             </p>
           </motion.div>
 
           {/* Stats */}
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1 }}
-            className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8"
+            className="grid grid-cols-1 md:grid-cols-2 gap-6"
           >
             <StatCard
-              title="Education"
+              title="Education Records"
               value={education.length}
               icon={GraduationCap}
             />
@@ -197,34 +202,26 @@ export default function ProfileManagement() {
           </motion.div>
 
           {/* Tabs */}
-          <div className="flex gap-4 mb-6 border-b border-zinc-800">
+          <div className="flex flex-wrap gap-3">
             <button
               onClick={() => setActiveTab('education')}
-              className={`pb-4 px-2 text-lg font-medium transition-colors relative ${
-                activeTab === 'education' ? 'text-primary' : 'text-zinc-400 hover:text-zinc-300'
+              className={`brutal-btn px-4 py-2.5 rounded-lg text-xs font-mono font-bold transition-all ${
+                activeTab === 'education'
+                  ? 'bg-black text-sky-300 border-2 border-black shadow-[3px_3px_0px_0px_#000]'
+                  : 'bg-white text-black hover:bg-sky-50 border-2 border-black shadow-[2px_2px_0px_0px_#000]'
               }`}
             >
-              Education
-              {activeTab === 'education' && (
-                <motion.div
-                  layoutId="activeTab"
-                  className="absolute bottom-0 left-0 right-0 h-0.5 bg-primary"
-                />
-              )}
+              Education History ({education.length})
             </button>
             <button
               onClick={() => setActiveTab('experience')}
-              className={`pb-4 px-2 text-lg font-medium transition-colors relative ${
-                activeTab === 'experience' ? 'text-primary' : 'text-zinc-400 hover:text-zinc-300'
+              className={`brutal-btn px-4 py-2.5 rounded-lg text-xs font-mono font-bold transition-all ${
+                activeTab === 'experience'
+                  ? 'bg-black text-sky-300 border-2 border-black shadow-[3px_3px_0px_0px_#000]'
+                  : 'bg-white text-black hover:bg-sky-50 border-2 border-black shadow-[2px_2px_0px_0px_#000]'
               }`}
             >
-              Experience
-              {activeTab === 'experience' && (
-                <motion.div
-                  layoutId="activeTab"
-                  className="absolute bottom-0 left-0 right-0 h-0.5 bg-primary"
-                />
-              )}
+              Work Experience ({experience.length})
             </button>
           </div>
 
@@ -233,27 +230,36 @@ export default function ProfileManagement() {
             {activeTab === 'education' ? (
               <motion.div
                 key="education"
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: 20 }}
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                className="space-y-6"
               >
-                <div className="flex items-center justify-between mb-6">
-                  <h2 className="text-2xl font-bold text-white">Education History</h2>
-                  <Button onClick={() => setShowEducationForm(true)} className="gap-2">
-                    <Plus size={20} />
-                    Add Education
-                  </Button>
+                <div className="flex items-center justify-between">
+                  <h2 className="text-xl font-black text-black uppercase">Formal Education</h2>
+                  <button
+                    type="button"
+                    onClick={() => setShowEducationForm(true)}
+                    className="brutal-btn flex items-center gap-2 px-4 py-2 rounded-lg bg-sky-300 hover:bg-sky-400 text-black text-xs font-mono font-bold border-2 border-black"
+                  >
+                    <Plus size={16} />
+                    <span>Add Education</span>
+                  </button>
                 </div>
 
                 {education.length === 0 ? (
-                  <div className="text-center py-16 bg-zinc-900/30 rounded-lg border border-zinc-800">
-                    <GraduationCap size={48} className="mx-auto text-zinc-600 mb-4" />
-                    <h3 className="text-xl font-semibold text-white mb-2">No education added</h3>
-                    <p className="text-zinc-400 mb-6">Add your educational background</p>
-                    <Button onClick={() => setShowEducationForm(true)}>
-                      <Plus size={20} className="mr-2" />
-                      Add Education
-                    </Button>
+                  <div className="text-center py-16 brutal-card bg-white border-2 border-black shadow-[4px_4px_0px_0px_#000] rounded-xl p-8">
+                    <GraduationCap size={40} className="mx-auto text-black mb-3" />
+                    <h3 className="text-lg font-black text-black uppercase mb-1">No education records yet</h3>
+                    <p className="text-zinc-600 text-xs font-mono mb-4">Add your degrees and institutions.</p>
+                    <button
+                      type="button"
+                      onClick={() => setShowEducationForm(true)}
+                      className="brutal-btn inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-sky-300 hover:bg-sky-400 text-black text-xs font-mono font-bold border-2 border-black"
+                    >
+                      <Plus size={16} />
+                      <span>Add Education</span>
+                    </button>
                   </div>
                 ) : (
                   <div className="space-y-4">
@@ -271,27 +277,36 @@ export default function ProfileManagement() {
             ) : (
               <motion.div
                 key="experience"
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: 20 }}
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                className="space-y-6"
               >
-                <div className="flex items-center justify-between mb-6">
-                  <h2 className="text-2xl font-bold text-white">Work Experience</h2>
-                  <Button onClick={() => setShowExperienceForm(true)} className="gap-2">
-                    <Plus size={20} />
-                    Add Experience
-                  </Button>
+                <div className="flex items-center justify-between">
+                  <h2 className="text-xl font-black text-black uppercase">Work Experience</h2>
+                  <button
+                    type="button"
+                    onClick={() => setShowExperienceForm(true)}
+                    className="brutal-btn flex items-center gap-2 px-4 py-2 rounded-lg bg-sky-300 hover:bg-sky-400 text-black text-xs font-mono font-bold border-2 border-black"
+                  >
+                    <Plus size={16} />
+                    <span>Add Experience</span>
+                  </button>
                 </div>
 
                 {experience.length === 0 ? (
-                  <div className="text-center py-16 bg-zinc-900/30 rounded-lg border border-zinc-800">
-                    <Briefcase size={48} className="mx-auto text-zinc-600 mb-4" />
-                    <h3 className="text-xl font-semibold text-white mb-2">No experience added</h3>
-                    <p className="text-zinc-400 mb-6">Add your professional experience</p>
-                    <Button onClick={() => setShowExperienceForm(true)}>
-                      <Plus size={20} className="mr-2" />
-                      Add Experience
-                    </Button>
+                  <div className="text-center py-16 brutal-card bg-white border-2 border-black shadow-[4px_4px_0px_0px_#000] rounded-xl p-8">
+                    <Briefcase size={40} className="mx-auto text-black mb-3" />
+                    <h3 className="text-lg font-black text-black uppercase mb-1">No experience records yet</h3>
+                    <p className="text-zinc-600 text-xs font-mono mb-4">Add your professional work experience.</p>
+                    <button
+                      type="button"
+                      onClick={() => setShowExperienceForm(true)}
+                      className="brutal-btn inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-sky-300 hover:bg-sky-400 text-black text-xs font-mono font-bold border-2 border-black"
+                    >
+                      <Plus size={16} />
+                      <span>Add Experience</span>
+                    </button>
                   </div>
                 ) : (
                   <div className="space-y-4">

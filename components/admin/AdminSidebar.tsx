@@ -1,17 +1,20 @@
 'use client'
-import { LogOut, User, Settings, LayoutDashboard, GraduationCap } from 'lucide-react'
+
+import { useState } from 'react'
+import { LogOut, User, Settings, LayoutDashboard, GraduationCap, ExternalLink, Loader2 } from 'lucide-react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
+import { signOut } from 'next-auth/react'
 import { cn } from '@/lib/utils'
-import { logoutUser } from '@/lib/services/auth.service'
 import { ROUTES } from '@/lib/constants/api'
 
 interface AdminSidebarProps {
-  onLogout: () => void
+  onLogout?: () => void
 }
 
 export function AdminSidebar({ onLogout }: AdminSidebarProps) {
   const pathname = usePathname()
+  const [isLoggingOut, setIsLoggingOut] = useState(false)
 
   const menuItems = [
     {
@@ -20,7 +23,7 @@ export function AdminSidebar({ onLogout }: AdminSidebarProps) {
       href: ROUTES.ADMIN_DASHBOARD,
     },
     {
-      label: 'Profile',
+      label: 'Profile & Experience',
       icon: GraduationCap,
       href: '/admin-dashboard/profile',
     },
@@ -31,63 +34,106 @@ export function AdminSidebar({ onLogout }: AdminSidebarProps) {
     },
   ]
 
+  const handleLogoutClick = async () => {
+    try {
+      setIsLoggingOut(true)
+      if (onLogout) {
+        onLogout()
+      }
+      await signOut({ callbackUrl: ROUTES.LOGIN, redirect: true })
+    } catch (error) {
+      console.error('Logout error:', error)
+      setIsLoggingOut(false)
+    }
+  }
+
   return (
-    <div className="w-64 min-h-screen bg-zinc-900 border-r border-zinc-800 p-6 flex flex-col">
-      {/* Logo */}
-      <div className="mb-8">
-        <Link href={ROUTES.ADMIN_DASHBOARD}>
-          <h2 className="text-2xl font-bold gradient-text">Admin Panel</h2>
-        </Link>
-        <p className="text-xs text-zinc-500 mt-1">Portfolio Management</p>
+    <aside className="w-64 min-h-screen bg-white border-r-2 border-black p-5 flex flex-col justify-between shadow-[4px_0px_0px_0px_#000] relative z-20">
+      <div className="space-y-6">
+        {/* Brand Header */}
+        <div className="space-y-1.5 pb-4 border-b-2 border-black">
+          <div className="flex items-center gap-2">
+            <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 border border-black shadow-[1px_1px_0px_0px_#000]" />
+            <span className="brutal-badge bg-sky-200 text-black px-2 py-0.5 text-[10px] font-mono font-bold uppercase">
+              Admin Console
+            </span>
+          </div>
+          <Link href={ROUTES.ADMIN_DASHBOARD} className="block">
+            <h2 className="text-base font-black font-mono tracking-tight text-black uppercase">
+              A. Issadurrofiq
+            </h2>
+          </Link>
+          <p className="text-[11px] font-mono text-zinc-600">Portfolio Management</p>
+        </div>
+
+        {/* Navigation Menu */}
+        <nav className="space-y-2">
+          {menuItems.map((item) => {
+            const Icon = item.icon
+            const isActive = pathname === item.href
+
+            return (
+              <Link
+                key={item.href}
+                href={item.href}
+                className={cn(
+                  'flex items-center gap-2.5 px-3.5 py-2.5 rounded-lg text-xs font-mono font-bold transition-all',
+                  isActive
+                    ? 'bg-black text-sky-300 border-2 border-black shadow-[3px_3px_0px_0px_#000]'
+                    : 'bg-white text-black hover:bg-sky-50 border-2 border-transparent hover:border-black'
+                )}
+              >
+                <Icon size={17} />
+                <span>{item.label}</span>
+              </Link>
+            )
+          })}
+        </nav>
       </div>
 
-      {/* Menu Items */}
-      <nav className="flex-1 space-y-2">
-        {menuItems.map((item) => {
-          const Icon = item.icon
-          const isActive = pathname === item.href
-          
-          return (
-            <Link
-              key={item.href}
-              href={item.href}
-              className={cn(
-                'flex items-center gap-3 px-4 py-3 rounded-lg transition-all',
-                isActive
-                  ? 'bg-primary text-white font-semibold'
-                  : 'text-zinc-400 hover:bg-zinc-800 hover:text-white'
-              )}
-            >
-              <Icon size={20} />
-              <span>{item.label}</span>
-            </Link>
-          )
-        })}
-      </nav>
+      {/* Footer Section */}
+      <div className="space-y-3 pt-4 border-t-2 border-black">
+        {/* Link to Live Website */}
+        <Link
+          href="/"
+          target="_blank"
+          className="brutal-btn w-full flex items-center justify-center gap-2 px-3 py-2 rounded-lg bg-white hover:bg-sky-100 text-black text-xs font-mono font-bold border-2 border-black"
+        >
+          <ExternalLink size={14} />
+          <span>View Live Site</span>
+        </Link>
 
-      {/* User Section */}
-      <div className="border-t border-zinc-800 pt-4">
-        <div className="flex items-center gap-3 px-4 py-3 mb-2">
-          <div className="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center">
-            <User size={20} className="text-primary" />
+        {/* Admin Profile Box */}
+        <div className="flex items-center gap-2.5 p-2.5 bg-zinc-50 border-2 border-black rounded-lg shadow-[2px_2px_0px_0px_#000]">
+          <div className="w-8 h-8 rounded-md bg-sky-200 border border-black flex items-center justify-center font-mono font-bold text-xs text-black">
+            <User size={16} />
           </div>
-          <div>
-            <p className="text-sm font-semibold">Admin</p>
-            <p className="text-xs text-zinc-500">Administrator</p>
+          <div className="overflow-hidden">
+            <p className="text-xs font-bold text-black font-mono leading-tight">Admin</p>
+            <p className="text-[10px] font-mono text-zinc-600 uppercase">Authenticated</p>
           </div>
         </div>
-        
+
+        {/* Logout Action */}
         <button
-          onClick={async () => {
-            await logoutUser()
-            onLogout()
-          }}
-          className="w-full flex items-center gap-3 px-4 py-3 rounded-lg text-zinc-400 hover:bg-zinc-800 hover:text-white transition-all"
+          type="button"
+          onClick={handleLogoutClick}
+          disabled={isLoggingOut}
+          className="brutal-btn w-full flex items-center justify-center gap-2 px-3 py-2.5 rounded-lg bg-red-100 hover:bg-red-200 text-red-900 text-xs font-mono font-bold border-2 border-black disabled:opacity-50"
         >
-          <LogOut size={20} />
-          <span>Logout</span>
+          {isLoggingOut ? (
+            <>
+              <Loader2 size={15} className="animate-spin" />
+              <span>Logging out...</span>
+            </>
+          ) : (
+            <>
+              <LogOut size={15} />
+              <span>Sign Out</span>
+            </>
+          )}
         </button>
       </div>
-    </div>
+    </aside>
   )
 }

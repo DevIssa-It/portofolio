@@ -34,7 +34,7 @@ export default function Contact() {
         {/* Section Header */}
         <div className="space-y-2 border-b-2 border-black/10 pb-4">
           <span className="brutal-badge inline-block bg-pink-300 text-black px-3 py-1 text-xs uppercase tracking-wider font-mono">
-            // 04. Get In Touch
+            {'// 04. Get In Touch'}
           </span>
           <h2 className="text-3xl sm:text-4xl font-black tracking-tight text-black uppercase">
             Let's Build Something Great

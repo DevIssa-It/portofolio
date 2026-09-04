@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Menu, X, ArrowUpRight } from 'lucide-react'
 import { useScrollSpy } from '@/lib/hooks/useScrollSpy'
 import { cn } from '@/lib/utils'
@@ -15,10 +15,19 @@ const NAV_ITEMS = [
 
 export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false)
-  const activeId = useScrollSpy(NAV_ITEMS.map((n) => n.id))
+  const scrollActiveId = useScrollSpy(NAV_ITEMS.map((n) => n.id))
+  const [activeTab, setActiveTab] = useState<string>('hero')
+
+  // Keep activeTab synced with scrollActiveId when scrolling
+  useEffect(() => {
+    if (scrollActiveId) {
+      setActiveTab(scrollActiveId)
+    }
+  }, [scrollActiveId])
 
   const handleScrollTo = (id: string) => {
     setMobileOpen(false)
+    setActiveTab(id)
     const element = document.getElementById(id)
     if (element) {
       element.scrollIntoView({ behavior: 'smooth' })
@@ -42,7 +51,7 @@ export default function Navbar() {
         {/* Desktop Links */}
         <div className="hidden md:flex items-center gap-1 border-l-2 border-black pl-3">
           {NAV_ITEMS.map((item) => {
-            const isActive = activeId === item.id
+            const isActive = activeTab === item.id
             return (
               <button
                 key={item.id}
@@ -88,7 +97,7 @@ export default function Navbar() {
               onClick={() => handleScrollTo(item.id)}
               className={cn(
                 'w-full text-left p-2 text-xs font-bold font-mono rounded border-2 border-black bg-white shadow-[2px_2px_0px_0px_#000]',
-                activeId === item.id ? 'bg-black text-sky-300' : 'text-black'
+                activeTab === item.id ? 'bg-black text-sky-300' : 'text-black'
               )}
             >
               {item.label}

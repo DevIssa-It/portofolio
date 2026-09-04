@@ -18,7 +18,7 @@ export default function Hero() {
             Available for Developer Roles & Internships
           </span>
           <span className="font-mono text-xs font-bold text-zinc-600 hidden sm:inline">
-            // Malang, East Java (ID)
+            {'// Malang, East Java (ID)'}
           </span>
         </div>
 

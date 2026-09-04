@@ -22,7 +22,7 @@ export default function TestimonialsCarousel() {
       company: 'Tech Company',
       content: 'Working with this developer was an absolute pleasure. The attention to detail and code quality is outstanding!',
       rating: 5,
-      avatar: '👨‍💼',
+      avatar: 'JD',
     },
     {
       id: 2,
@@ -31,7 +31,7 @@ export default function TestimonialsCarousel() {
       company: 'Startup Inc',
       content: 'Delivered ahead of schedule and exceeded all expectations. Highly recommended for any web development project!',
       rating: 5,
-      avatar: '👩‍💼',
+      avatar: 'JS',
     },
     {
       id: 3,
@@ -40,7 +40,7 @@ export default function TestimonialsCarousel() {
       company: 'Digital Agency',
       content: 'Exceptional technical skills combined with great communication. A true professional who delivers results.',
       rating: 5,
-      avatar: '👨‍💻',
+      avatar: 'MJ',
     },
   ]
 
@@ -50,11 +50,12 @@ export default function TestimonialsCarousel() {
   // Auto-slide effect
   useEffect(() => {
     const timer = setInterval(() => {
-      paginate(1)
-    }, 4000) // Slide every 4 seconds
+      setDirection(1)
+      setCurrentIndex((prev) => (prev + 1) % testimonials.length)
+    }, 4000)
 
     return () => clearInterval(timer)
-  }, [currentIndex])
+  }, [testimonials.length])
 
   const slideVariants = {
     enter: (direction: number) => ({

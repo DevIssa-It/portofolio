@@ -20,44 +20,50 @@ interface ExperienceCardProps {
 export function ExperienceCard({ experience, onEdit, onDelete }: ExperienceCardProps) {
   return (
     <motion.div
-      initial={{ opacity: 0, y: 20 }}
+      initial={{ opacity: 0, y: 15 }}
       animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: -20 }}
-      className="group bg-zinc-900/50 border border-zinc-800 rounded-lg p-6 hover:border-primary/50 transition-all"
+      exit={{ opacity: 0, y: -15 }}
+      className="group brutal-card bg-white border-2 border-black shadow-[4px_4px_0px_0px_#000] rounded-xl p-6 transition-all"
     >
       <div className="flex items-start justify-between gap-4">
         <div className="flex gap-4 flex-1">
-          <div className="flex-shrink-0 w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center">
-            <Briefcase size={24} className="text-primary" />
+          <div className="flex-shrink-0 w-12 h-12 bg-sky-100 border-2 border-black rounded-lg flex items-center justify-center text-black shadow-[2px_2px_0px_0px_#000]">
+            <Briefcase size={22} />
           </div>
           
-          <div className="flex-1">
-            <h3 className="text-xl font-bold text-white mb-1">{experience.company}</h3>
-            <p className="text-primary font-medium mb-2">{experience.role}</p>
-            <p className="text-sm text-zinc-500 font-mono mb-3">{experience.year}</p>
+          <div className="flex-1 space-y-1.5">
+            <div className="flex flex-wrap items-center gap-2">
+              <h3 className="text-base font-black text-black uppercase">{experience.company}</h3>
+              <span className="text-[11px] font-mono font-bold text-black bg-emerald-200 px-2 py-0.5 rounded border border-black">
+                {experience.role}
+              </span>
+            </div>
+            <p className="text-xs text-zinc-600 font-mono font-bold">{experience.year}</p>
             {experience.description && (
-              <p className="text-zinc-400 text-sm leading-relaxed">{experience.description}</p>
+              <p className="text-zinc-700 text-xs leading-relaxed font-medium pt-1 whitespace-pre-line">
+                {experience.description}
+              </p>
             )}
           </div>
         </div>
 
-        <div className="flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
-          <Button
-            size="sm"
-            variant="ghost"
+        <div className="flex items-center gap-2">
+          <button
+            type="button"
             onClick={() => onEdit(experience)}
-            className="hover:bg-primary/10 hover:text-primary"
+            className="brutal-btn p-2 rounded-lg bg-sky-100 hover:bg-sky-200 text-black border-2 border-black"
+            aria-label="Edit experience"
           >
-            <Edit2 size={16} />
-          </Button>
-          <Button
-            size="sm"
-            variant="ghost"
+            <Edit2 size={15} />
+          </button>
+          <button
+            type="button"
             onClick={() => onDelete(experience.id)}
-            className="hover:bg-red-500/10 hover:text-red-500"
+            className="brutal-btn p-2 rounded-lg bg-red-100 hover:bg-red-200 text-red-900 border-2 border-black"
+            aria-label="Delete experience"
           >
-            <Trash2 size={16} />
-          </Button>
+            <Trash2 size={15} />
+          </button>
         </div>
       </div>
     </motion.div>
