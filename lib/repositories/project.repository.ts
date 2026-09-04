@@ -88,6 +88,7 @@ export class ProjectRepository {
             : payload.technologies,
         tags: Array.from(new Set([...existing.tags, ...payload.tags])),
         image: existing.image || payload.image || '',
+        createdAt: payload.createdAt || existing.createdAt,
       })
 
       return { action: 'updated', project: updated || existing }
@@ -101,6 +102,7 @@ export class ProjectRepository {
       technologies: payload.technologies,
       tags: payload.tags,
       image: payload.image || '',
+      createdAt: payload.createdAt,
     })
 
     return { action: 'created', project: created }

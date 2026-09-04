@@ -59,26 +59,16 @@ export default function Journey() {
                   {item.description}
                 </p>
                 <div className="pt-1 flex flex-wrap gap-1.5">
-                  {idx === 0 ? (
+                  {item.company.toLowerCase().includes('koding') ? (
                     <>
-                      <span className="brutal-badge bg-white text-black text-[10px] font-mono px-2 py-0.5">
-                        Next.js 15 App Router
-                      </span>
-                      <span className="brutal-badge bg-white text-black text-[10px] font-mono px-2 py-0.5">
-                        React 19 & TypeScript
-                      </span>
-                      <span className="brutal-badge bg-white text-black text-[10px] font-mono px-2 py-0.5">
-                        Jest & MSW
-                      </span>
+                      <span className="brutal-badge bg-white text-black text-[10px] font-mono px-2 py-0.5">Next.js 15 App Router</span>
+                      <span className="brutal-badge bg-white text-black text-[10px] font-mono px-2 py-0.5">React 19 & TypeScript</span>
+                      <span className="brutal-badge bg-white text-black text-[10px] font-mono px-2 py-0.5">Jest & MSW</span>
                     </>
                   ) : (
                     <>
-                      <span className="brutal-badge bg-emerald-300 text-black text-[10px] font-mono px-2 py-0.5 font-bold">
-                        Grade: 87.7 / 100 (Excellent)
-                      </span>
-                      <span className="brutal-badge bg-white text-black text-[10px] font-mono px-2 py-0.5">
-                        Vue.js & CI/CD
-                      </span>
+                      <span className="brutal-badge bg-emerald-300 text-black text-[10px] font-mono px-2 py-0.5 font-bold">Grade: 87.7 / 100 (Excellent)</span>
+                      <span className="brutal-badge bg-white text-black text-[10px] font-mono px-2 py-0.5">Vue.js & CI/CD</span>
                     </>
                   )}
                 </div>

@@ -2,12 +2,13 @@ import { useState, useEffect, useMemo } from 'react'
 import { getProjects } from '@/lib/services/project.service'
 import { Project } from '@/types/project'
 
-export function usePublicProjects(initialDisplayCount = 4) {
+export function usePublicProjects(initialDisplayCount = 6) {
   const [projects, setProjects] = useState<Project[]>([])
   const [loading, setLoading] = useState(true)
   const [showAll, setShowAll] = useState(false)
   const [searchTerm, setSearchTerm] = useState('')
   const [selectedTech, setSelectedTech] = useState('All')
+  const [sortOrder, setSortOrder] = useState<'newest' | 'oldest'>('newest')
 
   useEffect(() => {
     let isMounted = true
@@ -36,7 +37,7 @@ export function usePublicProjects(initialDisplayCount = 4) {
   }, [projects])
 
   const filteredProjects = useMemo(() => {
-    return projects.filter((project) => {
+    const list = projects.filter((project) => {
       const matchText =
         project.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
         project.description.toLowerCase().includes(searchTerm.toLowerCase())
@@ -44,7 +45,13 @@ export function usePublicProjects(initialDisplayCount = 4) {
         selectedTech === 'All' || project.technologies?.includes(selectedTech)
       return matchText && matchTech
     })
-  }, [projects, searchTerm, selectedTech])
+
+    return list.sort((a, b) => {
+      const timeA = a.createdAt ? new Date(a.createdAt).getTime() : 0
+      const timeB = b.createdAt ? new Date(b.createdAt).getTime() : 0
+      return sortOrder === 'newest' ? timeB - timeA : timeA - timeB
+    })
+  }, [projects, searchTerm, selectedTech, sortOrder])
 
   const displayedProjects = showAll
     ? filteredProjects
@@ -61,5 +68,7 @@ export function usePublicProjects(initialDisplayCount = 4) {
     setSelectedTech,
     showAll,
     setShowAll,
+    sortOrder,
+    setSortOrder,
   }
 }

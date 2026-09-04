@@ -54,6 +54,7 @@ export class SyncService {
       technologies,
       tags,
       image: autoImage,
+      createdAt: repo.created_at,
     }
   }
 

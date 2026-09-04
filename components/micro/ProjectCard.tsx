@@ -9,6 +9,7 @@ interface ProjectCardProps {
   tags: string[]
   liveUrl?: string
   githubUrl?: string
+  createdAt?: string
 }
 
 export function ProjectCard({
@@ -19,7 +20,15 @@ export function ProjectCard({
   tags,
   liveUrl,
   githubUrl,
+  createdAt,
 }: ProjectCardProps) {
+  const formattedDate = createdAt
+    ? new Date(createdAt).toLocaleDateString('en-US', {
+        month: 'short',
+        year: 'numeric',
+      })
+    : null
+
   return (
     <article className="brutal-card brutal-card-hover bg-white overflow-hidden flex flex-col h-full">
       {/* Card Header & Image */}
@@ -29,6 +38,8 @@ export function ProjectCard({
           alt={title}
           className="w-full h-full object-cover object-center"
         />
+
+        {/* Tags on Top Left */}
         {tags && tags.length > 0 && (
           <div className="absolute top-2.5 left-2.5 z-10 flex flex-wrap gap-1">
             {tags.map((tag) => (
@@ -39,6 +50,15 @@ export function ProjectCard({
                 {tag}
               </span>
             ))}
+          </div>
+        )}
+
+        {/* Repo Creation Date Badge on Top Right */}
+        {formattedDate && (
+          <div className="absolute top-2.5 right-2.5 z-10">
+            <span className="brutal-badge text-[10px] font-mono px-2 py-0.5 rounded bg-white text-black font-bold shadow-[1px_1px_0px_0px_#000]">
+              {formattedDate}
+            </span>
           </div>
         )}
       </div>

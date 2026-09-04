@@ -26,9 +26,33 @@ export async function GET() {
     if (useDatabase) {
       const experience = await sql`
         SELECT * FROM "Experience" 
-        ORDER BY "createdAt" DESC
+        ORDER BY id ASC
       `
-      return NextResponse.json(experience)
+
+      if (experience.length >= 2) {
+        return NextResponse.json(experience)
+      }
+
+      // Auto-sync from JSON to Neon DB
+      const jsonExperience = getExperienceFromJSON()
+      for (const exp of jsonExperience) {
+        await sql`
+          INSERT INTO "Experience" (id, company, role, year, description, "createdAt", "updatedAt")
+          VALUES (${exp.id}, ${exp.company}, ${exp.role}, ${exp.year}, ${exp.description || ''}, NOW(), NOW())
+          ON CONFLICT (id) DO UPDATE SET
+            company = EXCLUDED.company,
+            role = EXCLUDED.role,
+            year = EXCLUDED.year,
+            description = EXCLUDED.description,
+            "updatedAt" = NOW()
+        `
+      }
+
+      const synced = await sql`
+        SELECT * FROM "Experience" 
+        ORDER BY id ASC
+      `
+      return NextResponse.json(synced.length > 0 ? synced : jsonExperience)
     }
     
     // Fallback to JSON

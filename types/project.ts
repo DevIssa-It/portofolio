@@ -16,12 +16,14 @@ export interface Project {
   updatedAt?: string
 }
 
-export type CreateProjectInput = Omit<Project, 'id' | 'createdAt' | 'updatedAt'> & {
+export type CreateProjectInput = Omit<Project, 'id' | 'updatedAt'> & {
   id?: string
+  createdAt?: string
 }
 
 export type UpdateProjectInput = Partial<Omit<Project, 'id'>> & {
   id: string
+  createdAt?: string
 }
 
 export interface GitHubSyncPayload {
@@ -32,6 +34,7 @@ export interface GitHubSyncPayload {
   technologies: string[]
   tags: string[]
   image?: string
+  createdAt?: string
 }
 
 export interface SyncResult {

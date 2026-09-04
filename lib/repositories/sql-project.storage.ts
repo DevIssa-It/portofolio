@@ -49,6 +49,7 @@ export class SqlProjectStorage {
 
   async create(data: CreateProjectInput): Promise<Project> {
     const id = data.id || Date.now().toString()
+    const createdAt = data.createdAt ? new Date(data.createdAt).toISOString() : new Date().toISOString()
     const rows = await sql`
       INSERT INTO "Project" (
         id, title, description, image, technologies, tags, github, demo, "createdAt", "updatedAt"
@@ -62,7 +63,7 @@ export class SqlProjectStorage {
         ${data.tags || []}, 
         ${data.github || ''}, 
         ${data.demo || ''}, 
-        NOW(), 
+        ${createdAt}, 
         NOW()
       )
       RETURNING *
@@ -84,6 +85,7 @@ export class SqlProjectStorage {
         tags = ${data.tags !== undefined ? data.tags : existing.tags}, 
         github = ${data.github !== undefined ? data.github : existing.github}, 
         demo = ${data.demo !== undefined ? data.demo : existing.demo}, 
+        "createdAt" = ${data.createdAt !== undefined ? data.createdAt : existing.createdAt},
         "updatedAt" = NOW()
       WHERE id = ${id}
       RETURNING *

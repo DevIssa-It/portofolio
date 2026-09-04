@@ -24,11 +24,25 @@ export async function GET() {
     const useDatabase = await isDatabaseAvailable()
     
     if (useDatabase) {
+      const jsonEducation = getEducationFromJSON()
+      for (const edu of jsonEducation) {
+        await sql`
+          INSERT INTO "Education" (id, school, degree, year, description, "createdAt", "updatedAt")
+          VALUES (${edu.id}, ${edu.school}, ${edu.degree}, ${edu.year}, ${edu.description || ''}, NOW(), NOW())
+          ON CONFLICT (id) DO UPDATE SET
+            school = EXCLUDED.school,
+            degree = EXCLUDED.degree,
+            year = EXCLUDED.year,
+            description = EXCLUDED.description,
+            "updatedAt" = NOW()
+        `
+      }
+
       const education = await sql`
         SELECT * FROM "Education" 
         ORDER BY "createdAt" DESC
       `
-      return NextResponse.json(education)
+      return NextResponse.json(education.length > 0 ? education : jsonEducation)
     }
     
     // Fallback to JSON

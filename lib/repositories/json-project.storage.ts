@@ -38,7 +38,12 @@ export class JsonProjectStorage {
   }
 
   async findAll(): Promise<Project[]> {
-    return this.read()
+    const list = this.read()
+    return list.sort((a, b) => {
+      const timeA = a.createdAt ? new Date(a.createdAt).getTime() : 0
+      const timeB = b.createdAt ? new Date(b.createdAt).getTime() : 0
+      return timeB - timeA
+    })
   }
 
   async findById(id: string): Promise<Project | null> {
@@ -70,7 +75,7 @@ export class JsonProjectStorage {
       tags: data.tags || [],
       github: data.github || '',
       demo: data.demo || '',
-      createdAt: now,
+      createdAt: data.createdAt || now,
       updatedAt: now,
     }
 
