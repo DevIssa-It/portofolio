@@ -42,6 +42,7 @@ export function ProjectImage({
         src={src}
         alt={alt}
         fill
+        unoptimized
         sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
         onError={() => setHasError(true)}
         className="object-cover object-center"

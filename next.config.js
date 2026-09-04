@@ -8,6 +8,7 @@ const nextConfig = {
       { protocol: 'https', hostname: 'opengraph.githubassets.com' },
       { protocol: 'https', hostname: 'avatars.githubusercontent.com' },
       { protocol: 'https', hostname: 'raw.githubusercontent.com' },
+      { protocol: 'https', hostname: 's0.wp.com' },
     ],
   },
 }
