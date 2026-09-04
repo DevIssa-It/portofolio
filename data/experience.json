@@ -1,9 +1,16 @@
 [
   {
     "id": "1",
+    "company": "CV Koding Data Artifisial",
+    "role": "Frontend Developer Intern",
+    "year": "Dec 2025 - May 2026",
+    "description": "Engineered modular enterprise ERP dashboards using Next.js 15, React 19, TypeScript, and Tailwind CSS v4. Implemented Reimbursement & Cash Advance approval workflows, role-based routing via Next.js Middleware, centralized token-refresh fetcher, and unit tests using Jest, React Testing Library & MSW."
+  },
+  {
+    "id": "2",
     "company": "Core Initiative x Rakamin Academy",
     "role": "Frontend Developer Intern",
     "year": "Sep 2025",
-    "description": "Developed responsive web applications using Vue.js with deployment and unit testing implementation. Achieved Excellent grade (score 87.7) reflecting technical competencies and soft skills aligned with industry needs."
+    "description": "Built responsive web interfaces using Vue.js and JavaScript. Designed automated CI/CD deployment pipelines, conducted unit testing, and managed version control with Git. Graduated with Excellent grade (score 87.7/100)."
   }
 ]

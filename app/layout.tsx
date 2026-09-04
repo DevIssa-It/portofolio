@@ -1,23 +1,36 @@
 import './globals.css'
 import type { Metadata } from 'next'
+import { Inter, JetBrains_Mono } from 'next/font/google'
+
+const inter = Inter({
+  subsets: ['latin'],
+  variable: '--font-sans',
+  display: 'swap',
+})
+
+const jetbrainsMono = JetBrains_Mono({
+  subsets: ['latin'],
+  variable: '--font-mono',
+  display: 'swap',
+})
 
 export const metadata: Metadata = {
-  title: 'A. Issadurrofiq Jaya Utama - Frontend Developer Aspiring Fullstack',
-  description: 'Information Technology student at Brawijaya University focused on modern web development with React.js, Vue.js, and expanding backend skills. Portfolio: CampusHub, TalentHunt, and more.',
-  keywords: ['frontend developer', 'react.js', 'vue.js', 'next.js', 'typescript', 'web developer', 'portfolio', 'brawijaya university', 'fullstack developer'],
+  title: 'A. Issadurrofiq Jaya Utama - Frontend & Software Developer',
+  description: 'Information Technology student at Brawijaya University crafting high-performance web applications with React, Next.js, and modern TypeScript.',
+  keywords: ['frontend developer', 'react.js', 'vue.js', 'next.js', 'typescript', 'web developer', 'portfolio', 'brawijaya university', 'software engineer'],
   authors: [{ name: 'A. Issadurrofiq Jaya Utama' }],
   openGraph: {
-    title: 'A. Issadurrofiq Jaya Utama - Frontend Developer',
-    description: 'Information Technology student focused on modern web development. Building responsive, user-centric interfaces.',
-    url: 'https://yourportfolio.com',
+    title: 'A. Issadurrofiq Jaya Utama - Frontend & Software Developer',
+    description: 'Information Technology student at Brawijaya University crafting high-performance web applications.',
+    url: 'https://github.com/DevIssa-It',
     siteName: 'A. Issadurrofiq Portfolio',
     locale: 'en_US',
     type: 'website',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'A. Issadurrofiq Jaya Utama - Frontend Developer',
-    description: 'Information Technology student focused on modern web development',
+    title: 'A. Issadurrofiq Jaya Utama - Frontend & Software Developer',
+    description: 'Crafting responsive, high-performance web applications',
   },
   robots: {
     index: true,
@@ -31,8 +44,16 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" className="scroll-smooth">
-      <body>{children}</body>
+    <html lang="en" suppressHydrationWarning className={`${inter.variable} ${jetbrainsMono.variable} scroll-smooth`}>
+      <head>
+        <link rel="preconnect" href="https://api.github.com" />
+        <link rel="preconnect" href="https://opengraph.githubassets.com" />
+        <link rel="preconnect" href="https://avatars.githubusercontent.com" />
+        <link rel="preconnect" href="https://api.open-meteo.com" />
+      </head>
+      <body suppressHydrationWarning className="font-sans antialiased bg-[#f8fafc] text-black selection:bg-sky-300 selection:text-black">
+        {children}
+      </body>
     </html>
   )
 }

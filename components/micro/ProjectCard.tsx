@@ -1,6 +1,3 @@
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import { Button } from "@/components/ui/button"
 import { ArrowUpRight, Github } from "lucide-react"
 import { ProjectImage } from "@/components/micro/ProjectImage"
 
@@ -14,85 +11,90 @@ interface ProjectCardProps {
   githubUrl?: string
 }
 
-export function ProjectCard({ 
-  title, 
-  description, 
-  image, 
-  technologies, 
+export function ProjectCard({
+  title,
+  description,
+  image,
+  technologies,
   tags,
-  liveUrl, 
-  githubUrl
+  liveUrl,
+  githubUrl,
 }: ProjectCardProps) {
   return (
-    <Card className="group relative rounded-xl border-zinc-800 bg-zinc-900/50 overflow-hidden transition-all duration-300 hover:border-primary hover:bg-zinc-900 hover:-translate-y-1">
-      {/* Image Section */}
-      <div className="w-full h-48 overflow-hidden border-b border-zinc-800/50 relative">
-        <div className="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-all duration-500 z-10" />
-        
+    <article className="brutal-card brutal-card-hover bg-white overflow-hidden flex flex-col h-full">
+      {/* Card Header & Image */}
+      <div className="w-full h-44 overflow-hidden relative border-b-2 border-black bg-zinc-100">
         <ProjectImage
           src={image}
           alt={title}
-          className="w-full h-full object-cover transform transition-all duration-700 grayscale group-hover:grayscale-0 group-hover:scale-105 opacity-80 group-hover:opacity-100"
+          className="w-full h-full object-cover object-center"
         />
-        
-        <div className="absolute top-4 left-4 z-20 flex gap-2">
-          {tags.map((tag, i) => (
-            <Badge key={i} className="px-3 py-1 text-[10px] font-bold uppercase tracking-wider bg-black/90 text-primary backdrop-blur-md border-primary/30">
-              {tag}
-            </Badge>
-          ))}
-        </div>
+        {tags && tags.length > 0 && (
+          <div className="absolute top-2.5 left-2.5 z-10 flex flex-wrap gap-1">
+            {tags.map((tag) => (
+              <span
+                key={tag}
+                className="brutal-badge text-[10px] font-mono uppercase px-2 py-0.5 rounded bg-sky-200 text-black"
+              >
+                {tag}
+              </span>
+            ))}
+          </div>
+        )}
       </div>
 
-      <CardContent className="p-6 md:p-8">
-        <div className="flex justify-between items-start mb-4">
-          <CardTitle className="text-2xl font-bold text-white group-hover:text-primary transition-colors">
+      {/* Card Content */}
+      <div className="p-5 flex-1 flex flex-col justify-between space-y-4">
+        <div className="space-y-2">
+          <h3 className="text-lg font-black text-black">
             {title}
-          </CardTitle>
-          <div className="flex gap-2">
-            {githubUrl && (
-              <Button
-                size="icon"
-                variant="outline"
-                className="rounded-full border-zinc-700 text-zinc-500 transition-all duration-300 hover:text-white hover:border-white hover:bg-white hover:text-black hover:scale-110"
-                asChild
+          </h3>
+
+          <p className="text-zinc-700 text-xs leading-relaxed line-clamp-2">
+            {description}
+          </p>
+        </div>
+
+        {/* Tech Badges */}
+        <div className="pt-3 border-t-2 border-black/10 space-y-3">
+          <div className="flex flex-wrap gap-1.5">
+            {technologies.map((tech) => (
+              <span
+                key={tech}
+                className="text-[10px] font-mono px-2 py-0.5 rounded border border-black bg-zinc-100 text-black font-semibold"
               >
-                <a href={githubUrl} target="_blank" rel="noopener noreferrer">
-                  <Github size={18} />
-                </a>
-              </Button>
-            )}
+                {tech}
+              </span>
+            ))}
+          </div>
+
+          {/* Action Buttons */}
+          <div className="flex items-center gap-2 pt-1">
             {liveUrl && (
-              <Button
-                size="icon"
-                variant="outline"
-                className="rounded-full border-zinc-700 text-zinc-500 transition-all duration-300 hover:text-primary hover:border-primary hover:rotate-45 hover:!bg-white hover:!text-black hover:!border-white hover:!scale-110"
-                asChild
+              <a
+                href={liveUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={`Live demo for ${title}`}
+                className="brutal-btn flex-1 bg-sky-300 hover:bg-sky-400 text-black py-1.5 px-3 rounded text-xs flex items-center justify-center gap-1.5"
               >
-                <a href={liveUrl} target="_blank" rel="noopener noreferrer">
-                  <ArrowUpRight size={20} />
-                </a>
-              </Button>
+                Live Demo <ArrowUpRight size={14} />
+              </a>
+            )}
+            {githubUrl && (
+              <a
+                href={githubUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="brutal-btn bg-white hover:bg-zinc-100 text-black p-1.5 rounded"
+                aria-label={`GitHub repo for ${title}`}
+              >
+                <Github size={16} />
+              </a>
             )}
           </div>
         </div>
-        
-        <CardDescription className="text-zinc-400 leading-relaxed text-sm mb-6 min-h-[60px]">
-          {description}
-        </CardDescription>
-
-        <div className="flex flex-wrap gap-2 pt-4 border-t border-zinc-800/50">
-          {technologies.map((tech) => (
-            <Badge
-              key={tech}
-              variant="outline"
-              className="px-3 py-1.5 text-[11px] font-medium bg-zinc-800/50 text-zinc-400 border-zinc-700/50 group-hover:border-primary/30 group-hover:text-primary group-hover:bg-primary/10 transition-all duration-300"
-            >
-              {tech}
-            </Badge>
-          ))}
-        </div>
-      </CardContent>
-    </Card>
+      </div>
+    </article>
   )
 }

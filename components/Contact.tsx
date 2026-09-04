@@ -1,162 +1,151 @@
 'use client'
-import { useState, useEffect } from 'react'
-import { Mail, Send, Loader2, Linkedin, Github } from 'lucide-react'
-import VisitorCounter from './VisitorCounter'
+
+import { useState } from 'react'
+import { Send, CheckCircle, Github, Linkedin, Copy, Check } from 'lucide-react'
 
 export default function Contact() {
-  const [formStatus, setFormStatus] = useState('idle')
-  const [time, setTime] = useState('')
+  const [copied, setCopied] = useState(false)
+  const [status, setStatus] = useState<'idle' | 'submitting' | 'success'>('idle')
+  const email = 'ahmadissadurrofiq17@gmail.com'
 
-  useEffect(() => {
-    const updateTime = () => {
-      const now = new Date()
-      setTime(now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false }))
-    }
-    updateTime()
-    const interval = setInterval(updateTime, 1000)
-    return () => clearInterval(interval)
-  }, [])
+  const copyEmail = () => {
+    navigator.clipboard.writeText(email)
+    setCopied(true)
+    setTimeout(() => setCopied(false), 2000)
+  }
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    setFormStatus('submitting')
-    
-    const formData = new FormData(e.currentTarget)
-    const data = {
-      name: formData.get('name'),
-      email: formData.get('email'),
-      message: formData.get('message')
-    }
-    
-    // TODO: Replace with your EmailJS credentials or API endpoint
-    // For now, simulate API call
-    try {
-      await new Promise(resolve => setTimeout(resolve, 2000))
-      console.log('Form data:', data)
-      setFormStatus('success')
-      e.currentTarget.reset()
-      setTimeout(() => setFormStatus('idle'), 3000)
-    } catch (error) {
-      setFormStatus('idle')
-      alert('Failed to send message. Please try again.')
-    }
+    setStatus('submitting')
+    const fd = new FormData(e.currentTarget)
+    const name = fd.get('name') as string
+    const senderEmail = fd.get('email') as string
+    const msg = fd.get('message') as string
+
+    const mailto = `mailto:${email}?subject=Portfolio%20Inquiry%20from%20${encodeURIComponent(name)}&body=${encodeURIComponent(`Sender: ${name} (${senderEmail})\n\n${msg}`)}`
+    window.open(mailto, '_blank')
+    setStatus('success')
+    e.currentTarget.reset()
   }
 
   return (
-    <>
-      <section id="contact" className="min-h-[90vh] flex flex-col justify-end pb-6">
-        {/* Content Wrapper */}
-        <div className="border-t border-zinc-800 pt-20 px-6">
-          <div className="container mx-auto max-w-7xl">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-              {/* Left: Heading & Socials */}
-              <div className="flex flex-col justify-between">
-                <div>
-                  <h2 className="text-5xl md:text-7xl font-bold text-white mb-6 tracking-tighter leading-tight">
-                    Have an idea? <br/>
-                    <span className="text-zinc-600">Let's build it.</span>
-                  </h2>
-                  <p className="text-zinc-400 text-lg max-w-md mb-8">
-                    I'm currently available for freelance work and collaboration. Let's discuss how we can work together.
-                  </p>
-                  
-                  <div className="flex gap-6 mt-auto">
-                    <a href="https://linkedin.com/in/a-issadurrofiq-jaya-utama-6b559228a" className="flex items-center gap-2 text-zinc-400 hover:text-primary transition-colors">
-                      <Linkedin size={20} /> LinkedIn
-                    </a>
-                    <a href="https://github.com/DevIssa-It" className="flex items-center gap-2 text-zinc-400 hover:text-primary transition-colors">
-                      <Github size={20} /> GitHub
-                    </a>
-                    <a href="mailto:ahmadissadurrofiq17@gmail.com" className="flex items-center gap-2 text-zinc-400 hover:text-primary transition-colors">
-                      <Mail size={20} /> Email
-                    </a>
-                  </div>
-                </div>
-              </div>
+    <section id="contact" className="py-20 px-6 border-t-2 border-black bg-[#f8fafc]">
+      <div className="max-w-7xl mx-auto space-y-10">
+        {/* Section Header */}
+        <div className="space-y-2 border-b-2 border-black/10 pb-4">
+          <span className="brutal-badge inline-block bg-pink-300 text-black px-3 py-1 text-xs uppercase tracking-wider font-mono">
+            // 04. Get In Touch
+          </span>
+          <h2 className="text-3xl sm:text-4xl font-black tracking-tight text-black uppercase">
+            Let's Build Something Great
+          </h2>
+        </div>
 
-              {/* Right: CONTACT FORM */}
-              <div className="bg-zinc-900/30 border border-zinc-800 rounded-2xl p-8">
-                <form onSubmit={handleSubmit} className="space-y-6">
-                  <div>
-                    <label htmlFor="name" className="block text-sm font-bold text-zinc-400 mb-2 uppercase tracking-wider">Name</label>
-                    <input 
-                      type="text" 
-                      id="name" 
-                      className="w-full bg-zinc-950 border border-zinc-800 rounded-lg p-4 text-white placeholder:text-zinc-700 focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all"
-                      placeholder="Your Name"
-                      required 
-                    />
-                  </div>
-                  <div>
-                    <label htmlFor="email" className="block text-sm font-bold text-zinc-400 mb-2 uppercase tracking-wider">Email</label>
-                    <input 
-                      type="email" 
-                      id="email" 
-                      className="w-full bg-zinc-950 border border-zinc-800 rounded-lg p-4 text-white placeholder:text-zinc-700 focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all"
-                      placeholder="name@example.com"
-                      required 
-                    />
-                  </div>
-                  <div>
-                    <label htmlFor="message" className="block text-sm font-bold text-zinc-400 mb-2 uppercase tracking-wider">Message</label>
-                    <textarea 
-                      id="message" 
-                      rows={4}
-                      className="w-full bg-zinc-950 border border-zinc-800 rounded-lg p-4 text-white placeholder:text-zinc-700 focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all resize-none"
-                      placeholder="Tell me about your project..."
-                      required 
-                    />
-                  </div>
-                  
-                  <button 
-                    type="submit"
-                    disabled={formStatus === 'submitting'}
-                    className="w-full bg-primary hover:bg-white text-black font-bold py-4 rounded-lg transition-all flex items-center justify-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed"
-                  >
-                    {formStatus === 'submitting' ? (
-                      <>
-                        <Loader2 className="animate-spin" size={18} /> Sending...
-                      </>
-                    ) : formStatus === 'success' ? (
-                      'Message Sent!'
-                    ) : (
-                      <>
-                        Send Message <Send size={18} />
-                      </>
-                    )}
-                  </button>
-                </form>
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10">
+          {/* Left Column: Direct Info & Copy Email */}
+          <div className="lg:col-span-5 space-y-6">
+            <p className="text-sm text-zinc-800 leading-relaxed font-medium">
+              Currently looking for developer opportunities, internships, and collaborative web projects. Click to copy my email or send an inquiry directly.
+            </p>
+
+            {/* Click to Copy Card */}
+            <div className="brutal-card bg-sky-100 p-5 space-y-2">
+              <span className="font-mono text-xs font-black uppercase tracking-wider text-black block">
+                Direct Email
+              </span>
+              <div className="flex items-center justify-between gap-2">
+                <span className="text-sm font-mono font-bold text-black truncate">{email}</span>
+                <button
+                  onClick={copyEmail}
+                  className="brutal-btn p-2 rounded bg-white text-black shrink-0"
+                  aria-label="Copy email address"
+                >
+                  {copied ? <Check size={16} className="text-emerald-700" /> : <Copy size={16} />}
+                </button>
               </div>
+              {copied && <span className="text-[11px] font-mono text-emerald-800 font-bold block">Copied to clipboard!</span>}
+            </div>
+
+            {/* Social Buttons */}
+            <div className="flex items-center gap-3 pt-2">
+              <a
+                href="https://github.com/DevIssa-It"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="brutal-btn flex-1 flex items-center justify-center gap-2 py-2.5 px-4 rounded bg-white text-black text-xs"
+              >
+                <Github size={16} /> GitHub
+              </a>
+              <a
+                href="https://linkedin.com/in/a-issadurrofiq-jaya-utama-6b559228a"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="brutal-btn flex-1 flex items-center justify-center gap-2 py-2.5 px-4 rounded bg-white text-black text-xs"
+              >
+                <Linkedin size={16} /> LinkedIn
+              </a>
             </div>
           </div>
-        </div>
-      </section>
 
-      {/* Footer - Separate Section */}
-      <footer className="min-h-[10vh] flex items-center border-t border-zinc-800 px-6">
-        <div className="container mx-auto max-w-7xl w-full">
-          <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-            <div className="flex gap-8">
-              <div className="text-zinc-600 text-xs">
-                LOCAL TIME <br/>
-                <span className="text-zinc-400 font-mono">{time}</span>
+          {/* Right Column: Form */}
+          <div className="lg:col-span-7">
+            <form onSubmit={handleSubmit} className="brutal-card bg-white p-6 sm:p-7 space-y-4">
+              <div>
+                <label htmlFor="name" className="block text-xs font-mono font-bold uppercase text-black mb-1.5">
+                  Your Name
+                </label>
+                <input
+                  id="name"
+                  name="name"
+                  type="text"
+                  required
+                  placeholder="e.g. Alex"
+                  className="w-full bg-zinc-50 border-2 border-black rounded-lg px-3.5 py-2.5 text-xs font-mono text-black placeholder:text-zinc-600 focus:bg-sky-50 focus:outline-none"
+                />
               </div>
-              <div className="text-zinc-600 text-xs">
-                STATUS <br/>
-                <span className="text-primary animate-pulse">●</span> <span className="text-zinc-400">Available</span>
-              </div>
-              <div className="text-zinc-600 text-xs hidden md:block">
-                VISITORS <br/>
-                <VisitorCounter />
-              </div>
-            </div>
 
-            <div className="text-zinc-600 text-xs font-mono">
-              © 2025 A. ISSADURROFIQ. ALL RIGHTS RESERVED.
-            </div>
+              <div>
+                <label htmlFor="email" className="block text-xs font-mono font-bold uppercase text-black mb-1.5">
+                  Your Email
+                </label>
+                <input
+                  id="email"
+                  name="email"
+                  type="email"
+                  required
+                  placeholder="e.g. alex@example.com"
+                  className="w-full bg-zinc-50 border-2 border-black rounded-lg px-3.5 py-2.5 text-xs font-mono text-black placeholder:text-zinc-600 focus:bg-sky-50 focus:outline-none"
+                />
+              </div>
+
+              <div>
+                <label htmlFor="message" className="block text-xs font-mono font-bold uppercase text-black mb-1.5">
+                  Message
+                </label>
+                <textarea
+                  id="message"
+                  name="message"
+                  rows={4}
+                  required
+                  placeholder="Tell me about your project scope or opportunity..."
+                  className="w-full bg-zinc-50 border-2 border-black rounded-lg p-3 text-xs font-mono text-black placeholder:text-zinc-600 focus:bg-sky-50 focus:outline-none resize-none"
+                />
+              </div>
+
+              <button
+                type="submit"
+                className="brutal-btn w-full py-3 rounded-lg bg-sky-300 hover:bg-sky-400 text-black text-xs font-black uppercase flex items-center justify-center gap-2"
+              >
+                {status === 'success' ? (
+                  <>Draft Opened in Mail App <CheckCircle size={15} /></>
+                ) : (
+                  <>Send Message <Send size={15} /></>
+                )}
+              </button>
+            </form>
           </div>
         </div>
-      </footer>
-    </>
+      </div>
+    </section>
   )
 }

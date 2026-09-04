@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import Image from 'next/image'
 import { FolderGit2 } from 'lucide-react'
 
 interface ProjectImageProps {
@@ -13,7 +14,6 @@ interface ProjectImageProps {
 export function ProjectImage({
   src,
   alt,
-  className = 'w-full h-full object-cover',
   fallbackIconSize = 36,
 }: ProjectImageProps) {
   const [hasError, setHasError] = useState(false)
@@ -22,14 +22,14 @@ export function ProjectImage({
 
   if (isInvalidSrc || hasError) {
     return (
-      <div className="w-full h-full flex flex-col items-center justify-center bg-gradient-to-br from-zinc-900 via-zinc-950 to-zinc-900 border-b border-zinc-800/40 select-none">
-        <div className="w-14 h-14 rounded-xl bg-zinc-800/60 border border-zinc-700/40 flex items-center justify-center mb-2 shadow-inner">
+      <div className="w-full h-full flex flex-col items-center justify-center bg-zinc-100 border-b-2 border-black select-none">
+        <div className="w-12 h-12 rounded-lg bg-white border-2 border-black flex items-center justify-center mb-1 shadow-[2px_2px_0px_0px_#000]">
           <FolderGit2
             size={fallbackIconSize}
-            className="text-zinc-500 group-hover:text-primary transition-colors"
+            className="text-black"
           />
         </div>
-        <span className="text-xs font-mono text-zinc-500 uppercase tracking-widest px-3 text-center line-clamp-1">
+        <span className="text-xs font-mono font-bold text-black uppercase tracking-wider px-3 text-center line-clamp-1">
           {alt || 'Repository'}
         </span>
       </div>
@@ -37,12 +37,16 @@ export function ProjectImage({
   }
 
   return (
-    <img
-      src={src}
-      alt={alt}
-      onError={() => setHasError(true)}
-      className={className}
-      loading="lazy"
-    />
+    <div className="relative w-full h-full">
+      <Image
+        src={src}
+        alt={alt}
+        fill
+        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+        onError={() => setHasError(true)}
+        className="object-cover object-center"
+        loading="lazy"
+      />
+    </div>
   )
 }

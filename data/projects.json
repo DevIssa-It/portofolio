@@ -1,5 +1,65 @@
 [
   {
+    "id": "project-campushub-memory",
+    "title": "CampusHub – Campus Memory Sharing Platform",
+    "description": "Intuitive web platform for campus community to upload, store, and showcase memorable photos in an organized gallery. Designed authentication and integrated storage, optimizing upload & access speed by 35%.",
+    "image": "https://s0.wp.com/mshots/v1/https%3A%2F%2Fnotes-app-psi-tan.vercel.app?w=800&h=500",
+    "technologies": [
+      "React.js",
+      "Tailwind CSS",
+      "Node.js",
+      "Web Storage"
+    ],
+    "tags": [
+      "Featured",
+      "Web App"
+    ],
+    "github": "https://github.com/DevIssa-It",
+    "demo": "",
+    "createdAt": "2026-09-04T12:00:00.000Z",
+    "updatedAt": "2026-09-04T12:00:00.000Z"
+  },
+  {
+    "id": "project-talenthunt-recruitment",
+    "title": "TalentHunt – Recruitment Management Platform",
+    "description": "Recruitment web app with role-based access for HR admins & job seekers. Admin dashboard for postings & candidate reviews, job seeker portal with real-time tracking, pagination, and sorting. Adopted by 200+ candidates, reducing manual workload by 40%.",
+    "image": "https://s0.wp.com/mshots/v1/https%3A%2F%2Fhiring-management-app-jet.vercel.app?w=800&h=500",
+    "technologies": [
+      "React.js",
+      "Tailwind CSS",
+      "REST API",
+      "MySQL"
+    ],
+    "tags": [
+      "Featured",
+      "Web App"
+    ],
+    "github": "https://github.com/DevIssa-It",
+    "demo": "https://hiring-management-app-jet.vercel.app",
+    "createdAt": "2026-09-04T11:00:00.000Z",
+    "updatedAt": "2026-09-04T11:00:00.000Z"
+  },
+  {
+    "id": "project-campushub-event",
+    "title": "CampusHub – Event Management Platform",
+    "description": "Web app for campus event management (workshops, seminars, webinars). Participant registration, event management dashboard, and organizer tools. Reduced manual administrative work by 40% with 200+ participants.",
+    "image": "https://opengraph.githubassets.com/1/DevIssa-It/gemini-flash-api",
+    "technologies": [
+      "React.js",
+      "Tailwind CSS",
+      "JavaScript",
+      "REST API"
+    ],
+    "tags": [
+      "Featured",
+      "Web App"
+    ],
+    "github": "https://github.com/DevIssa-It",
+    "demo": "",
+    "createdAt": "2026-09-04T10:00:00.000Z",
+    "updatedAt": "2026-09-04T10:00:00.000Z"
+  },
+  {
     "id": "1788453624840",
     "title": "MyContactApp",
     "description": "Open source project on GitHub.",
