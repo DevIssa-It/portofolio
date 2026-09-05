@@ -12,6 +12,7 @@ import { ExperienceSection } from '@/components/admin/ExperienceSection'
 import { ResumeManager } from '@/components/admin/ResumeManager'
 import { EducationFormDialog } from '@/components/admin/EducationFormDialog'
 import { ExperienceFormDialog } from '@/components/admin/ExperienceFormDialog'
+import { ConfirmDialog } from '@/components/admin/ConfirmDialog'
 import { useProfileData } from '@/lib/hooks/useProfileData'
 import { ROUTES } from '@/lib/constants/api'
 
@@ -21,27 +22,16 @@ export default function ProfileManagement() {
   const [activeTab, setActiveTab] = useState<'education' | 'experience' | 'resume'>('education')
 
   const {
-    education,
-    experience,
-    loading,
-    showEducationForm,
-    editingEducation,
-    setShowEducationForm,
-    setEditingEducation,
-    handleDeleteEducation,
-    handleSaveEducation,
-    showExperienceForm,
-    editingExperience,
-    setShowExperienceForm,
-    setEditingExperience,
-    handleDeleteExperience,
+    education, experience, loading,
+    showEducationForm, editingEducation, setShowEducationForm, setEditingEducation,
+    itemToDelete, isDeleting, handleDeleteEducation, handleDeleteExperience,
+    confirmDelete, cancelDelete, handleSaveEducation,
+    showExperienceForm, editingExperience, setShowExperienceForm, setEditingExperience,
     handleSaveExperience,
   } = useProfileData(status === 'authenticated')
 
   useEffect(() => {
-    if (status === 'unauthenticated') {
-      router.push(ROUTES.LOGIN)
-    }
+    if (status === 'unauthenticated') router.push(ROUTES.LOGIN)
   }, [status, router])
 
   if (status === 'loading' || loading) {
@@ -55,22 +45,23 @@ export default function ProfileManagement() {
     )
   }
 
+  const tabs = [
+    { id: 'education', label: `Education History (${education.length})`, icon: GraduationCap },
+    { id: 'experience', label: `Work Experience (${experience.length})`, icon: Briefcase },
+    { id: 'resume', label: 'CV / Resume Document', icon: FileText },
+  ] as const
+
   return (
     <div className="flex min-h-screen bg-[#f8fafc] text-black">
       <AdminSidebar />
-
       <main className="flex-1 p-6 sm:p-10 overflow-y-auto">
         <div className="max-w-7xl mx-auto space-y-8">
           <motion.div initial={{ opacity: 0, y: -15 }} animate={{ opacity: 1, y: 0 }} className="pb-6 border-b-2 border-black">
             <span className="brutal-badge inline-block bg-sky-300 text-black px-2.5 py-0.5 text-[11px] font-mono font-bold uppercase mb-2">
               {'// Credentials & Document Assets'}
             </span>
-            <h1 className="text-3xl sm:text-4xl font-black text-black uppercase tracking-tight">
-              Profile & Resume Management
-            </h1>
-            <p className="text-xs font-mono text-zinc-600 mt-1">
-              Manage verified education, industry experience, and live downloadable CV.
-            </p>
+            <h1 className="text-3xl sm:text-4xl font-black text-black uppercase tracking-tight">Profile & Resume Management</h1>
+            <p className="text-xs font-mono text-zinc-600 mt-1">Manage verified education, industry experience, and live downloadable CV.</p>
           </motion.div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -80,11 +71,7 @@ export default function ProfileManagement() {
           </div>
 
           <div className="flex flex-wrap gap-3">
-            {[
-              { id: 'education', label: `Education History (${education.length})`, icon: GraduationCap },
-              { id: 'experience', label: `Work Experience (${experience.length})`, icon: Briefcase },
-              { id: 'resume', label: 'CV / Resume Document', icon: FileText },
-            ].map((tab) => {
+            {tabs.map((tab) => {
               const Icon = tab.icon
               const isActive = activeTab === tab.id
               return (
@@ -92,11 +79,9 @@ export default function ProfileManagement() {
                   key={tab.id}
                   type="button"
                   suppressHydrationWarning
-                  onClick={() => setActiveTab(tab.id as 'education' | 'experience' | 'resume')}
+                  onClick={() => setActiveTab(tab.id)}
                   className={`brutal-btn inline-flex items-center gap-2 px-4 py-2.5 rounded-lg text-xs font-mono font-bold transition-all border-2 border-black ${
-                    isActive
-                      ? 'bg-black text-sky-300 shadow-[3px_3px_0px_0px_#000]'
-                      : 'bg-white text-black hover:bg-sky-50 shadow-[2px_2px_0px_0px_#000]'
+                    isActive ? 'bg-black text-sky-300 shadow-[3px_3px_0px_0px_#000]' : 'bg-white text-black hover:bg-sky-50 shadow-[2px_2px_0px_0px_#000]'
                   }`}
                 >
                   <Icon size={14} />
@@ -134,12 +119,22 @@ export default function ProfileManagement() {
         onOpenChange={(open) => { setShowEducationForm(open); if (!open) setEditingEducation(null); }}
         onSave={handleSaveEducation}
       />
-
       <ExperienceFormDialog
         experience={editingExperience}
         open={showExperienceForm}
         onOpenChange={(open) => { setShowExperienceForm(open); if (!open) setEditingExperience(null); }}
         onSave={handleSaveExperience}
+      />
+      <ConfirmDialog
+        open={!!itemToDelete}
+        onOpenChange={(open) => !open && cancelDelete()}
+        title={itemToDelete?.type === 'education' ? 'Delete Education Record' : 'Delete Experience Record'}
+        description={`Are you sure you want to permanently delete this ${itemToDelete?.type || 'record'}? This action cannot be undone.`}
+        confirmText="Delete Record"
+        cancelText="Cancel"
+        variant="danger"
+        loading={isDeleting}
+        onConfirm={confirmDelete}
       />
     </div>
   )

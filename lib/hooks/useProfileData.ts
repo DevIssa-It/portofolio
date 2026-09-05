@@ -20,12 +20,12 @@ export function useProfileData(isAuthenticated: boolean) {
   const [education, setEducation] = useState<Education[]>([])
   const [experience, setExperience] = useState<Experience[]>([])
   const [loading, setLoading] = useState(true)
-
   const [showEducationForm, setShowEducationForm] = useState(false)
   const [editingEducation, setEditingEducation] = useState<Education | null>(null)
-
   const [showExperienceForm, setShowExperienceForm] = useState(false)
   const [editingExperience, setEditingExperience] = useState<Experience | null>(null)
+  const [itemToDelete, setItemToDelete] = useState<{ id: string; type: 'education' | 'experience' } | null>(null)
+  const [isDeleting, setIsDeleting] = useState(false)
 
   const loadData = async () => {
     try {
@@ -43,10 +43,21 @@ export function useProfileData(isAuthenticated: boolean) {
     if (isAuthenticated) loadData()
   }, [isAuthenticated])
 
-  const handleDeleteEducation = async (id: string) => {
-    if (!confirm('Are you sure you want to delete this education?')) return
-    const result = await deleteEducation(id)
-    if (result.success) setEducation((prev) => prev.filter((e) => e.id !== id))
+  const confirmDelete = async () => {
+    if (!itemToDelete) return
+    setIsDeleting(true)
+    try {
+      if (itemToDelete.type === 'education') {
+        const result = await deleteEducation(itemToDelete.id)
+        if (result.success) setEducation((prev) => prev.filter((e) => e.id !== itemToDelete.id))
+      } else {
+        const result = await deleteExperience(itemToDelete.id)
+        if (result.success) setExperience((prev) => prev.filter((e) => e.id !== itemToDelete.id))
+      }
+      setItemToDelete(null)
+    } finally {
+      setIsDeleting(false)
+    }
   }
 
   const handleSaveEducation = async (edu: Education) => {
@@ -58,12 +69,6 @@ export function useProfileData(isAuthenticated: boolean) {
       setShowEducationForm(false)
       setEditingEducation(null)
     }
-  }
-
-  const handleDeleteExperience = async (id: string) => {
-    if (!confirm('Are you sure you want to delete this experience?')) return
-    const result = await deleteExperience(id)
-    if (result.success) setExperience((prev) => prev.filter((e) => e.id !== id))
   }
 
   const handleSaveExperience = async (exp: Experience) => {
@@ -85,13 +90,17 @@ export function useProfileData(isAuthenticated: boolean) {
     editingEducation,
     setShowEducationForm,
     setEditingEducation,
-    handleDeleteEducation,
+    itemToDelete,
+    isDeleting,
+    handleDeleteEducation: (id: string) => setItemToDelete({ id, type: 'education' }),
+    handleDeleteExperience: (id: string) => setItemToDelete({ id, type: 'experience' }),
+    confirmDelete,
+    cancelDelete: () => setItemToDelete(null),
     handleSaveEducation,
     showExperienceForm,
     editingExperience,
     setShowExperienceForm,
     setEditingExperience,
-    handleDeleteExperience,
     handleSaveExperience,
   }
 }

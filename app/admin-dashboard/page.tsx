@@ -7,6 +7,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { AdminSidebar } from '@/components/admin/AdminSidebar'
 import { ProjectCard } from '@/components/admin/ProjectCard'
 import { ProjectFormDialog } from '@/components/admin/ProjectFormDialog'
+import { ConfirmDialog } from '@/components/admin/ConfirmDialog'
 import { DashboardHeader } from '@/components/admin/DashboardHeader'
 import { DashboardStats } from '@/components/admin/DashboardStats'
 import { SyncStatusBanner } from '@/components/admin/SyncStatusBanner'
@@ -25,8 +26,12 @@ export default function AdminDashboard() {
     showForm,
     editingProject,
     syncFeedback,
+    projectToDelete,
+    isDeleting,
     handleSyncGithub,
     handleDelete,
+    confirmDelete,
+    cancelDelete,
     handleEdit,
     handleSave,
     closeForm,
@@ -70,22 +75,11 @@ export default function AdminDashboard() {
             onAdd={openAddForm}
           />
 
-          <SyncStatusBanner
-            feedback={syncFeedback}
-            onDismiss={clearSyncFeedback}
-          />
+          <SyncStatusBanner feedback={syncFeedback} onDismiss={clearSyncFeedback} />
 
-          <DashboardStats
-            totalProjects={projects.length}
-            totalTechnologies={techCount}
-          />
+          <DashboardStats totalProjects={projects.length} totalTechnologies={techCount} />
 
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.15 }}
-            className="space-y-6"
-          >
+          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.15 }} className="space-y-6">
             <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
               <div>
                 <span className="brutal-badge inline-block bg-emerald-300 text-black px-2.5 py-0.5 text-xs font-mono uppercase mb-1">
@@ -101,21 +95,12 @@ export default function AdminDashboard() {
             </div>
 
             {projects.length === 0 ? (
-              <EmptyProjectsState
-                isSyncing={isSyncing}
-                onSync={handleSyncGithub}
-                onAdd={openAddForm}
-              />
+              <EmptyProjectsState isSyncing={isSyncing} onSync={handleSyncGithub} onAdd={openAddForm} />
             ) : (
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 <AnimatePresence mode="popLayout">
                   {projects.map((project) => (
-                    <ProjectCard
-                      key={project.id}
-                      project={project}
-                      onEdit={handleEdit}
-                      onDelete={handleDelete}
-                    />
+                    <ProjectCard key={project.id} project={project} onEdit={handleEdit} onDelete={handleDelete} />
                   ))}
                 </AnimatePresence>
               </div>
@@ -127,10 +112,20 @@ export default function AdminDashboard() {
       <ProjectFormDialog
         project={editingProject}
         open={showForm}
-        onOpenChange={(open) => {
-          if (!open) closeForm()
-        }}
+        onOpenChange={(open) => { if (!open) closeForm() }}
         onSave={handleSave}
+      />
+
+      <ConfirmDialog
+        open={!!projectToDelete}
+        onOpenChange={(open) => !open && cancelDelete()}
+        title="Delete Project Repository"
+        description="Are you sure you want to permanently delete this project from your portfolio catalog? This action cannot be undone."
+        confirmText="Delete Project"
+        cancelText="Cancel"
+        variant="danger"
+        loading={isDeleting}
+        onConfirm={confirmDelete}
       />
     </div>
   )

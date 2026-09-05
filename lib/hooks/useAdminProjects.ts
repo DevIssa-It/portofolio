@@ -22,6 +22,8 @@ export function useAdminProjects(isAuthenticated: boolean) {
   const [showForm, setShowForm] = useState(false)
   const [editingProject, setEditingProject] = useState<Project | null>(null)
   const [syncFeedback, setSyncFeedback] = useState<SyncFeedbackState | null>(null)
+  const [projectToDelete, setProjectToDelete] = useState<string | null>(null)
+  const [isDeleting, setIsDeleting] = useState(false)
 
   const loadProjects = useCallback(async () => {
     try {
@@ -60,10 +62,16 @@ export function useAdminProjects(isAuthenticated: boolean) {
     }
   }
 
-  const handleDelete = async (id: string) => {
-    if (!confirm('Are you sure you want to delete this project?')) return
-    const result = await deleteProject(id)
-    if (result.success) setProjects((prev) => prev.filter((p) => p.id !== id))
+  const confirmDelete = async () => {
+    if (!projectToDelete) return
+    setIsDeleting(true)
+    try {
+      const result = await deleteProject(projectToDelete)
+      if (result.success) setProjects((prev) => prev.filter((p) => p.id !== projectToDelete))
+      setProjectToDelete(null)
+    } finally {
+      setIsDeleting(false)
+    }
   }
 
   const handleSave = async (project: Project) => {
@@ -84,8 +92,12 @@ export function useAdminProjects(isAuthenticated: boolean) {
     showForm,
     editingProject,
     syncFeedback,
+    projectToDelete,
+    isDeleting,
     handleSyncGithub,
-    handleDelete,
+    handleDelete: (id: string) => setProjectToDelete(id),
+    confirmDelete,
+    cancelDelete: () => setProjectToDelete(null),
     handleEdit: (p: Project) => { setEditingProject(p); setShowForm(true); },
     handleSave,
     closeForm: () => { setShowForm(false); setEditingProject(null); },
