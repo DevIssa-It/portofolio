@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react'
 import { Briefcase, GraduationCap, Award, CheckCircle2 } from 'lucide-react'
 import { getExperience, Experience } from '@/lib/services/experience.service'
 import { getEducation, Education } from '@/lib/services/education.service'
+import { sortChronologically } from '@/lib/utils/date-sorter'
 
 export default function Journey() {
   const [experience, setExperience] = useState<Experience[]>([])
@@ -12,8 +13,8 @@ export default function Journey() {
   useEffect(() => {
     async function loadData() {
       const [expRes, eduRes] = await Promise.all([getExperience(), getEducation()])
-      if (expRes.success && expRes.data) setExperience(expRes.data)
-      if (eduRes.success && eduRes.data) setEducation(eduRes.data)
+      if (expRes.success && expRes.data) setExperience(sortChronologically(expRes.data))
+      if (eduRes.success && eduRes.data) setEducation(sortChronologically(eduRes.data))
     }
     loadData()
   }, [])

@@ -4,6 +4,7 @@ import { motion } from 'framer-motion'
 import { Briefcase } from 'lucide-react'
 import { Section } from '@/components/micro/Section'
 import { getExperience, Experience as ExperienceType } from '@/lib/services/experience.service'
+import { sortChronologically } from '@/lib/utils/date-sorter'
 
 export default function Experience() {
   const [experience, setExperience] = useState<ExperienceType[]>([])
@@ -17,7 +18,7 @@ export default function Experience() {
     try {
       const result = await getExperience()
       if (result.success && result.data) {
-        setExperience(result.data)
+        setExperience(sortChronologically(result.data))
       }
     } catch (error) {
       console.error('Error loading experience:', error)

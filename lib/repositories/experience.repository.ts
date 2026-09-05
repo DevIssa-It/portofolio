@@ -1,6 +1,7 @@
 import { sql, isDatabaseAvailable } from '@/lib/db'
 import fs from 'fs'
 import path from 'path'
+import { sortChronologically } from '@/lib/utils/date-sorter'
 
 export interface ExperienceEntity {
   id: string
@@ -32,9 +33,9 @@ export class ExperienceRepository {
     const isDbReady = await isDatabaseAvailable()
     if (isDbReady) {
       const records = await sql`SELECT * FROM "Experience" ORDER BY "createdAt" DESC`
-      if (records.length > 0) return records as ExperienceEntity[]
+      if (records.length > 0) return sortChronologically(records as ExperienceEntity[])
     }
-    return readJson()
+    return sortChronologically(readJson())
   }
 
   async create(data: Omit<ExperienceEntity, 'id'>): Promise<ExperienceEntity> {
