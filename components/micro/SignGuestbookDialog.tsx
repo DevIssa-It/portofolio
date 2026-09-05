@@ -1,8 +1,8 @@
 'use client'
 
-import { useState } from 'react'
 import { X, Send, Loader2, Sparkles, Github } from 'lucide-react'
 import { CreateGuestbookInput } from '@/types/guestbook'
+import { useSignGuestbookForm } from '@/lib/hooks/useSignGuestbookForm'
 
 interface SignGuestbookDialogProps {
   open: boolean
@@ -17,26 +17,18 @@ export function SignGuestbookDialog({
   onSubmit,
   submitting,
 }: SignGuestbookDialogProps) {
-  const [name, setName] = useState('')
-  const [role, setRole] = useState('')
-  const [message, setMessage] = useState('')
-  const [githubUsername, setGithubUsername] = useState('')
-  const [honeypot, setHoneypot] = useState('')
+  const {
+    formState,
+    setName,
+    setRole,
+    setMessage,
+    setGithubUsername,
+    setHoneypot,
+    handleSubmit,
+    isValid,
+  } = useSignGuestbookForm({ onSubmit, onSuccess: onClose })
 
   if (!open) return null
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    if (honeypot) return
-    const ok = await onSubmit({ name, role, message, githubUsername })
-    if (ok) {
-      setName('')
-      setRole('')
-      setMessage('')
-      setGithubUsername('')
-      onClose()
-    }
-  }
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-in fade-in-0 duration-150">
@@ -64,7 +56,7 @@ export function SignGuestbookDialog({
         <form onSubmit={handleSubmit} className="space-y-4">
           <input
             type="text"
-            value={honeypot}
+            value={formState.honeypot}
             onChange={(e) => setHoneypot(e.target.value)}
             className="hidden"
             tabIndex={-1}
@@ -78,7 +70,7 @@ export function SignGuestbookDialog({
                 type="text"
                 required
                 maxLength={50}
-                value={name}
+                value={formState.name}
                 onChange={(e) => setName(e.target.value)}
                 placeholder="Jane Doe"
                 className="w-full px-3 py-2 text-xs font-mono border-2 border-black rounded-lg bg-white shadow-[2px_2px_0px_0px_#000] focus:outline-none focus:bg-sky-50"
@@ -89,7 +81,7 @@ export function SignGuestbookDialog({
               <input
                 type="text"
                 maxLength={80}
-                value={role}
+                value={formState.role}
                 onChange={(e) => setRole(e.target.value)}
                 placeholder="Software Engineer @ Tech Co"
                 className="w-full px-3 py-2 text-xs font-mono border-2 border-black rounded-lg bg-white shadow-[2px_2px_0px_0px_#000] focus:outline-none focus:bg-sky-50"
@@ -104,7 +96,7 @@ export function SignGuestbookDialog({
             <input
               type="text"
               maxLength={40}
-              value={githubUsername}
+              value={formState.githubUsername}
               onChange={(e) => setGithubUsername(e.target.value)}
               placeholder="e.g. torvalds"
               className="w-full px-3 py-2 text-xs font-mono border-2 border-black rounded-lg bg-white shadow-[2px_2px_0px_0px_#000] focus:outline-none focus:bg-sky-50"
@@ -118,7 +110,7 @@ export function SignGuestbookDialog({
               rows={3}
               minLength={5}
               maxLength={500}
-              value={message}
+              value={formState.message}
               onChange={(e) => setMessage(e.target.value)}
               placeholder="Share your experience working or collaborating with Issa..."
               className="w-full px-3 py-2 text-xs font-mono border-2 border-black rounded-lg bg-white shadow-[2px_2px_0px_0px_#000] focus:outline-none focus:bg-sky-50 resize-none"
@@ -135,7 +127,7 @@ export function SignGuestbookDialog({
             </button>
             <button
               type="submit"
-              disabled={submitting || !name.trim() || !message.trim()}
+              disabled={submitting || !isValid}
               className="brutal-btn px-5 py-2 rounded-lg bg-sky-300 hover:bg-sky-400 text-black text-xs font-mono font-bold border-2 border-black shadow-[2px_2px_0px_0px_#000] flex items-center gap-1.5 disabled:opacity-50"
             >
               {submitting ? <Loader2 size={13} className="animate-spin" /> : <Send size={13} />}
