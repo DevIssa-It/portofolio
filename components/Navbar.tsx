@@ -39,6 +39,8 @@ export default function Navbar() {
     <header className="sticky top-4 inset-x-0 z-50 flex justify-center px-6 pointer-events-none">
       <nav className="pointer-events-auto brutal-card bg-white px-3 py-2 flex items-center gap-4 transition-all">
         <button
+          type="button"
+          suppressHydrationWarning
           onClick={() => handleScrollTo('hero')}
           className="flex items-center gap-2 pl-2 text-left"
         >
@@ -52,6 +54,8 @@ export default function Navbar() {
           {NAV_ITEMS.map((item) => (
             <button
               key={item.id}
+              type="button"
+              suppressHydrationWarning
               onClick={() => handleScrollTo(item.id)}
               className={cn(
                 'px-3 py-1 text-xs font-bold font-mono rounded transition-colors',
@@ -66,6 +70,7 @@ export default function Navbar() {
         <div className="flex items-center gap-2">
           <button
             type="button"
+            suppressHydrationWarning
             onClick={triggerCommandPalette}
             aria-label="Open Command Palette"
             className="hidden sm:inline-flex items-center gap-1.5 px-2.5 py-1 text-xs font-mono font-bold bg-zinc-100 hover:bg-zinc-200 text-black border-2 border-black rounded shadow-[2px_2px_0px_0px_#000] active:translate-x-0.5 active:translate-y-0.5 transition-all"
@@ -75,6 +80,8 @@ export default function Navbar() {
           </button>
 
           <button
+            type="button"
+            suppressHydrationWarning
             onClick={() => handleScrollTo('contact')}
             className="hidden sm:inline-flex items-center gap-1 brutal-btn bg-sky-300 hover:bg-sky-400 text-black px-3.5 py-1 text-xs rounded-md"
           >
@@ -82,6 +89,8 @@ export default function Navbar() {
           </button>
 
           <button
+            type="button"
+            suppressHydrationWarning
             onClick={() => setMobileOpen(!mobileOpen)}
             className="p-1 text-black md:hidden"
             aria-label="Toggle navigation"
@@ -95,6 +104,7 @@ export default function Navbar() {
         <div className="pointer-events-auto md:hidden fixed top-20 inset-x-6 brutal-card bg-sky-50 p-4 space-y-2 z-50">
           <button
             type="button"
+            suppressHydrationWarning
             onClick={triggerCommandPalette}
             className="w-full text-left p-2 text-xs font-bold font-mono rounded border-2 border-black bg-zinc-100 text-black flex items-center justify-between shadow-[2px_2px_0px_0px_#000]"
           >
@@ -104,6 +114,8 @@ export default function Navbar() {
           {NAV_ITEMS.map((item) => (
             <button
               key={item.id}
+              type="button"
+              suppressHydrationWarning
               onClick={() => handleScrollTo(item.id)}
               className={cn(
                 'w-full text-left p-2 text-xs font-bold font-mono rounded border-2 border-black bg-white shadow-[2px_2px_0px_0px_#000]',

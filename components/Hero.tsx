@@ -35,6 +35,8 @@ export default function Hero() {
 
         <div className="flex flex-wrap items-center gap-4 pt-2">
           <button
+            type="button"
+            suppressHydrationWarning
             onClick={() => scrollTo('projects')}
             className="brutal-btn inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-sky-300 hover:bg-sky-400 text-black text-sm"
           >

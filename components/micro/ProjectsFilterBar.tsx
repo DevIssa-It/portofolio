@@ -42,6 +42,7 @@ export function ProjectsFilterBar({
           <button
             key={cat.id}
             type="button"
+            suppressHydrationWarning
             onClick={() => onSelectCategory(cat.id)}
             className={`brutal-btn px-3.5 py-1.5 rounded-md text-xs font-mono font-bold whitespace-nowrap ${
               selectedCategory === cat.id
@@ -70,6 +71,7 @@ export function ProjectsFilterBar({
           </div>
           <button
             type="button"
+            suppressHydrationWarning
             onClick={onToggleSort}
             className="brutal-btn inline-flex items-center justify-center gap-1.5 px-3 py-2 rounded-lg text-xs font-mono bg-white text-black hover:bg-sky-100 whitespace-nowrap border-2 border-black shadow-[3px_3px_0px_0px_#000]"
             title="Urutkan repo: Terbaru / Terlama"
@@ -84,6 +86,7 @@ export function ProjectsFilterBar({
             <button
               key={tech}
               type="button"
+              suppressHydrationWarning
               onClick={() => onSelectTech(tech)}
               className={`brutal-btn px-3 py-1.5 rounded-md text-xs font-mono whitespace-nowrap ${
                 selectedTech === tech
