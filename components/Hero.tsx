@@ -43,8 +43,8 @@ export default function Hero() {
             Explore Projects <ArrowDown size={16} />
           </button>
           <a
-            href="/resume.pdf"
-            download
+            href="/api/resume?download=true"
+            download="A_Issadurrofiq_Resume.pdf"
             onClick={() => trackEvent('cv_download')}
             className="brutal-btn inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-white text-black text-sm"
           >
