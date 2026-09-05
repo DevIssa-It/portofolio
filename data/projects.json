@@ -16,7 +16,7 @@
     "demo": "https://ular-tangga-woad.vercel.app",
     "createdAt": "2026-09-04T05:43:38.000Z",
     "updatedAt": "2026-09-04T09:54:54.758Z",
-    "category": "open-source",
+    "category": "web-app",
     "role": "Frontend & Game Developer",
     "problemStatement": "Traditional board games often fail to deliver engaging, responsive interactive experiences on modern web browsers.",
     "architectureSolution": "Engineered a modular turn-based Snakes and Ladders game engine in TypeScript with reactive animations and sound effects.",
@@ -104,7 +104,7 @@
     "demo": "https://mini-sales.vercel.app",
     "createdAt": "2026-07-28T19:35:01.000Z",
     "updatedAt": "2026-09-04T09:54:55.181Z",
-    "category": "open-source"
+    "category": "enterprise"
   },
   {
     "id": "1788453618261",
@@ -125,7 +125,7 @@
     "demo": "https://estafet-usaha-ten.vercel.app",
     "createdAt": "2026-07-25T21:41:06.000Z",
     "updatedAt": "2026-09-04T09:54:55.439Z",
-    "category": "open-source"
+    "category": "enterprise"
   },
   {
     "id": "1788453618729",
@@ -146,7 +146,7 @@
     "demo": "https://arcline-beta.vercel.app",
     "createdAt": "2026-07-10T18:37:00.000Z",
     "updatedAt": "2026-09-04T09:54:55.795Z",
-    "category": "open-source"
+    "category": "web-app"
   },
   {
     "id": "1788453618990",
@@ -165,7 +165,7 @@
     "demo": "https://berita-kini.vercel.app",
     "createdAt": "2026-06-20T02:35:57.000Z",
     "updatedAt": "2026-09-04T09:54:56.091Z",
-    "category": "open-source"
+    "category": "web-app"
   },
   {
     "id": "1788453619226",
@@ -186,7 +186,7 @@
     "demo": "https://monkey-coffe.vercel.app",
     "createdAt": "2026-06-15T19:47:47.000Z",
     "updatedAt": "2026-09-04T09:54:56.619Z",
-    "category": "open-source"
+    "category": "web-app"
   },
   {
     "id": "1788453620246",
@@ -261,7 +261,7 @@
     "demo": "https://ahmadissadurrofiq.vercel.app",
     "createdAt": "2025-12-30T09:30:16.000Z",
     "updatedAt": "2026-09-04T09:54:54.554Z",
-    "category": "open-source"
+    "category": "web-app"
   },
   {
     "id": "1788453620871",

@@ -46,7 +46,9 @@ export class SqlProjectStorage {
     const createdAt = data.createdAt ? new Date(data.createdAt).toISOString() : new Date().toISOString()
     const rows = await sql`
       INSERT INTO "Project" (
-        id, title, description, image, technologies, tags, github, demo, "createdAt", "updatedAt"
+        id, title, description, image, technologies, tags, github, demo,
+        category, role, "problemStatement", "architectureSolution", "keyMetrics", featured,
+        "createdAt", "updatedAt"
       )
       VALUES (
         ${id}, 
@@ -57,6 +59,12 @@ export class SqlProjectStorage {
         ${data.tags || []}, 
         ${data.github || ''}, 
         ${data.demo || ''}, 
+        ${data.category || 'open-source'},
+        ${data.role || ''},
+        ${data.problemStatement || ''},
+        ${data.architectureSolution || ''},
+        ${data.keyMetrics || []},
+        ${!!data.featured},
         ${createdAt}, 
         NOW()
       )
@@ -79,6 +87,12 @@ export class SqlProjectStorage {
         tags = ${data.tags !== undefined ? data.tags : existing.tags}, 
         github = ${data.github !== undefined ? data.github : existing.github}, 
         demo = ${data.demo !== undefined ? data.demo : existing.demo}, 
+        category = ${data.category !== undefined ? data.category : (existing.category || 'open-source')},
+        role = ${data.role !== undefined ? data.role : (existing.role || '')},
+        "problemStatement" = ${data.problemStatement !== undefined ? data.problemStatement : (existing.problemStatement || '')},
+        "architectureSolution" = ${data.architectureSolution !== undefined ? data.architectureSolution : (existing.architectureSolution || '')},
+        "keyMetrics" = ${data.keyMetrics !== undefined ? data.keyMetrics : (existing.keyMetrics || [])},
+        featured = ${data.featured !== undefined ? data.featured : (existing.featured || false)},
         "createdAt" = ${data.createdAt !== undefined ? data.createdAt : existing.createdAt},
         "updatedAt" = NOW()
       WHERE id = ${id}

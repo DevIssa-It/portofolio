@@ -18,6 +18,7 @@ import { Project } from '@/types/project'
 import { ImageUploadField } from '@/components/admin/ImageUploadField'
 import { TechnologyTagInput } from '@/components/admin/TechnologyTagInput'
 import { ProjectUrlFields } from '@/components/admin/ProjectUrlFields'
+import { ProjectMetaFields } from '@/components/admin/ProjectMetaFields'
 import { useProjectForm } from '@/lib/hooks/useProjectForm'
 
 interface ProjectFormDialogProps {
@@ -100,29 +101,14 @@ export function ProjectFormDialog({
             onChange={(field, value) => updateField(field, value)}
           />
 
-          <div className="space-y-2">
-            <Label htmlFor="problemStatement">Architecture & Problem Statement</Label>
-            <Textarea
-              id="problemStatement"
-              value={formData.problemStatement || ''}
-              onChange={(e) => updateField('problemStatement', e.target.value)}
-              placeholder="What core engineering challenge did this solve?"
-              rows={2}
-            />
-          </div>
-
-          <div className="flex items-center gap-2 p-3 bg-zinc-50 border border-black/20 rounded-lg">
-            <input
-              type="checkbox"
-              id="featured"
-              checked={!!formData.featured}
-              onChange={(e) => updateField('featured', e.target.checked)}
-              className="w-4 h-4 accent-black rounded"
-            />
-            <Label htmlFor="featured" className="cursor-pointer text-xs font-mono font-bold">
-              Pin as Featured Project (Display at top with badge)
-            </Label>
-          </div>
+          <ProjectMetaFields
+            category={formData.category}
+            problemStatement={formData.problemStatement}
+            featured={formData.featured}
+            onCategoryChange={(cat) => updateField('category', cat)}
+            onProblemStatementChange={(val) => updateField('problemStatement', val)}
+            onFeaturedChange={(feat) => updateField('featured', feat)}
+          />
 
           <DialogFooter>
             <Button

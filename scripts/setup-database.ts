@@ -58,7 +58,13 @@ async function createTables() {
         "updatedAt" TIMESTAMP DEFAULT NOW()
       )
     `;
-    console.log('[SUCCESS] Project table created');
+    await sql`ALTER TABLE "Project" ADD COLUMN IF NOT EXISTS category TEXT DEFAULT 'open-source'`;
+    await sql`ALTER TABLE "Project" ADD COLUMN IF NOT EXISTS role TEXT DEFAULT ''`;
+    await sql`ALTER TABLE "Project" ADD COLUMN IF NOT EXISTS "problemStatement" TEXT DEFAULT ''`;
+    await sql`ALTER TABLE "Project" ADD COLUMN IF NOT EXISTS "architectureSolution" TEXT DEFAULT ''`;
+    await sql`ALTER TABLE "Project" ADD COLUMN IF NOT EXISTS "keyMetrics" TEXT[] DEFAULT '{}'`;
+    await sql`ALTER TABLE "Project" ADD COLUMN IF NOT EXISTS featured BOOLEAN DEFAULT false`;
+    console.log('[SUCCESS] Project table created & updated with category and metadata columns');
 
     // Create Education table
     await sql`

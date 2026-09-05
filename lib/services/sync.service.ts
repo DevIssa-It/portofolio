@@ -12,6 +12,7 @@ import {
 import { GitHubRepo, GitHubWebhookPayload } from '@/types/github'
 import { GitHubSyncPayload, SyncResult } from '@/types/project'
 import { APP_CONFIG } from '@/lib/config'
+import { determineProjectCategory } from '@/lib/utils/project-categorizer'
 
 export class SyncService {
   constructor(
@@ -54,17 +55,27 @@ export class SyncService {
     }
 
     const autoImage = this.generateAutoImage(repo)
-
     const liveDeployment = await this.client.fetchLatestDeploymentUrl(repo.name)
+    const demo = liveDeployment || repo.homepage || ''
+
+    const category = determineProjectCategory({
+      title: formattedTitle,
+      description: repo.description || '',
+      technologies,
+      tags,
+      topics: repo.topics || [],
+      demo,
+    })
 
     return {
       title: formattedTitle,
       description: repo.description || 'Open source project on GitHub.',
       github: repo.html_url,
-      demo: liveDeployment || repo.homepage || '',
+      demo,
       technologies,
       tags,
       image: autoImage,
+      category,
       createdAt: repo.created_at,
     }
   }
