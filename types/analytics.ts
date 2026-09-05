@@ -8,6 +8,8 @@ export type AnalyticsEventType =
   | 'github_click'
   | 'cv_download'
   | 'contact_copied'
+  | 'vcard_downloaded'
+  | 'inquiry_submitted'
 
 export interface AnalyticsEvent {
   id: string
@@ -21,6 +23,8 @@ export interface AnalyticsSummary {
   totalGithubClicks: number
   totalCvDownloads: number
   totalContactCopies: number
+  totalVCardDownloads?: number
+  totalInquiries?: number
   totalEvents: number
   recentEvents: AnalyticsEvent[]
 }

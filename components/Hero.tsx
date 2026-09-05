@@ -1,7 +1,8 @@
 'use client'
 
-import { ArrowDown, Download, Github, Linkedin, Mail } from 'lucide-react'
+import { ArrowDown, Download, Github, Linkedin, Mail, Contact as ContactCardIcon } from 'lucide-react'
 import { useAnalyticsTracker } from '@/lib/hooks/useAnalyticsTracker'
+import { downloadVCard } from '@/lib/utils/vcard'
 
 export default function Hero() {
   const { trackEvent } = useAnalyticsTracker()
@@ -79,6 +80,18 @@ export default function Hero() {
             >
               <Mail size={18} />
             </a>
+            <button
+              type="button"
+              onClick={() => {
+                trackEvent('vcard_downloaded', 'Hero')
+                downloadVCard()
+              }}
+              className="brutal-btn p-2.5 rounded-lg bg-emerald-300 hover:bg-emerald-400 text-black cursor-pointer"
+              title="Download Contact Card (.VCF)"
+              aria-label="Download Contact Card (.VCF)"
+            >
+              <ContactCardIcon size={18} />
+            </button>
           </div>
         </div>
 

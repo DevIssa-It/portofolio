@@ -5,6 +5,8 @@ import { Menu, X, ArrowUpRight, Command } from 'lucide-react'
 import { useScrollSpy } from '@/lib/hooks/useScrollSpy'
 import { cn } from '@/lib/utils'
 import { ThemeToggle } from '@/components/micro/ThemeToggle'
+import SoundToggle from '@/components/micro/SoundToggle'
+import { playClickSound } from '@/lib/utils/sound'
 
 const NAV_ITEMS = [
   { id: 'hero', label: 'Overview' },
@@ -26,6 +28,7 @@ export default function Navbar() {
   }, [scrollActiveId])
 
   const handleScrollTo = (id: string) => {
+    playClickSound()
     setMobileOpen(false)
     setActiveTab(id)
     document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' })
@@ -70,6 +73,7 @@ export default function Navbar() {
 
         <div className="flex items-center gap-2">
           <ThemeToggle />
+          <SoundToggle />
           <button
             type="button"
             suppressHydrationWarning

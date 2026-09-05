@@ -3,6 +3,7 @@
 import { X, ArrowUpRight, Github, Target, Layers, TrendingUp, Check } from 'lucide-react'
 import { Project } from '@/types/project'
 import { useAnalyticsTracker } from '@/lib/hooks/useAnalyticsTracker'
+import ArchitectureFlowVisualizer from '@/components/micro/ArchitectureFlowVisualizer'
 
 interface ProjectCaseStudyModalProps {
   project: Project | null
@@ -75,6 +76,8 @@ export function ProjectCaseStudyModal({
               {project.architectureSolution || 'Implemented responsive modular architecture with clean component boundaries.'}
             </p>
           </div>
+
+          <ArchitectureFlowVisualizer project={project} />
 
           {project.keyMetrics && project.keyMetrics.length > 0 && (
             <div className="space-y-2">

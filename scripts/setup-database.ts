@@ -128,6 +128,21 @@ async function createTables() {
     `;
     console.log('[SUCCESS] Certification table created\n');
 
+    // Create ContactInquiry table
+    await sql`
+      CREATE TABLE IF NOT EXISTS "ContactInquiry" (
+        id TEXT PRIMARY KEY,
+        name TEXT NOT NULL,
+        email TEXT NOT NULL,
+        company TEXT DEFAULT '',
+        "roleType" TEXT DEFAULT '',
+        message TEXT NOT NULL,
+        status TEXT NOT NULL DEFAULT 'unread',
+        "createdAt" TIMESTAMP NOT NULL DEFAULT NOW()
+      )
+    `;
+    console.log('[SUCCESS] ContactInquiry table created\n');
+
     console.log('[SUCCESS] All tables created successfully.');
     console.log('\n[INFO] Next step: Run "npm run migrate-data" to import data from JSON files');
   } catch (error) {

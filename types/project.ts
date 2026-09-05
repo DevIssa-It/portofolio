@@ -20,6 +20,12 @@ export interface Project {
   role?: string
   problemStatement?: string
   architectureSolution?: string
+  architectureNodes?: {
+    id: string
+    label: string
+    type: 'client' | 'edge' | 'server' | 'db' | 'auth'
+    detail: string
+  }[]
   keyMetrics?: string[]
   featured?: boolean
 }

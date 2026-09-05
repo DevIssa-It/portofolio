@@ -37,6 +37,11 @@ export const API_ENDPOINTS = {
   CERTIFICATIONS: {
     BASE: '/api/certifications',
   },
+
+  // Contact & Inquiries
+  CONTACT: {
+    BASE: '/api/contact',
+  },
 } as const
 
 // API Routes

@@ -39,6 +39,12 @@ export const metadata: Metadata = {
     index: true,
     follow: true,
   },
+  manifest: '/manifest.json',
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: 'black-translucent',
+    title: 'DevIssa',
+  },
 }
 
 export default function RootLayout({
@@ -53,6 +59,8 @@ export default function RootLayout({
         <link rel="preconnect" href="https://opengraph.githubassets.com" />
         <link rel="preconnect" href="https://avatars.githubusercontent.com" />
         <link rel="preconnect" href="https://api.open-meteo.com" />
+        <link rel="apple-touch-icon" href="/icon-192.svg" />
+        <meta name="theme-color" content="#07090e" />
         <script
           dangerouslySetInnerHTML={{
             __html: `(function(){try{var t=localStorage.getItem('theme');if(t==='dark'||(!t&&window.matchMedia('(prefers-color-scheme: dark)').matches)){document.documentElement.classList.add('dark');}else{document.documentElement.classList.remove('dark');}}catch(e){}})()`,

@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
-import { FolderGit2, TrendingUp, MousePointerClick, Download, ExternalLink } from 'lucide-react'
+import { FolderGit2, TrendingUp, MousePointerClick, Download, ExternalLink, Mail } from 'lucide-react'
 import { StatCard } from '@/components/admin/StatCard'
 import { AnalyticsSummary } from '@/types/analytics'
 
@@ -16,6 +16,7 @@ export function DashboardStats({
   totalTechnologies,
 }: DashboardStatsProps) {
   const [summary, setSummary] = useState<AnalyticsSummary | null>(null)
+  const [inquiryCount, setInquiryCount] = useState<number>(0)
 
   useEffect(() => {
     fetch('/api/analytics/summary')
@@ -24,6 +25,13 @@ export function DashboardStats({
         if (data && data.success && data.data) {
           setSummary(data.data)
         }
+      })
+      .catch(() => {})
+
+    fetch('/api/contact')
+      .then((res) => (res.ok ? res.json() : []))
+      .then((data) => {
+        if (Array.isArray(data)) setInquiryCount(data.length)
       })
       .catch(() => {})
   }, [])
@@ -81,6 +89,11 @@ export function DashboardStats({
             <ExternalLink size={12} className="text-black" />
             <span className="text-zinc-600">GitHub Clicks:</span>
             <strong className="text-black">{githubClicks}</strong>
+          </div>
+          <div className="flex items-center gap-1.5 bg-sky-100 px-2.5 py-1 border border-black rounded shadow-[1px_1px_0px_0px_#000]">
+            <Mail size={12} className="text-black" />
+            <span className="text-zinc-600">Inquiries:</span>
+            <strong className="text-black">{inquiryCount}</strong>
           </div>
         </div>
       </div>

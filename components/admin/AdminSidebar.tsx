@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { LogOut, User, Settings, LayoutDashboard, GraduationCap, ExternalLink, MessageSquare, BarChart3 } from 'lucide-react'
+import { LogOut, User, Settings, LayoutDashboard, GraduationCap, ExternalLink, MessageSquare, BarChart3, Mail } from 'lucide-react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { signOut } from 'next-auth/react'
@@ -20,6 +20,7 @@ export function AdminSidebar({ onLogout }: AdminSidebarProps) {
 
   const menuItems = [
     { label: 'Dashboard', icon: LayoutDashboard, href: ROUTES.ADMIN_DASHBOARD },
+    { label: 'Inquiries', icon: Mail, href: '/admin-dashboard/inquiries' },
     { label: 'Profile & Resume', icon: GraduationCap, href: '/admin-dashboard/profile' },
     { label: 'Guestbook', icon: MessageSquare, href: '/admin-dashboard/guestbook' },
     { label: 'Analytics', icon: BarChart3, href: '/admin-dashboard/analytics' },
