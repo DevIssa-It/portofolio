@@ -1,7 +1,6 @@
 'use client'
 
 import { useState } from 'react'
-import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { motion } from 'framer-motion'
 import { Lock, ArrowLeft, Mail, Eye, EyeOff, ShieldCheck } from 'lucide-react'
@@ -14,7 +13,6 @@ export default function AdminLogin() {
   const [showPassword, setShowPassword] = useState(false)
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
-  const router = useRouter()
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -26,7 +24,7 @@ export default function AdminLogin() {
       if (!result.success) {
         setError(result.error || 'Invalid email or password')
       } else {
-        router.push(ROUTES.ADMIN_DASHBOARD)
+        window.location.href = ROUTES.ADMIN_DASHBOARD
       }
     } catch {
       setError('An error occurred during authentication. Please try again.')

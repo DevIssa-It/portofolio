@@ -51,7 +51,10 @@ export async function loginUser(credentials: LoginCredentials): Promise<LoginRes
  */
 export async function logoutUser(): Promise<void> {
   try {
-    await signOut({ callbackUrl: ROUTES.LOGIN })
+    await signOut({ redirect: false })
+    if (typeof window !== 'undefined') {
+      window.location.href = ROUTES.LOGIN
+    }
   } catch (error) {
     console.error('Logout error:', error)
   }

@@ -49,6 +49,16 @@ export const authOptions: NextAuthOptions = {
       }
       return session
     },
+    async redirect({ url, baseUrl }) {
+      if (url.startsWith('/')) return url
+      try {
+        const parsed = new URL(url)
+        if (parsed.origin === baseUrl || parsed.hostname.endsWith('vercel.app') || parsed.hostname === 'localhost') {
+          return url
+        }
+      } catch {}
+      return baseUrl
+    },
   },
   secret: process.env.NEXTAUTH_SECRET,
 }

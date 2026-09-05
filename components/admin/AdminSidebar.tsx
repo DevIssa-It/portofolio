@@ -40,7 +40,8 @@ export function AdminSidebar({ onLogout }: AdminSidebarProps) {
       if (onLogout) {
         onLogout()
       }
-      await signOut({ callbackUrl: ROUTES.LOGIN, redirect: true })
+      await signOut({ redirect: false })
+      window.location.href = ROUTES.LOGIN
     } catch (error) {
       console.error('Logout error:', error)
       setIsLoggingOut(false)
