@@ -13,9 +13,11 @@ const NAV_ITEMS = [
   { id: 'contact', label: 'Contact' },
 ]
 
+const SECTION_IDS = NAV_ITEMS.map((n) => n.id)
+
 export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false)
-  const scrollActiveId = useScrollSpy(NAV_ITEMS.map((n) => n.id))
+  const scrollActiveId = useScrollSpy(SECTION_IDS)
   const [activeTab, setActiveTab] = useState<string>('hero')
 
   useEffect(() => {

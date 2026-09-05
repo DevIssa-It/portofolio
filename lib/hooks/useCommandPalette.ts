@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect, useCallback, useMemo } from 'react'
+import { useState, useEffect, useCallback, useMemo, useRef } from 'react'
 import { ExternalLink, LucideIcon } from 'lucide-react'
 import { Project } from '@/types/project'
 import { useAnalyticsTracker } from '@/lib/hooks/useAnalyticsTracker'
@@ -21,12 +21,22 @@ export function useCommandPalette(initialProjects: Project[] = []) {
   const [query, setQuery] = useState('')
   const [selectedIndex, setSelectedIndex] = useState(0)
   const [projects, setProjects] = useState<Project[]>(initialProjects)
+  const hasFetched = useRef(false)
   const { trackEvent } = useAnalyticsTracker()
 
   useEffect(() => {
-    if (initialProjects.length > 0) setProjects(initialProjects)
-    else getProjects().then((r) => r.success && r.data && setProjects(r.data))
-  }, [initialProjects])
+    if (initialProjects.length > 0) {
+      setProjects(initialProjects)
+      return
+    }
+    if (hasFetched.current) return
+    hasFetched.current = true
+
+    getProjects().then((r) => {
+      if (r.success && r.data) setProjects(r.data)
+    })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [initialProjects.length])
 
   const openPalette = useCallback(() => setIsOpen(true), [])
   const closePalette = useCallback(() => {

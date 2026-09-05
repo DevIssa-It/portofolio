@@ -11,8 +11,10 @@ interface CommandPaletteProps {
   onClose?: () => void
 }
 
+const EMPTY_PROJECTS: Project[] = []
+
 export function CommandPalette({
-  projects = [],
+  projects = EMPTY_PROJECTS,
   isOpen: controlledIsOpen,
   onClose: controlledOnClose,
 }: CommandPaletteProps) {

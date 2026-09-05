@@ -6,6 +6,7 @@ import { useState, useEffect } from 'react'
  */
 export function useScrollSpy(sectionIds: string[], offsetRatio = 0.25): string {
   const [activeId, setActiveId] = useState<string>(sectionIds[0] || '')
+  const serializedSectionIds = sectionIds.join(',')
 
   useEffect(() => {
     if (typeof window === 'undefined' || sectionIds.length === 0) return
@@ -20,7 +21,6 @@ export function useScrollSpy(sectionIds: string[], offsetRatio = 0.25): string {
 
     const observer = new IntersectionObserver(
       (entries) => {
-        // If we are at the top, prioritize the first section
         if (window.scrollY < 120) {
           setActiveId(sectionIds[0])
           return
@@ -47,8 +47,8 @@ export function useScrollSpy(sectionIds: string[], offsetRatio = 0.25): string {
       window.removeEventListener('scroll', handleScroll)
       observer.disconnect()
     }
-  }, [sectionIds, offsetRatio])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [serializedSectionIds, offsetRatio])
 
   return activeId
 }
-
