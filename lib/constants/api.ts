@@ -32,6 +32,11 @@ export const API_ENDPOINTS = {
   EXPERIENCE: {
     BASE: '/api/experience',
   },
+
+  // Certification endpoints
+  CERTIFICATIONS: {
+    BASE: '/api/certifications',
+  },
 } as const
 
 // API Routes

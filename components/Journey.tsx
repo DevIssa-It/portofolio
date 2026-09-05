@@ -1,20 +1,29 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { Briefcase, GraduationCap, Award, CheckCircle2 } from 'lucide-react'
+import { Briefcase, GraduationCap } from 'lucide-react'
 import { getExperience, Experience } from '@/lib/services/experience.service'
 import { getEducation, Education } from '@/lib/services/education.service'
+import { getCertifications } from '@/lib/services/certification.service'
+import { Certification } from '@/types/certification'
 import { sortChronologically } from '@/lib/utils/date-sorter'
+import { CertificationsCard } from '@/components/micro/CertificationsCard'
 
 export default function Journey() {
   const [experience, setExperience] = useState<Experience[]>([])
   const [education, setEducation] = useState<Education[]>([])
+  const [certifications, setCertifications] = useState<Certification[]>([])
 
   useEffect(() => {
     async function loadData() {
-      const [expRes, eduRes] = await Promise.all([getExperience(), getEducation()])
+      const [expRes, eduRes, certRes] = await Promise.all([
+        getExperience(),
+        getEducation(),
+        getCertifications(),
+      ])
       if (expRes.success && expRes.data) setExperience(sortChronologically(expRes.data))
       if (eduRes.success && eduRes.data) setEducation(sortChronologically(eduRes.data))
+      if (certRes.success && certRes.data) setCertifications(sortChronologically(certRes.data))
     }
     loadData()
   }, [])
@@ -103,28 +112,8 @@ export default function Journey() {
               </div>
             ))}
 
-            {/* Certifications Card */}
-            <div className="brutal-card bg-orange-50 p-5 space-y-3">
-              <h4 className="font-mono text-xs font-black uppercase tracking-wider text-black flex items-center gap-2">
-                <Award size={15} /> Verified Certifications
-              </h4>
-              <div className="space-y-2 text-xs">
-                <div className="flex items-start gap-2">
-                  <CheckCircle2 size={14} className="text-black shrink-0 mt-0.5" />
-                  <div>
-                    <span className="font-bold text-black block">Core Initiative Frontend Project-Based Internship</span>
-                    <span className="text-[11px] font-mono text-zinc-600">ID: 351201IAPAGIC2492025 • Sep 2025</span>
-                  </div>
-                </div>
-                <div className="flex items-start gap-2">
-                  <CheckCircle2 size={14} className="text-black shrink-0 mt-0.5" />
-                  <div>
-                    <span className="font-bold text-black block">Agile Scrum Fundamentals (ASF)</span>
-                    <span className="text-[11px] font-mono text-zinc-600">MindMagine • May 2025</span>
-                  </div>
-                </div>
-              </div>
-            </div>
+            {/* Dynamic Certifications Card */}
+            <CertificationsCard certifications={certifications} />
 
             {/* Availability & Languages */}
             <div className="brutal-card bg-emerald-100 p-4 text-xs font-mono text-black space-y-1">

@@ -58,10 +58,10 @@ export function parseDateScore(periodStr?: string): number {
 /**
  * Sorts items chronologically descending (newest to oldest)
  */
-export function sortChronologically<T extends { year?: string; period?: string }>(items: T[]): T[] {
+export function sortChronologically<T extends { year?: string; period?: string; issueDate?: string }>(items: T[]): T[] {
   return [...items].sort((a, b) => {
-    const scoreA = parseDateScore(a.year || a.period)
-    const scoreB = parseDateScore(b.year || b.period)
+    const scoreA = parseDateScore(a.year || a.period || a.issueDate)
+    const scoreB = parseDateScore(b.year || b.period || b.issueDate)
     return scoreB - scoreA
   })
 }

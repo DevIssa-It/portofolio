@@ -113,6 +113,21 @@ async function createTables() {
     `;
     console.log('[SUCCESS] GuestbookEntry table created\n');
 
+    // Create Certification table
+    await sql`
+      CREATE TABLE IF NOT EXISTS "Certification" (
+        id TEXT PRIMARY KEY,
+        title TEXT NOT NULL,
+        issuer TEXT NOT NULL,
+        "issueDate" TEXT NOT NULL,
+        "credentialId" TEXT DEFAULT '',
+        "credentialUrl" TEXT DEFAULT '',
+        "createdAt" TIMESTAMP DEFAULT NOW(),
+        "updatedAt" TIMESTAMP DEFAULT NOW()
+      )
+    `;
+    console.log('[SUCCESS] Certification table created\n');
+
     console.log('[SUCCESS] All tables created successfully.');
     console.log('\n[INFO] Next step: Run "npm run migrate-data" to import data from JSON files');
   } catch (error) {
