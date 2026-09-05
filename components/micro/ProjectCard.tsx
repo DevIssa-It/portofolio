@@ -1,5 +1,6 @@
-import { ArrowUpRight, Github } from "lucide-react"
+import { ArrowUpRight, Github, BookOpen } from "lucide-react"
 import { ProjectImage } from "@/components/micro/ProjectImage"
+import { useAnalyticsTracker } from "@/lib/hooks/useAnalyticsTracker"
 
 interface ProjectCardProps {
   title: string
@@ -10,6 +11,7 @@ interface ProjectCardProps {
   liveUrl?: string
   githubUrl?: string
   createdAt?: string
+  onViewCaseStudy?: () => void
 }
 
 export function ProjectCard({
@@ -21,7 +23,9 @@ export function ProjectCard({
   liveUrl,
   githubUrl,
   createdAt,
+  onViewCaseStudy,
 }: ProjectCardProps) {
+  const { trackEvent } = useAnalyticsTracker()
   const formattedDate = createdAt
     ? new Date(createdAt).toLocaleDateString('en-US', {
         month: 'short',
@@ -90,13 +94,26 @@ export function ProjectCard({
 
           {/* Action Buttons */}
           <div className="flex items-center gap-2 pt-1">
+            {onViewCaseStudy && (
+              <button
+                type="button"
+                onClick={onViewCaseStudy}
+                className="brutal-btn bg-white hover:bg-sky-50 text-black py-1.5 px-2.5 rounded text-xs flex items-center justify-center gap-1 font-mono font-bold"
+                title="View project case study & architecture"
+              >
+                <BookOpen size={13} />
+                <span>Case Study</span>
+              </button>
+            )}
+
             {liveUrl && (
               <a
                 href={liveUrl}
                 target="_blank"
                 rel="noopener noreferrer"
+                onClick={() => trackEvent('demo_click', title)}
                 aria-label={`Live demo for ${title}`}
-                className="brutal-btn flex-1 bg-sky-300 hover:bg-sky-400 text-black py-1.5 px-3 rounded text-xs flex items-center justify-center gap-1.5"
+                className="brutal-btn flex-1 bg-sky-300 hover:bg-sky-400 text-black py-1.5 px-3 rounded text-xs flex items-center justify-center gap-1.5 font-bold"
               >
                 Live Demo <ArrowUpRight size={14} />
               </a>
@@ -106,6 +123,7 @@ export function ProjectCard({
                 href={githubUrl}
                 target="_blank"
                 rel="noopener noreferrer"
+                onClick={() => trackEvent('github_click', title)}
                 className="brutal-btn bg-white hover:bg-zinc-100 text-black p-1.5 rounded"
                 aria-label={`GitHub repo for ${title}`}
               >

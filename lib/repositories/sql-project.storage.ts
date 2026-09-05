@@ -13,9 +13,7 @@ import {
 export class SqlProjectStorage {
   async findAll(): Promise<Project[]> {
     const rows = await sql`
-      SELECT 
-        id, title, description, image, technologies, tags, github, demo,
-        "createdAt", "updatedAt"
+      SELECT *
       FROM "Project" 
       ORDER BY "createdAt" DESC
     `
@@ -24,9 +22,7 @@ export class SqlProjectStorage {
 
   async findById(id: string): Promise<Project | null> {
     const rows = await sql`
-      SELECT 
-        id, title, description, image, technologies, tags, github, demo,
-        "createdAt", "updatedAt"
+      SELECT *
       FROM "Project" 
       WHERE id = ${id}
       LIMIT 1
@@ -37,9 +33,7 @@ export class SqlProjectStorage {
   async findByGithubUrl(githubUrl: string): Promise<Project | null> {
     const normalizedUrl = githubUrl.trim().toLowerCase().replace(/\/+$/, '')
     const rows = await sql`
-      SELECT 
-        id, title, description, image, technologies, tags, github, demo,
-        "createdAt", "updatedAt"
+      SELECT *
       FROM "Project" 
       WHERE LOWER(TRIM(TRAILING '/' FROM github)) = ${normalizedUrl}
       LIMIT 1

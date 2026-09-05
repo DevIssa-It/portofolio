@@ -4,7 +4,8 @@ import { TerminalWidget } from '@/components/bento/TerminalWidget'
 import { GitHubWidget } from '@/components/bento/GitHubWidget'
 import { LofiPlayerWidget } from '@/components/bento/LofiPlayerWidget'
 import { WeatherWidget } from '@/components/bento/WeatherWidget'
-import { Sparkles, Code2 } from 'lucide-react'
+import { GithubContributionWidget } from '@/components/micro/GithubContributionWidget'
+import { Code2 } from 'lucide-react'
 
 export function BentoSection() {
   return (
@@ -74,6 +75,11 @@ export function BentoSection() {
             <div className="text-[11px] text-zinc-800 font-sans border-t border-black/10 pt-2 font-medium">
               Focus: Reactive interfaces, strict type safety, modular micro-components.
             </div>
+          </div>
+
+          {/* Live GitHub Contribution Matrix (Spans 12 cols on lg) */}
+          <div className="lg:col-span-12">
+            <GithubContributionWidget />
           </div>
         </div>
       </div>

@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { Menu, X, ArrowUpRight } from 'lucide-react'
+import { Menu, X, ArrowUpRight, Command } from 'lucide-react'
 import { useScrollSpy } from '@/lib/hooks/useScrollSpy'
 import { cn } from '@/lib/utils'
 
@@ -18,26 +18,24 @@ export default function Navbar() {
   const scrollActiveId = useScrollSpy(NAV_ITEMS.map((n) => n.id))
   const [activeTab, setActiveTab] = useState<string>('hero')
 
-  // Keep activeTab synced with scrollActiveId when scrolling
   useEffect(() => {
-    if (scrollActiveId) {
-      setActiveTab(scrollActiveId)
-    }
+    if (scrollActiveId) setActiveTab(scrollActiveId)
   }, [scrollActiveId])
 
   const handleScrollTo = (id: string) => {
     setMobileOpen(false)
     setActiveTab(id)
-    const element = document.getElementById(id)
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' })
-    }
+    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' })
+  }
+
+  const triggerCommandPalette = () => {
+    setMobileOpen(false)
+    window.dispatchEvent(new CustomEvent('open-command-palette'))
   }
 
   return (
     <header className="sticky top-4 inset-x-0 z-50 flex justify-center px-6 pointer-events-none">
       <nav className="pointer-events-auto brutal-card bg-white px-3 py-2 flex items-center gap-4 transition-all">
-        {/* Brand */}
         <button
           onClick={() => handleScrollTo('hero')}
           className="flex items-center gap-2 pl-2 text-left"
@@ -48,29 +46,32 @@ export default function Navbar() {
           </span>
         </button>
 
-        {/* Desktop Links */}
         <div className="hidden md:flex items-center gap-1 border-l-2 border-black pl-3">
-          {NAV_ITEMS.map((item) => {
-            const isActive = activeTab === item.id
-            return (
-              <button
-                key={item.id}
-                onClick={() => handleScrollTo(item.id)}
-                className={cn(
-                  'px-3 py-1 text-xs font-bold font-mono rounded transition-colors',
-                  isActive
-                    ? 'bg-black text-sky-300'
-                    : 'text-black hover:bg-sky-100'
-                )}
-              >
-                {item.label}
-              </button>
-            )
-          })}
+          {NAV_ITEMS.map((item) => (
+            <button
+              key={item.id}
+              onClick={() => handleScrollTo(item.id)}
+              className={cn(
+                'px-3 py-1 text-xs font-bold font-mono rounded transition-colors',
+                activeTab === item.id ? 'bg-black text-sky-300' : 'text-black hover:bg-sky-100'
+              )}
+            >
+              {item.label}
+            </button>
+          ))}
         </div>
 
-        {/* Action Button & Mobile Trigger */}
         <div className="flex items-center gap-2">
+          <button
+            type="button"
+            onClick={triggerCommandPalette}
+            aria-label="Open Command Palette"
+            className="hidden sm:inline-flex items-center gap-1.5 px-2.5 py-1 text-xs font-mono font-bold bg-zinc-100 hover:bg-zinc-200 text-black border-2 border-black rounded shadow-[2px_2px_0px_0px_#000] active:translate-x-0.5 active:translate-y-0.5 transition-all"
+          >
+            <Command size={12} />
+            <span>Cmd+K</span>
+          </button>
+
           <button
             onClick={() => handleScrollTo('contact')}
             className="hidden sm:inline-flex items-center gap-1 brutal-btn bg-sky-300 hover:bg-sky-400 text-black px-3.5 py-1 text-xs rounded-md"
@@ -88,9 +89,16 @@ export default function Navbar() {
         </div>
       </nav>
 
-      {/* Mobile Drawer */}
       {mobileOpen && (
         <div className="pointer-events-auto md:hidden fixed top-20 inset-x-6 brutal-card bg-sky-50 p-4 space-y-2 z-50">
+          <button
+            type="button"
+            onClick={triggerCommandPalette}
+            className="w-full text-left p-2 text-xs font-bold font-mono rounded border-2 border-black bg-zinc-100 text-black flex items-center justify-between shadow-[2px_2px_0px_0px_#000]"
+          >
+            <span className="flex items-center gap-2"><Command size={14} /> Quick Search</span>
+            <span className="text-[10px] bg-white px-1.5 py-0.5 border border-black rounded">Ctrl+K</span>
+          </button>
           {NAV_ITEMS.map((item) => (
             <button
               key={item.id}

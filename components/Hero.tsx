@@ -1,9 +1,11 @@
 'use client'
 
-import { motion } from 'framer-motion'
 import { ArrowDown, Download, Github, Linkedin, Mail } from 'lucide-react'
+import { useAnalyticsTracker } from '@/lib/hooks/useAnalyticsTracker'
 
 export default function Hero() {
+  const { trackEvent } = useAnalyticsTracker()
+
   const scrollTo = (id: string) => {
     const element = document.getElementById(id)
     if (element) element.scrollIntoView({ behavior: 'smooth' })
@@ -12,7 +14,6 @@ export default function Hero() {
   return (
     <section id="hero" className="pt-16 pb-20 px-6">
       <div className="max-w-7xl mx-auto space-y-10">
-        {/* Eyebrow Sticker */}
         <div className="flex items-center gap-3">
           <span className="brutal-badge bg-emerald-300 text-black px-3 py-1 text-xs font-mono font-black uppercase">
             Available for Developer Roles & Internships
@@ -22,7 +23,6 @@ export default function Hero() {
           </span>
         </div>
 
-        {/* Big Punchy Headline */}
         <div className="max-w-5xl space-y-6">
           <h1 className="text-4xl sm:text-6xl lg:text-7xl font-black tracking-tight text-black leading-[1.06] uppercase">
             Crafting High-Performance Web Apps & Modern Interfaces.
@@ -33,7 +33,6 @@ export default function Hero() {
           </p>
         </div>
 
-        {/* Action Row */}
         <div className="flex flex-wrap items-center gap-4 pt-2">
           <button
             onClick={() => scrollTo('projects')}
@@ -44,6 +43,7 @@ export default function Hero() {
           <a
             href="/resume.pdf"
             download
+            onClick={() => trackEvent('cv_download')}
             className="brutal-btn inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-white text-black text-sm"
           >
             <Download size={16} /> Download Resume
@@ -54,6 +54,7 @@ export default function Hero() {
               href="https://github.com/DevIssa-It"
               target="_blank"
               rel="noopener noreferrer"
+              onClick={() => trackEvent('github_click', 'DevIssa-It')}
               className="brutal-btn p-2.5 rounded-lg bg-white text-black"
               aria-label="GitHub Profile"
             >
@@ -70,6 +71,7 @@ export default function Hero() {
             </a>
             <a
               href="mailto:ahmadissadurrofiq17@gmail.com"
+              onClick={() => trackEvent('contact_copied')}
               className="brutal-btn p-2.5 rounded-lg bg-white text-black"
               aria-label="Send Email"
             >
@@ -78,7 +80,6 @@ export default function Hero() {
           </div>
         </div>
 
-        {/* Fact Cards (Cyan, Orange, Emerald, No Yellow) */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-5 pt-4">
           <div className="brutal-card bg-sky-100 p-5 space-y-2">
             <span className="font-mono text-xs font-black uppercase tracking-wider text-black block">

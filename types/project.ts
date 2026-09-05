@@ -3,6 +3,8 @@
  * Single Source of Truth (SSOT) for Project entities
  */
 
+export type ProjectCategory = 'all' | 'enterprise' | 'web-app' | 'api-tool' | 'open-source'
+
 export interface Project {
   id: string
   title: string
@@ -14,6 +16,11 @@ export interface Project {
   demo: string
   createdAt?: string
   updatedAt?: string
+  category?: ProjectCategory
+  role?: string
+  problemStatement?: string
+  architectureSolution?: string
+  keyMetrics?: string[]
 }
 
 export type CreateProjectInput = Omit<Project, 'id' | 'updatedAt'> & {
@@ -35,6 +42,11 @@ export interface GitHubSyncPayload {
   tags: string[]
   image?: string
   createdAt?: string
+  category?: ProjectCategory
+  role?: string
+  problemStatement?: string
+  architectureSolution?: string
+  keyMetrics?: string[]
 }
 
 export interface SyncResult {

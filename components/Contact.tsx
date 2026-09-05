@@ -2,14 +2,17 @@
 
 import { useState } from 'react'
 import { Send, CheckCircle, Github, Linkedin, Copy, Check } from 'lucide-react'
+import { useAnalyticsTracker } from '@/lib/hooks/useAnalyticsTracker'
 
 export default function Contact() {
   const [copied, setCopied] = useState(false)
   const [status, setStatus] = useState<'idle' | 'submitting' | 'success'>('idle')
+  const { trackEvent } = useAnalyticsTracker()
   const email = 'ahmadissadurrofiq17@gmail.com'
 
   const copyEmail = () => {
     navigator.clipboard.writeText(email)
+    trackEvent('contact_copied')
     setCopied(true)
     setTimeout(() => setCopied(false), 2000)
   }
@@ -31,7 +34,6 @@ export default function Contact() {
   return (
     <section id="contact" className="py-20 px-6 border-t-2 border-black bg-[#f8fafc]">
       <div className="max-w-7xl mx-auto space-y-10">
-        {/* Section Header */}
         <div className="space-y-2 border-b-2 border-black/10 pb-4">
           <span className="brutal-badge inline-block bg-pink-300 text-black px-3 py-1 text-xs uppercase tracking-wider font-mono">
             {'// 04. Get In Touch'}
@@ -42,13 +44,11 @@ export default function Contact() {
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10">
-          {/* Left Column: Direct Info & Copy Email */}
           <div className="lg:col-span-5 space-y-6">
             <p className="text-sm text-zinc-800 leading-relaxed font-medium">
               Currently looking for developer opportunities, internships, and collaborative web projects. Click to copy my email or send an inquiry directly.
             </p>
 
-            {/* Click to Copy Card */}
             <div className="brutal-card bg-sky-100 p-5 space-y-2">
               <span className="font-mono text-xs font-black uppercase tracking-wider text-black block">
                 Direct Email
@@ -66,12 +66,12 @@ export default function Contact() {
               {copied && <span className="text-[11px] font-mono text-emerald-800 font-bold block">Copied to clipboard!</span>}
             </div>
 
-            {/* Social Buttons */}
             <div className="flex items-center gap-3 pt-2">
               <a
                 href="https://github.com/DevIssa-It"
                 target="_blank"
                 rel="noopener noreferrer"
+                onClick={() => trackEvent('github_click', 'DevIssa-It')}
                 className="brutal-btn flex-1 flex items-center justify-center gap-2 py-2.5 px-4 rounded bg-white text-black text-xs"
               >
                 <Github size={16} /> GitHub
@@ -87,7 +87,6 @@ export default function Contact() {
             </div>
           </div>
 
-          {/* Right Column: Form */}
           <div className="lg:col-span-7">
             <form onSubmit={handleSubmit} className="brutal-card bg-white p-6 sm:p-7 space-y-4">
               <div>

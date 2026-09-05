@@ -15,6 +15,7 @@ const jetbrainsMono = JetBrains_Mono({
 })
 
 export const metadata: Metadata = {
+  metadataBase: new URL(process.env.NEXTAUTH_URL || 'http://localhost:3000'),
   title: 'A. Issadurrofiq Jaya Utama - Frontend & Software Developer',
   description: 'Information Technology student at Brawijaya University crafting high-performance web applications with React, Next.js, and modern TypeScript.',
   keywords: ['frontend developer', 'react.js', 'vue.js', 'next.js', 'typescript', 'web developer', 'portfolio', 'brawijaya university', 'software engineer'],
@@ -24,6 +25,7 @@ export const metadata: Metadata = {
     description: 'Information Technology student at Brawijaya University crafting high-performance web applications.',
     url: 'https://github.com/DevIssa-It',
     siteName: 'A. Issadurrofiq Portfolio',
+    images: [{ url: '/api/og', width: 1200, height: 630, alt: 'A. Issadurrofiq Jaya Utama Portfolio' }],
     locale: 'en_US',
     type: 'website',
   },
@@ -31,6 +33,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'A. Issadurrofiq Jaya Utama - Frontend & Software Developer',
     description: 'Crafting responsive, high-performance web applications',
+    images: ['/api/og'],
   },
   robots: {
     index: true,

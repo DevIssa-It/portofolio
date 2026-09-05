@@ -77,6 +77,11 @@ export class JsonProjectStorage {
       demo: data.demo || '',
       createdAt: data.createdAt || now,
       updatedAt: now,
+      category: data.category,
+      role: data.role,
+      problemStatement: data.problemStatement,
+      architectureSolution: data.architectureSolution,
+      keyMetrics: data.keyMetrics,
     }
 
     list.unshift(newProject)

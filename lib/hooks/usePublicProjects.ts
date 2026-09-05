@@ -1,6 +1,6 @@
 import { useState, useEffect, useMemo } from 'react'
 import { getProjects } from '@/lib/services/project.service'
-import { Project } from '@/types/project'
+import { Project, ProjectCategory } from '@/types/project'
 
 export function usePublicProjects(initialDisplayCount = 6) {
   const [projects, setProjects] = useState<Project[]>([])
@@ -8,6 +8,7 @@ export function usePublicProjects(initialDisplayCount = 6) {
   const [showAll, setShowAll] = useState(false)
   const [searchTerm, setSearchTerm] = useState('')
   const [selectedTech, setSelectedTech] = useState('All')
+  const [selectedCategory, setSelectedCategory] = useState<ProjectCategory>('all')
   const [sortOrder, setSortOrder] = useState<'newest' | 'oldest'>('newest')
 
   useEffect(() => {
@@ -43,7 +44,9 @@ export function usePublicProjects(initialDisplayCount = 6) {
         project.description.toLowerCase().includes(searchTerm.toLowerCase())
       const matchTech =
         selectedTech === 'All' || project.technologies?.includes(selectedTech)
-      return matchText && matchTech
+      const matchCategory =
+        selectedCategory === 'all' || project.category === selectedCategory
+      return matchText && matchTech && matchCategory
     })
 
     return list.sort((a, b) => {
@@ -51,7 +54,7 @@ export function usePublicProjects(initialDisplayCount = 6) {
       const timeB = b.createdAt ? new Date(b.createdAt).getTime() : 0
       return sortOrder === 'newest' ? timeB - timeA : timeA - timeB
     })
-  }, [projects, searchTerm, selectedTech, sortOrder])
+  }, [projects, searchTerm, selectedTech, selectedCategory, sortOrder])
 
   const displayedProjects = showAll
     ? filteredProjects
@@ -59,6 +62,7 @@ export function usePublicProjects(initialDisplayCount = 6) {
 
   return {
     projects: displayedProjects,
+    rawProjects: projects,
     totalFiltered: filteredProjects.length,
     allTechnologies,
     loading,
@@ -66,6 +70,8 @@ export function usePublicProjects(initialDisplayCount = 6) {
     setSearchTerm,
     selectedTech,
     setSelectedTech,
+    selectedCategory,
+    setSelectedCategory,
     showAll,
     setShowAll,
     sortOrder,
