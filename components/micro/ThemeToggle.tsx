@@ -5,30 +5,51 @@ import { Sun, Moon } from 'lucide-react'
 
 export function ThemeToggle() {
   const [isDark, setIsDark] = useState(false)
+  const [mounted, setMounted] = useState(false)
 
   useEffect(() => {
-    const isDarkMode = document.documentElement.classList.contains('dark')
-    setIsDark(isDarkMode)
+    setMounted(true)
+    const active = document.documentElement.classList.contains('dark')
+    setIsDark(active)
   }, [])
 
   const toggleTheme = () => {
-    const nextDark = !isDark
-    setIsDark(nextDark)
+    const isCurrentlyDark = document.documentElement.classList.contains('dark')
+    const nextDark = !isCurrentlyDark
+    
     if (nextDark) {
       document.documentElement.classList.add('dark')
-      localStorage.setItem('theme', 'dark')
+      try { localStorage.setItem('theme', 'dark') } catch {}
     } else {
       document.documentElement.classList.remove('dark')
-      localStorage.setItem('theme', 'light')
+      try { localStorage.setItem('theme', 'light') } catch {}
     }
+    
+    setIsDark(nextDark)
+  }
+
+  if (!mounted) {
+    return (
+      <button
+        type="button"
+        aria-label="Toggle light/dark theme"
+        className="brutal-btn inline-flex items-center gap-1.5 px-2.5 py-1 rounded text-[11px] font-mono font-bold bg-white text-black border-2 border-black shadow-[2px_2px_0px_0px_#000]"
+      >
+        <Moon size={13} />
+        <span>DARK</span>
+      </button>
+    )
   }
 
   return (
     <button
       type="button"
-      suppressHydrationWarning
       onClick={toggleTheme}
-      className="brutal-btn inline-flex items-center gap-1.5 px-2.5 py-1 rounded text-[11px] font-mono font-bold bg-white text-black hover:bg-sky-50 border-2 border-black shadow-[2px_2px_0px_0px_#000] dark:bg-zinc-900 dark:text-sky-300 dark:border-sky-400 dark:shadow-[2px_2px_0px_0px_#38bdf8]"
+      className={`brutal-btn inline-flex items-center gap-1.5 px-2.5 py-1 rounded text-[11px] font-mono font-bold border-2 transition-all ${
+        isDark
+          ? 'bg-[#0f141f] text-sky-300 border-sky-400 shadow-[2px_2px_0px_0px_#0284c7] hover:bg-[#162032]'
+          : 'bg-white text-black border-black shadow-[2px_2px_0px_0px_#000] hover:bg-sky-50'
+      }`}
       aria-label="Toggle light/dark theme"
     >
       {isDark ? <Sun size={13} className="text-sky-400" /> : <Moon size={13} />}

@@ -27,11 +27,11 @@
   }
 
   .dark {
-    --background: 222 47% 4%;
+    --background: 224 71% 4%;
     --foreground: 210 40% 98%;
-    --card: 222 47% 8%;
+    --card: 222 47% 9%;
     --card-foreground: 210 40% 98%;
-    --popover: 222 47% 8%;
+    --popover: 222 47% 9%;
     --popover-foreground: 210 40% 98%;
     --primary: 199 89% 58%;
     --primary-foreground: 0 0% 0%;
@@ -122,4 +122,191 @@
     box-shadow: 2px 2px 0px 0px #000000;
     font-weight: 600;
   }
+}
+
+/* ==========================================================================
+   NEO-BRUTALIST DARK MODE ARCHITECTURE (High-Contrast Sky Blue & Emerald)
+   ========================================================================== */
+
+html.dark {
+  color-scheme: dark;
+  background-color: #07090e;
+}
+
+html.dark body {
+  background-color: #07090e !important;
+  color: #f8fafc !important;
+}
+
+/* Canvas background overrides */
+html.dark .bg-\[\#f8fafc\] {
+  background-color: #07090e !important;
+}
+
+/* Card & Surface dark mode transforms */
+html.dark .bg-white {
+  background-color: #0f141f !important;
+  color: #f1f5f9 !important;
+}
+
+html.dark .bg-zinc-50 {
+  background-color: #141b29 !important;
+}
+
+html.dark .bg-zinc-100 {
+  background-color: #192233 !important;
+  color: #f1f5f9 !important;
+}
+
+html.dark .bg-sky-50 {
+  background-color: #0c1827 !important;
+}
+
+/* Typography High-Contrast in Dark Mode */
+html.dark .text-black {
+  color: #f8fafc !important;
+}
+
+html.dark .text-zinc-900 {
+  color: #f8fafc !important;
+}
+
+html.dark .text-zinc-800 {
+  color: #e2e8f0 !important;
+}
+
+html.dark .text-zinc-700 {
+  color: #cbd5e1 !important;
+}
+
+html.dark .text-zinc-600 {
+  color: #94a3b8 !important;
+}
+
+html.dark .text-zinc-500 {
+  color: #94a3b8 !important;
+}
+
+html.dark .text-zinc-400 {
+  color: #64748b !important;
+}
+
+/* Border System High-Contrast in Dark Mode */
+html.dark .border-black {
+  border-color: #38bdf8 !important;
+}
+
+html.dark .border-black\/10,
+html.dark .border-black\/20,
+html.dark .border-black\/30 {
+  border-color: rgba(56, 189, 248, 0.25) !important;
+}
+
+/* Neo-Brutalist Glowing Shadows & Elevation in Dark Mode */
+html.dark .brutal-card {
+  border: 2px solid #38bdf8 !important;
+  box-shadow: 4px 4px 0px 0px #0284c7 !important;
+  background-color: #0f141f;
+}
+
+html.dark .brutal-card-sm {
+  border: 2px solid #38bdf8 !important;
+  box-shadow: 3px 3px 0px 0px #0284c7 !important;
+}
+
+html.dark .brutal-card-hover:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0px 0px #38bdf8 !important;
+}
+
+html.dark .brutal-btn {
+  border-color: #38bdf8 !important;
+  box-shadow: 3px 3px 0px 0px #0284c7 !important;
+}
+
+html.dark .brutal-btn:hover {
+  box-shadow: 4px 4px 0px 0px #38bdf8 !important;
+}
+
+html.dark .brutal-badge {
+  border-color: #38bdf8 !important;
+  box-shadow: 2px 2px 0px 0px #0284c7 !important;
+}
+
+/* Arbitrary shadow overrides */
+html.dark [class*="shadow-["][class*="#000]"] {
+  box-shadow: 3px 3px 0px 0px #0284c7 !important;
+}
+
+/* Color Accents (Maintain Vivid Pop & Dark Legibility) */
+html.dark .bg-sky-300,
+html.dark .bg-sky-400 {
+  background-color: #38bdf8 !important;
+  color: #07090e !important;
+}
+
+html.dark .bg-sky-200 {
+  background-color: #0369a1 !important;
+  color: #f8fafc !important;
+}
+
+html.dark .bg-emerald-300,
+html.dark .bg-emerald-400 {
+  background-color: #34d399 !important;
+  color: #07090e !important;
+}
+
+html.dark .bg-emerald-200 {
+  background-color: #065f46 !important;
+  color: #f8fafc !important;
+}
+
+/* Bento colored cards dark adaptation */
+html.dark .bg-orange-100 {
+  background-color: #26150b !important;
+  color: #fed7aa !important;
+}
+
+html.dark .bg-purple-100 {
+  background-color: #230f40 !important;
+  color: #e9d5ff !important;
+}
+
+html.dark .bg-emerald-100 {
+  background-color: #062e21 !important;
+  color: #a7f3d0 !important;
+}
+
+html.dark .bg-sky-100 {
+  background-color: #082236 !important;
+  color: #bae6fd !important;
+}
+
+/* Inputs & Form Controls */
+html.dark input:not([type="checkbox"]):not([type="radio"]),
+html.dark textarea,
+html.dark select {
+  background-color: #141b29 !important;
+  color: #f8fafc !important;
+  border-color: #38bdf8 !important;
+}
+
+html.dark input::placeholder,
+html.dark textarea::placeholder {
+  color: #64748b !important;
+}
+
+/* Scrollbar dark mode */
+html.dark ::-webkit-scrollbar-track {
+  background: #07090e;
+  border-left: 2px solid #38bdf8;
+}
+
+html.dark ::-webkit-scrollbar-thumb {
+  background: #38bdf8;
+  border: 2px solid #07090e;
+}
+
+html.dark ::-webkit-scrollbar-thumb:hover {
+  background: #0284c7;
 }

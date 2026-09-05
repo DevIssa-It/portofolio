@@ -10,7 +10,7 @@ import { CommandPalette } from '@/components/micro/CommandPalette'
 
 export default function Home() {
   return (
-    <div className="min-h-screen bg-[#f8fafc] text-black">
+    <div className="min-h-screen bg-[#f8fafc] dark:bg-[#07090e] text-black dark:text-slate-100 transition-colors duration-200">
       <Navbar />
       <main className="relative z-10">
         <Hero />
