@@ -23,7 +23,7 @@ export function AdminSidebar({ onLogout }: AdminSidebarProps) {
       href: ROUTES.ADMIN_DASHBOARD,
     },
     {
-      label: 'Profile & Experience',
+      label: 'Profile & Resume',
       icon: GraduationCap,
       href: '/admin-dashboard/profile',
     },

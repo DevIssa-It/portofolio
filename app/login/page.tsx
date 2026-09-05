@@ -1,20 +1,17 @@
 'use client'
+
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { motion } from 'framer-motion'
-import { Button } from '@/components/ui/button'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-import { UsernameInput } from '@/components/admin/UsernameInput'
-import { PasswordInput } from '@/components/admin/PasswordInput'
-import { ErrorAlert } from '@/components/admin/ErrorAlert'
-import { Sparkles, Lock, Home, ArrowLeft } from 'lucide-react'
+import { Lock, ArrowLeft, Mail, Eye, EyeOff, ShieldCheck } from 'lucide-react'
 import { loginUser } from '@/lib/services/auth.service'
 import { ROUTES } from '@/lib/constants/api'
 
 export default function AdminLogin() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [showPassword, setShowPassword] = useState(false)
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
   const router = useRouter()
@@ -26,150 +23,124 @@ export default function AdminLogin() {
 
     try {
       const result = await loginUser({ email, password })
-
       if (!result.success) {
-        setError(result.error || 'Login failed')
+        setError(result.error || 'Invalid email or password')
       } else {
         router.push(ROUTES.ADMIN_DASHBOARD)
       }
-    } catch (error) {
-      setError('An error occurred. Please try again.')
+    } catch {
+      setError('An error occurred during authentication. Please try again.')
     } finally {
       setLoading(false)
     }
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-zinc-950 via-zinc-900 to-zinc-950 flex items-center justify-center px-4 relative overflow-hidden">
-      {/* Animated Background Elements */}
-      <div className="absolute inset-0 overflow-hidden">
-        <motion.div
-          className="absolute top-20 left-20 w-72 h-72 bg-primary/10 rounded-full blur-3xl"
-          animate={{
-            scale: [1, 1.2, 1],
-            opacity: [0.3, 0.5, 0.3],
-          }}
-          transition={{
-            duration: 8,
-            repeat: Infinity,
-            ease: 'easeInOut',
-          }}
-        />
-        <motion.div
-          className="absolute bottom-20 right-20 w-96 h-96 bg-secondary/10 rounded-full blur-3xl"
-          animate={{
-            scale: [1.2, 1, 1.2],
-            opacity: [0.5, 0.3, 0.5],
-          }}
-          transition={{
-            duration: 10,
-            repeat: Infinity,
-            ease: 'easeInOut',
-          }}
-        />
-      </div>
-
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
-        className="max-w-md w-full relative z-10"
-      >
-        {/* Back to Home Button */}
-        <motion.div
-          initial={{ opacity: 0, x: -20 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ delay: 0.3 }}
-          className="mb-6"
+    <div className="min-h-screen bg-[#f8fafc] text-black flex items-center justify-center p-6 relative">
+      <div className="max-w-md w-full space-y-6">
+        <Link
+          href="/"
+          className="brutal-btn inline-flex items-center gap-2 px-3.5 py-1.5 rounded-lg bg-white border-2 border-black text-xs font-mono font-bold shadow-[2px_2px_0px_0px_#000]"
         >
-          <Link href="/">
-            <Button
-              variant="ghost"
-              className="gap-2 text-zinc-400 hover:text-white hover:bg-zinc-800/50"
-            >
-              <ArrowLeft size={18} />
-              Back to Portfolio
-            </Button>
-          </Link>
-        </motion.div>
+          <ArrowLeft size={14} /> Back to Portfolio
+        </Link>
 
-        {/* Header */}
-        <div className="text-center mb-8">
-          <motion.div
-            initial={{ scale: 0 }}
-            animate={{ scale: 1 }}
-            transition={{ delay: 0.2, type: 'spring', stiffness: 200 }}
-            className="inline-flex items-center justify-center w-16 h-16 bg-primary/10 rounded-2xl mb-4"
-          >
-            <Lock className="text-primary" size={32} />
-          </motion.div>
-          <h1 className="text-4xl font-bold text-white mb-2 flex items-center justify-center gap-2">
-            Admin Portal
-            <Sparkles className="text-primary" size={24} />
-          </h1>
-          <p className="text-zinc-400">Manage your portfolio dashboard</p>
-        </div>
-
-        {/* Login Card */}
-        <Card className="backdrop-blur-xl bg-zinc-900/50 border-zinc-800">
-          <CardHeader>
-            <CardTitle>Welcome Back</CardTitle>
-            <CardDescription>Enter your credentials to access the admin panel</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <form onSubmit={handleLogin} className="space-y-6">
-              {error && <ErrorAlert message={error} onClose={() => setError('')} />}
-
-              <UsernameInput
-                label="Email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="admin@example.com"
-                required
-              />
-
-              <PasswordInput
-                label="Password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                placeholder="Enter your password"
-                required
-              />
-
-              <Button type="submit" className="w-full" size="lg" disabled={loading}>
-                {loading ? (
-                  <motion.div
-                    className="flex items-center gap-2"
-                    animate={{ opacity: [1, 0.5, 1] }}
-                    transition={{ duration: 1.5, repeat: Infinity }}
-                  >
-                    <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
-                    Signing in...
-                  </motion.div>
-                ) : (
-                  'Sign In'
-                )}
-              </Button>
-            </form>
-
-            <div className="mt-6 pt-6 border-t border-zinc-800">
-              <p className="text-xs text-center text-zinc-500">
-                This is a secure admin area. Unauthorized access is prohibited.
-              </p>
+        <motion.div
+          initial={{ opacity: 0, y: 12 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="brutal-card bg-white border-2 border-black shadow-[6px_6px_0px_0px_#000] rounded-xl p-8 space-y-6"
+        >
+          <div className="space-y-2 pb-4 border-b-2 border-black">
+            <div className="flex items-center justify-between">
+              <span className="brutal-badge bg-sky-300 text-black px-2.5 py-0.5 text-[11px] font-mono font-bold uppercase">
+                {'// Control Room'}
+              </span>
+              <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 border border-black shadow-[1px_1px_0px_0px_#000]" />
             </div>
-          </CardContent>
-        </Card>
+            <h1 className="text-2xl font-black font-mono tracking-tight text-black uppercase flex items-center gap-2">
+              <Lock size={22} /> Admin Console
+            </h1>
+            <p className="text-xs font-mono text-zinc-600">
+              Enter administrative credentials to manage portfolio catalog and assets.
+            </p>
+          </div>
 
-        {/* Footer Note */}
-        <motion.p
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.5 }}
-          className="text-center text-xs text-zinc-600 mt-6"
-        >
-          Protected by end-to-end encryption
-        </motion.p>
-      </motion.div>
+          {error && (
+            <div className="p-3 bg-red-100 border-2 border-black text-red-900 rounded-lg text-xs font-mono font-bold shadow-[2px_2px_0px_0px_#000]">
+              {error}
+            </div>
+          )}
+
+          <form onSubmit={handleLogin} className="space-y-4">
+            <div className="space-y-1.5">
+              <label className="text-xs font-mono font-bold text-black uppercase block">
+                Email Address
+              </label>
+              <div className="relative">
+                <Mail className="absolute left-3.5 top-1/2 -translate-y-1/2 text-black" size={15} />
+                <input
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="admin@example.com"
+                  required
+                  className="w-full bg-white border-2 border-black rounded-lg pl-10 pr-3.5 py-2.5 text-xs font-mono text-black shadow-[2px_2px_0px_0px_#000] focus:outline-none focus:bg-sky-50"
+                />
+              </div>
+            </div>
+
+            <div className="space-y-1.5">
+              <label className="text-xs font-mono font-bold text-black uppercase block">
+                Password
+              </label>
+              <div className="relative">
+                <Lock className="absolute left-3.5 top-1/2 -translate-y-1/2 text-black" size={15} />
+                <input
+                  type={showPassword ? 'text' : 'password'}
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  placeholder="Enter administrator password"
+                  required
+                  className="w-full bg-white border-2 border-black rounded-lg pl-10 pr-12 py-2.5 text-xs font-mono text-black shadow-[2px_2px_0px_0px_#000] focus:outline-none focus:bg-sky-50"
+                />
+                <button
+                  type="button"
+                  suppressHydrationWarning
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute right-3.5 top-1/2 -translate-y-1/2 text-black hover:text-zinc-600 text-xs font-mono font-bold"
+                  aria-label={showPassword ? 'Hide password' : 'Show password'}
+                >
+                  {showPassword ? <EyeOff size={15} /> : <Eye size={15} />}
+                </button>
+              </div>
+            </div>
+
+            <button
+              type="submit"
+              disabled={loading}
+              className="brutal-btn w-full mt-2 py-3 bg-sky-300 hover:bg-sky-400 text-black font-mono font-black text-xs uppercase border-2 border-black shadow-[3px_3px_0px_0px_#000] rounded-lg disabled:opacity-50 flex items-center justify-center gap-2"
+            >
+              {loading ? (
+                <>
+                  <div className="w-4 h-4 border-2 border-black border-t-transparent rounded-full animate-spin" />
+                  <span>Authenticating...</span>
+                </>
+              ) : (
+                <>
+                  <ShieldCheck size={16} />
+                  <span>Authenticate Session</span>
+                </>
+              )}
+            </button>
+          </form>
+
+          <div className="pt-2 border-t-2 border-black/10 text-center">
+            <span className="text-[11px] font-mono text-zinc-600 block">
+              {'// Authorized personnel only • Universitas Brawijaya'}
+            </span>
+          </div>
+        </motion.div>
+      </div>
     </div>
   )
 }
