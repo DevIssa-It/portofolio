@@ -86,7 +86,17 @@ async function createTables() {
         "updatedAt" TIMESTAMP DEFAULT NOW()
       )
     `;
-    console.log('[SUCCESS] Experience table created\n');
+    // Create ResumeAsset table
+    await sql`
+      CREATE TABLE IF NOT EXISTS "ResumeAsset" (
+        id TEXT PRIMARY KEY,
+        filename TEXT NOT NULL,
+        data TEXT NOT NULL,
+        size INTEGER NOT NULL,
+        "updatedAt" TIMESTAMP DEFAULT NOW()
+      )
+    `;
+    console.log('[SUCCESS] ResumeAsset table created\n');
 
     console.log('[SUCCESS] All tables created successfully.');
     console.log('\n[INFO] Next step: Run "npm run migrate-data" to import data from JSON files');

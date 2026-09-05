@@ -1,21 +1,17 @@
 /**
  * API Route: /api/resume
- * Handles CV / Resume metadata, download streaming, and administrative updates.
- * Serverless-compatible with Neon PostgreSQL persistence and zero-cache streaming.
+ * Handles CV / Resume metadata, binary streaming, and administrative updates.
+ * Serverless-native persistence via Neon PostgreSQL.
  */
 
 import { NextRequest, NextResponse } from 'next/server'
 import { getServerSession } from 'next-auth'
 import { authOptions } from '@/lib/auth'
 import { sql, isDatabaseAvailable } from '@/lib/db'
-import { stat, writeFile, readFile } from 'fs/promises'
-import { existsSync } from 'fs'
-import path from 'path'
 
 export const dynamic = 'force-dynamic'
 export const revalidate = 0
 
-const RESUME_FILE_PATH = path.join(process.cwd(), 'public', 'resume.pdf')
 const MAX_FILE_SIZE = 15 * 1024 * 1024 // 15MB
 
 async function ensureTable() {
@@ -30,7 +26,7 @@ async function ensureTable() {
       )
     `
   } catch (err) {
-    console.warn('ResumeAsset table check:', err)
+    console.warn('ResumeAsset table check failed:', err)
   }
 }
 
@@ -41,92 +37,57 @@ export async function GET(request: NextRequest) {
     const isDownload = searchParams.get('download') === 'true'
 
     const dbReady = await isDatabaseAvailable()
-
-    if (dbReady) {
-      try {
-        await ensureTable()
-        const rows = await sql`SELECT * FROM "ResumeAsset" WHERE id = 'active_resume' LIMIT 1`
-        if (rows.length > 0) {
-          const row = rows[0]
-          if (isDownload) {
-            const buffer = Buffer.from(row.data, 'base64')
-            return new NextResponse(buffer, {
-              headers: {
-                'Content-Type': 'application/pdf',
-                'Content-Disposition': `inline; filename="${row.filename || 'resume.pdf'}"`,
-                'Cache-Control': 'no-cache, no-store, must-revalidate, max-age=0',
-                'Pragma': 'no-cache',
-                'Expires': '0',
-              },
-            })
-          }
-          return NextResponse.json(
-            {
-              exists: true,
-              filename: row.filename,
-              path: '/api/resume?download=true',
-              size: row.size,
-              updatedAt: row.updatedAt,
-            },
-            {
-              headers: {
-                'Cache-Control': 'no-cache, no-store, must-revalidate, max-age=0',
-              },
-            }
-          )
-        }
-      } catch (dbErr) {
-        console.warn('Database resume error, falling back:', dbErr)
+    if (!dbReady) {
+      if (isDownload) {
+        return NextResponse.json({ error: 'Database unavailable' }, { status: 503 })
       }
+      return NextResponse.json({
+        exists: false,
+        filename: null,
+        path: '/api/resume?download=true',
+        size: 0,
+        updatedAt: null,
+      })
     }
+
+    await ensureTable()
+    const rows = await sql`SELECT * FROM "ResumeAsset" WHERE id = 'active_resume' LIMIT 1`
+
+    if (rows.length === 0) {
+      if (isDownload) {
+        return NextResponse.json({ error: 'No resume document uploaded yet' }, { status: 404 })
+      }
+      return NextResponse.json({
+        exists: false,
+        filename: null,
+        path: '/api/resume?download=true',
+        size: 0,
+        updatedAt: null,
+      })
+    }
+
+    const row = rows[0]
 
     if (isDownload) {
-      try {
-        if (existsSync(RESUME_FILE_PATH)) {
-          const fileBuffer = await readFile(RESUME_FILE_PATH)
-          return new NextResponse(fileBuffer, {
-            headers: {
-              'Content-Type': 'application/pdf',
-              'Content-Disposition': 'inline; filename="resume.pdf"',
-              'Cache-Control': 'no-cache, no-store, must-revalidate, max-age=0',
-            },
-          })
-        }
-      } catch {
-        // Ignore and fallback to redirect
-      }
-      return NextResponse.redirect(new URL('/resume.pdf', request.url))
-    }
-
-    try {
-      if (existsSync(RESUME_FILE_PATH)) {
-        const fileStat = await stat(RESUME_FILE_PATH)
-        return NextResponse.json(
-          {
-            exists: true,
-            filename: 'resume.pdf',
-            path: '/api/resume?download=true',
-            size: fileStat.size,
-            updatedAt: fileStat.mtime.toISOString(),
-          },
-          {
-            headers: {
-              'Cache-Control': 'no-cache, no-store, must-revalidate, max-age=0',
-            },
-          }
-        )
-      }
-    } catch {
-      // Ignore local filesystem error in serverless
+      const buffer = Buffer.from(row.data, 'base64')
+      return new NextResponse(buffer, {
+        headers: {
+          'Content-Type': 'application/pdf',
+          'Content-Disposition': `inline; filename="${row.filename || 'resume.pdf'}"`,
+          'Cache-Control': 'no-cache, no-store, must-revalidate, max-age=0',
+          'Pragma': 'no-cache',
+          'Expires': '0',
+        },
+      })
     }
 
     return NextResponse.json(
       {
         exists: true,
-        filename: 'resume.pdf',
+        filename: row.filename,
         path: '/api/resume?download=true',
-        size: 30395,
-        updatedAt: '2025-11-21T23:49:36.205Z',
+        size: row.size,
+        updatedAt: row.updatedAt,
       },
       {
         headers: {
@@ -135,18 +96,12 @@ export async function GET(request: NextRequest) {
       }
     )
   } catch (error) {
-    console.error('Safe fallback for resume:', error)
-    return NextResponse.json({
-      exists: true,
-      filename: 'resume.pdf',
-      path: '/api/resume?download=true',
-      size: 30395,
-      updatedAt: null,
-    })
+    console.error('Error fetching resume:', error)
+    return NextResponse.json({ error: 'Internal server error' }, { status: 500 })
   }
 }
 
-// POST - Upload and replace CV (Neon PostgreSQL + Local FS cache)
+// POST - Upload and replace CV in Neon PostgreSQL
 export async function POST(request: NextRequest) {
   try {
     const session = await getServerSession(authOptions)
@@ -175,26 +130,20 @@ export async function POST(request: NextRequest) {
     const base64Data = buffer.toString('base64')
 
     const dbReady = await isDatabaseAvailable()
-    if (dbReady) {
-      await ensureTable()
-      await sql`
-        INSERT INTO "ResumeAsset" (id, filename, data, size, "updatedAt")
-        VALUES ('active_resume', ${file.name}, ${base64Data}, ${file.size}, NOW())
-        ON CONFLICT (id) DO UPDATE SET
-          filename = EXCLUDED.filename,
-          data = EXCLUDED.data,
-          size = EXCLUDED.size,
-          "updatedAt" = NOW()
-      `
+    if (!dbReady) {
+      return NextResponse.json({ error: 'Database unavailable for storage' }, { status: 503 })
     }
 
-    try {
-      if (existsSync(path.dirname(RESUME_FILE_PATH))) {
-        await writeFile(RESUME_FILE_PATH, buffer)
-      }
-    } catch {
-      // Expected in serverless read-only filesystem
-    }
+    await ensureTable()
+    await sql`
+      INSERT INTO "ResumeAsset" (id, filename, data, size, "updatedAt")
+      VALUES ('active_resume', ${file.name}, ${base64Data}, ${file.size}, NOW())
+      ON CONFLICT (id) DO UPDATE SET
+        filename = EXCLUDED.filename,
+        data = EXCLUDED.data,
+        size = EXCLUDED.size,
+        "updatedAt" = NOW()
+    `
 
     return NextResponse.json({
       success: true,

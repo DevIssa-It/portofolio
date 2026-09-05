@@ -127,7 +127,7 @@ export function executePaletteAction(
     document.getElementById(action.target)?.scrollIntoView({ behavior: 'smooth' })
   } else if (action.type === 'cv') {
     trackEvent('cv_download')
-    window.open('/resume.pdf', '_blank')
+    window.open('/api/resume?download=true', '_blank')
   } else if (action.type === 'email') {
     navigator.clipboard.writeText('ahmadissadurrofiq17@gmail.com')
     trackEvent('contact_copied')

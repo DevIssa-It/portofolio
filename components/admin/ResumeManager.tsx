@@ -99,7 +99,7 @@ export function ResumeManager() {
         <div className="brutal-card bg-white border-2 border-black shadow-[4px_4px_0px_0px_#000] rounded-xl p-6 space-y-4">
           <div className="pb-3 border-b-2 border-black/10">
             <h3 className="text-sm font-black font-mono text-black uppercase">Upload New Version</h3>
-            <p className="text-[11px] font-mono text-zinc-600">Replaces public/resume.pdf immediately</p>
+            <p className="text-[11px] font-mono text-zinc-600">Replaces active CV document immediately</p>
           </div>
 
           <div
