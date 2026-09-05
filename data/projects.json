@@ -5,7 +5,9 @@
     "description": "Open source project on GitHub.",
     "image": "https://s0.wp.com/mshots/v1/https%3A%2F%2Fular-tangga-woad.vercel.app?w=800&h=500",
     "technologies": [
-      "TypeScript"
+      "TypeScript",
+      "Next.js",
+      "React.js"
     ],
     "tags": [
       "Open Source"
@@ -32,7 +34,9 @@
     "technologies": [
       "Next.js",
       "PostgreSQL",
-      "Prisma"
+      "Prisma",
+      "React.js",
+      "Tailwind CSS"
     ],
     "tags": [
       "Full Stack",
@@ -58,7 +62,11 @@
     "description": "Open source project on GitHub.",
     "image": "https://s0.wp.com/mshots/v1/https%3A%2F%2Fsbydev.vercel.app?w=800&h=500",
     "technologies": [
-      "TypeScript"
+      "TypeScript",
+      "Next.js",
+      "React.js",
+      "Tailwind CSS",
+      "Prisma"
     ],
     "tags": [
       "Open Source"
@@ -92,7 +100,11 @@
     "description": "Open source project on GitHub.",
     "image": "https://s0.wp.com/mshots/v1/https%3A%2F%2Festafet-usaha-ten.vercel.app?w=800&h=500",
     "technologies": [
-      "TypeScript"
+      "TypeScript",
+      "Next.js",
+      "React.js",
+      "Tailwind CSS",
+      "Framer Motion"
     ],
     "tags": [
       "Open Source"
@@ -109,7 +121,11 @@
     "description": "Open source project on GitHub.",
     "image": "https://s0.wp.com/mshots/v1/https%3A%2F%2Farcline-beta.vercel.app?w=800&h=500",
     "technologies": [
-      "TypeScript"
+      "TypeScript",
+      "Next.js",
+      "React.js",
+      "Tailwind CSS",
+      "Framer Motion"
     ],
     "tags": [
       "Open Source"
@@ -126,7 +142,9 @@
     "description": "Open source project on GitHub.",
     "image": "https://s0.wp.com/mshots/v1/https%3A%2F%2Fberita-kini-three.vercel.app?w=800&h=500",
     "technologies": [
-      "HTML"
+      "HTML",
+      "Tailwind CSS",
+      "TypeScript"
     ],
     "tags": [
       "Open Source"
@@ -143,7 +161,11 @@
     "description": "Open source project on GitHub.",
     "image": "https://s0.wp.com/mshots/v1/https%3A%2F%2Fmonkey-coffe.vercel.app?w=800&h=500",
     "technologies": [
-      "TypeScript"
+      "TypeScript",
+      "Next.js",
+      "React.js",
+      "Tailwind CSS",
+      "Framer Motion"
     ],
     "tags": [
       "Open Source"
@@ -160,7 +182,8 @@
     "description": "Open source project on GitHub.",
     "image": "https://opengraph.githubassets.com/1/DevIssa-It/sporton-be",
     "technologies": [
-      "TypeScript"
+      "TypeScript",
+      "Express.js"
     ],
     "tags": [
       "Open Source"
@@ -185,7 +208,10 @@
     "description": "Open source project on GitHub.",
     "image": "https://s0.wp.com/mshots/v1/https%3A%2F%2Fsporton-fe-azure.vercel.app?w=800&h=500",
     "technologies": [
-      "TypeScript"
+      "TypeScript",
+      "Next.js",
+      "React.js",
+      "Tailwind CSS"
     ],
     "tags": [
       "Open Source"
@@ -210,7 +236,11 @@
     "description": "Open source project on GitHub.",
     "image": "https://s0.wp.com/mshots/v1/https%3A%2F%2Fahmadissadurrofiq.vercel.app%2F?w=800&h=500",
     "technologies": [
-      "TypeScript"
+      "TypeScript",
+      "Next.js",
+      "React.js",
+      "Tailwind CSS",
+      "Framer Motion"
     ],
     "tags": [
       "Open Source"
@@ -227,7 +257,9 @@
     "description": "Open source project on GitHub.",
     "image": "https://s0.wp.com/mshots/v1/https%3A%2F%2Fhiring-management-app-jet.vercel.app?w=800&h=500",
     "technologies": [
-      "TypeScript"
+      "TypeScript",
+      "React.js",
+      "Tailwind CSS"
     ],
     "tags": [
       "Open Source"
@@ -277,7 +309,8 @@
     "description": "Open source project on GitHub.",
     "image": "https://images.unsplash.com/photo-1472851294608-062f824d29cc?q=80&w=800&auto=format&fit=crop",
     "technologies": [
-      "Vue"
+      "Vue.js",
+      "TypeScript"
     ],
     "tags": [
       "E-Commerce",
@@ -304,7 +337,8 @@
     "description": "Open source project on GitHub.",
     "image": "https://opengraph.githubassets.com/1/DevIssa-It/Gemini-Chatbot-API",
     "technologies": [
-      "JavaScript"
+      "JavaScript",
+      "Express.js"
     ],
     "tags": [
       "Open Source"
@@ -329,7 +363,8 @@
     "description": "Open source project on GitHub.",
     "image": "https://opengraph.githubassets.com/1/DevIssa-It/gemini-flash-api",
     "technologies": [
-      "JavaScript"
+      "JavaScript",
+      "Express.js"
     ],
     "tags": [
       "Open Source"
@@ -401,7 +436,8 @@
     "image": "https://images.unsplash.com/photo-1523240795612-9a054b0db644?q=80&w=800&auto=format&fit=crop",
     "technologies": [
       "React.js",
-      "Tailwind CSS"
+      "Tailwind CSS",
+      "Next.js"
     ],
     "tags": [
       "Web App",

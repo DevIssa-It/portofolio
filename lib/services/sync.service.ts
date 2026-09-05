@@ -22,17 +22,26 @@ export class SyncService {
   /**
    * Convert GitHub repository metadata into a normalized project sync payload
    */
-  private mapRepoToSyncPayload(repo: GitHubRepo): GitHubSyncPayload {
-    // Format human-friendly title from repository name (e.g. 'ecommerce-catalog' -> 'Ecommerce Catalog')
+  private async mapRepoToSyncPayload(repo: GitHubRepo): Promise<GitHubSyncPayload> {
     const formattedTitle = repo.name
       .split(/[-_]+/)
       .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
       .join(' ')
 
-    const technologies: string[] = []
-    if (repo.language) {
-      technologies.push(repo.language)
+    const packageTechs = await this.client.detectRepositoryTechnologies(repo.name)
+    const techSet = new Set<string>(packageTechs)
+    if (repo.language) techSet.add(repo.language)
+
+    if (repo.topics && Array.isArray(repo.topics)) {
+      repo.topics.forEach((t) => {
+        const lower = t.toLowerCase()
+        if (lower.includes('next')) techSet.add('Next.js')
+        if (lower.includes('react')) techSet.add('React.js')
+        if (lower.includes('tailwind')) techSet.add('Tailwind CSS')
+        if (lower.includes('vue')) techSet.add('Vue.js')
+      })
     }
+    const technologies: string[] = Array.from(techSet)
 
     const tags: string[] = ['Open Source']
     if (repo.topics && Array.isArray(repo.topics)) {
@@ -95,7 +104,7 @@ export class SyncService {
 
       for (const repo of publicRepos) {
         try {
-          const payload = this.mapRepoToSyncPayload(repo)
+          const payload = await this.mapRepoToSyncPayload(repo)
           const { action, project } = await this.repository.upsertFromGithub(payload)
 
           result.syncedRepositories.push(project.title)
@@ -163,7 +172,7 @@ export class SyncService {
 
     // Handle created, publicized, or updated events
     if (action === 'created' || action === 'publicized' || action === 'edited') {
-      const syncPayload = this.mapRepoToSyncPayload(repository)
+      const syncPayload = await this.mapRepoToSyncPayload(repository)
       const { action: outcome, project } =
         await this.repository.upsertFromGithub(syncPayload)
 

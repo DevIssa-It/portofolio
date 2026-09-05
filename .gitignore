@@ -42,3 +42,5 @@ next-env.d.ts
 !/public/images/projects/.gitkeep
 
 /lib/generated/prisma
+/scratch
+

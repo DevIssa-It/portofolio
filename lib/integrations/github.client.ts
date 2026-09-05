@@ -109,6 +109,41 @@ export class GitHubClient {
       return false
     }
   }
+
+  /**
+   * Automatically detect technologies from package.json in repository
+   */
+  async detectRepositoryTechnologies(repoName: string, owner?: string): Promise<string[]> {
+    const targetOwner = owner || APP_CONFIG.github.defaultUsername
+    const branches = ['main', 'master']
+    const detected = new Set<string>()
+
+    for (const branch of branches) {
+      try {
+        const url = `https://raw.githubusercontent.com/${encodeURIComponent(targetOwner)}/${encodeURIComponent(repoName)}/${branch}/package.json`
+        const res = await fetch(url, {
+          headers: this.getRequestHeaders(),
+          next: { revalidate: 3600 },
+        })
+        if (res.ok) {
+          const pkg = await res.json()
+          const deps = { ...(pkg.dependencies || {}), ...(pkg.devDependencies || {}) }
+          if (deps['next']) detected.add('Next.js')
+          if (deps['react']) detected.add('React.js')
+          if (deps['vue']) detected.add('Vue.js')
+          if (deps['tailwindcss']) detected.add('Tailwind CSS')
+          if (deps['typescript']) detected.add('TypeScript')
+          if (deps['@prisma/client'] || deps['prisma']) detected.add('Prisma')
+          if (deps['express']) detected.add('Express.js')
+          if (deps['framer-motion']) detected.add('Framer Motion')
+          break
+        }
+      } catch {
+        // Try fallback branch
+      }
+    }
+    return Array.from(detected)
+  }
 }
 
 export const githubClient = new GitHubClient()
