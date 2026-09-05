@@ -43,7 +43,7 @@
       "Education"
     ],
     "github": "https://github.com/DevIssa-It/CampusHub",
-    "demo": "#",
+    "demo": "https://campushub.vercel.app",
     "createdAt": "2026-09-03T02:04:12.470Z",
     "updatedAt": "2026-09-03T02:04:12.470Z",
     "category": "enterprise",
@@ -89,7 +89,7 @@
       "Open Source"
     ],
     "github": "https://github.com/DevIssa-It/mini-sales",
-    "demo": "https://mini-sales-eight.vercel.app",
+    "demo": "https://mini-sales.vercel.app",
     "createdAt": "2026-07-28T19:35:01.000Z",
     "updatedAt": "2026-09-04T09:54:55.181Z",
     "category": "open-source"
@@ -150,7 +150,7 @@
       "Open Source"
     ],
     "github": "https://github.com/DevIssa-It/berita-kini",
-    "demo": "https://berita-kini-three.vercel.app",
+    "demo": "https://berita-kini.vercel.app",
     "createdAt": "2026-06-20T02:35:57.000Z",
     "updatedAt": "2026-09-04T09:54:56.091Z",
     "category": "open-source"
@@ -246,7 +246,7 @@
       "Open Source"
     ],
     "github": "https://github.com/DevIssa-It/portofolio",
-    "demo": "https://ahmadissadurrofiq.vercel.app/",
+    "demo": "https://ahmadissadurrofiq.vercel.app",
     "createdAt": "2025-12-30T09:30:16.000Z",
     "updatedAt": "2026-09-04T09:54:54.554Z",
     "category": "open-source"
@@ -399,7 +399,7 @@
       "Open Source"
     ],
     "github": "https://github.com/DevIssa-It/GreenImpact",
-    "demo": "",
+    "demo": "https://green-impact.vercel.app",
     "createdAt": "2025-07-05T19:36:28.000Z",
     "updatedAt": "2026-09-04T09:54:59.515Z",
     "category": "web-app",
@@ -445,7 +445,7 @@
       "Open Source"
     ],
     "github": "https://github.com/DevIssa-It/CampusHub",
-    "demo": "",
+    "demo": "https://campushub.vercel.app",
     "createdAt": "2024-11-30T02:13:42.000Z",
     "updatedAt": "2026-09-04T09:55:00.199Z",
     "category": "web-app",

@@ -55,11 +55,13 @@ export class SyncService {
 
     const autoImage = this.generateAutoImage(repo)
 
+    const liveDeployment = await this.client.fetchLatestDeploymentUrl(repo.name)
+
     return {
       title: formattedTitle,
       description: repo.description || 'Open source project on GitHub.',
       github: repo.html_url,
-      demo: repo.homepage || '',
+      demo: liveDeployment || repo.homepage || '',
       technologies,
       tags,
       image: autoImage,

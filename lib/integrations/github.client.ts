@@ -144,6 +144,32 @@ export class GitHubClient {
     }
     return Array.from(detected)
   }
+
+  /**
+   * Fetch verified live production deployment URL from GitHub Deployments
+   */
+  async fetchLatestDeploymentUrl(repoName: string, owner?: string): Promise<string | null> {
+    const targetOwner = owner || APP_CONFIG.github.defaultUsername
+    try {
+      const url = `${this.baseUrl}/repos/${encodeURIComponent(targetOwner)}/${encodeURIComponent(repoName)}/deployments?per_page=5`
+      const res = await fetch(url, { headers: this.getRequestHeaders(), next: { revalidate: 3600 } })
+      if (!res.ok) return null
+      const deployments = await res.json()
+      for (const d of deployments) {
+        if (d.statuses_url) {
+          const stRes = await fetch(d.statuses_url, { headers: this.getRequestHeaders(), next: { revalidate: 3600 } })
+          if (stRes.ok) {
+            const statuses = await stRes.json()
+            const success = statuses.find((s: any) => s.state === 'success' && (s.environment_url || s.target_url))
+            if (success) return success.environment_url || success.target_url
+          }
+        }
+      }
+    } catch {
+      // Ignore network errors on deployment lookup
+    }
+    return null
+  }
 }
 
 export const githubClient = new GitHubClient()
