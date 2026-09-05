@@ -21,7 +21,7 @@ export function useResumeManager() {
   const fetchMeta = async () => {
     try {
       setFetching(true)
-      const res = await fetch('/api/resume')
+      const res = await fetch(`/api/resume?t=${Date.now()}`, { cache: 'no-store' })
       if (res.ok) setMeta(await res.json())
     } catch {
       setMessage({ text: 'Failed to fetch resume status', type: 'error' })

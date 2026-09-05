@@ -1,18 +1,19 @@
 /**
  * API Route: /api/resume
- * Handles CV / Resume metadata, download, and updates.
- * Serverless-compatible with Neon PostgreSQL persistence and Vercel CDN fallback.
+ * Handles CV / Resume metadata, download streaming, and administrative updates.
+ * Serverless-compatible with Neon PostgreSQL persistence and zero-cache streaming.
  */
 
 import { NextRequest, NextResponse } from 'next/server'
 import { getServerSession } from 'next-auth'
 import { authOptions } from '@/lib/auth'
 import { sql, isDatabaseAvailable } from '@/lib/db'
-import { stat, writeFile } from 'fs/promises'
+import { stat, writeFile, readFile } from 'fs/promises'
 import { existsSync } from 'fs'
 import path from 'path'
 
 export const dynamic = 'force-dynamic'
+export const revalidate = 0
 
 const RESUME_FILE_PATH = path.join(process.cwd(), 'public', 'resume.pdf')
 const MAX_FILE_SIZE = 15 * 1024 * 1024 // 15MB
@@ -29,7 +30,7 @@ async function ensureTable() {
       )
     `
   } catch (err) {
-    console.warn('Could not initialize ResumeAsset table:', err)
+    console.warn('ResumeAsset table check:', err)
   }
 }
 
@@ -53,62 +54,99 @@ export async function GET(request: NextRequest) {
               headers: {
                 'Content-Type': 'application/pdf',
                 'Content-Disposition': `inline; filename="${row.filename || 'resume.pdf'}"`,
-                'Cache-Control': 'public, max-age=3600, s-maxage=3600',
+                'Cache-Control': 'no-cache, no-store, must-revalidate, max-age=0',
+                'Pragma': 'no-cache',
+                'Expires': '0',
               },
             })
           }
-          return NextResponse.json({
-            exists: true,
-            filename: row.filename,
-            path: '/api/resume?download=true',
-            size: row.size,
-            updatedAt: row.updatedAt,
-          })
+          return NextResponse.json(
+            {
+              exists: true,
+              filename: row.filename,
+              path: '/api/resume?download=true',
+              size: row.size,
+              updatedAt: row.updatedAt,
+            },
+            {
+              headers: {
+                'Cache-Control': 'no-cache, no-store, must-revalidate, max-age=0',
+              },
+            }
+          )
         }
       } catch (dbErr) {
-        console.warn('Database resume query error, falling back:', dbErr)
+        console.warn('Database resume error, falling back:', dbErr)
       }
     }
 
     if (isDownload) {
+      try {
+        if (existsSync(RESUME_FILE_PATH)) {
+          const fileBuffer = await readFile(RESUME_FILE_PATH)
+          return new NextResponse(fileBuffer, {
+            headers: {
+              'Content-Type': 'application/pdf',
+              'Content-Disposition': 'inline; filename="resume.pdf"',
+              'Cache-Control': 'no-cache, no-store, must-revalidate, max-age=0',
+            },
+          })
+        }
+      } catch {
+        // Ignore and fallback to redirect
+      }
       return NextResponse.redirect(new URL('/resume.pdf', request.url))
     }
 
     try {
       if (existsSync(RESUME_FILE_PATH)) {
         const fileStat = await stat(RESUME_FILE_PATH)
-        return NextResponse.json({
-          exists: true,
-          filename: 'resume.pdf',
-          path: '/resume.pdf',
-          size: fileStat.size,
-          updatedAt: fileStat.mtime.toISOString(),
-        })
+        return NextResponse.json(
+          {
+            exists: true,
+            filename: 'resume.pdf',
+            path: '/api/resume?download=true',
+            size: fileStat.size,
+            updatedAt: fileStat.mtime.toISOString(),
+          },
+          {
+            headers: {
+              'Cache-Control': 'no-cache, no-store, must-revalidate, max-age=0',
+            },
+          }
+        )
       }
     } catch {
       // Ignore local filesystem error in serverless
     }
 
-    return NextResponse.json({
-      exists: true,
-      filename: 'resume.pdf',
-      path: '/resume.pdf',
-      size: 30395,
-      updatedAt: '2025-11-21T23:49:36.205Z',
-    })
+    return NextResponse.json(
+      {
+        exists: true,
+        filename: 'resume.pdf',
+        path: '/api/resume?download=true',
+        size: 30395,
+        updatedAt: '2025-11-21T23:49:36.205Z',
+      },
+      {
+        headers: {
+          'Cache-Control': 'no-cache, no-store, must-revalidate, max-age=0',
+        },
+      }
+    )
   } catch (error) {
-    console.error('Safe fallback for resume metadata:', error)
+    console.error('Safe fallback for resume:', error)
     return NextResponse.json({
       exists: true,
       filename: 'resume.pdf',
-      path: '/resume.pdf',
+      path: '/api/resume?download=true',
       size: 30395,
       updatedAt: null,
     })
   }
 }
 
-// POST - Upload and replace CV (Supports Serverless Database + Local FS)
+// POST - Upload and replace CV (Neon PostgreSQL + Local FS cache)
 export async function POST(request: NextRequest) {
   try {
     const session = await getServerSession(authOptions)
@@ -155,7 +193,7 @@ export async function POST(request: NextRequest) {
         await writeFile(RESUME_FILE_PATH, buffer)
       }
     } catch {
-      // Read-only filesystem on Vercel is expected and safely handled by database
+      // Expected in serverless read-only filesystem
     }
 
     return NextResponse.json({

@@ -28,6 +28,10 @@ export function ResumeManager() {
     })
   }
 
+  const previewUrl = meta?.path
+    ? `${meta.path}${meta.path.includes('?') ? '&' : '?'}t=${meta.updatedAt ? new Date(meta.updatedAt).getTime() : Date.now()}`
+    : `/api/resume?download=true&t=${Date.now()}`
+
   return (
     <div className="space-y-6">
       {message && (
@@ -73,7 +77,7 @@ export function ResumeManager() {
 
           <div className="pt-2 flex items-center gap-3">
             <a
-              href="/resume.pdf"
+              href={previewUrl}
               target="_blank"
               rel="noopener noreferrer"
               className="brutal-btn inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-sky-200 hover:bg-sky-300 text-black text-xs font-mono font-bold border-2 border-black shadow-[2px_2px_0px_0px_#000]"
