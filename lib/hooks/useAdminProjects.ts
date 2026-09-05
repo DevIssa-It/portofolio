@@ -1,9 +1,3 @@
-/**
- * Custom Hook: useAdminProjects
- * Encapsulates project data fetching, state management, CRUD, and synchronization.
- * Adheres to Single Responsibility Principle (SRP) and Separation of Concerns (SoC).
- */
-
 'use client'
 
 import { useState, useEffect, useCallback } from 'react'
@@ -32,9 +26,7 @@ export function useAdminProjects(isAuthenticated: boolean) {
   const loadProjects = useCallback(async () => {
     try {
       const result = await getProjects()
-      if (result.success && result.data) {
-        setProjects(result.data)
-      }
+      if (result.success && result.data) setProjects(result.data)
     } catch (error) {
       console.error('Error loading projects:', error)
     } finally {
@@ -43,39 +35,26 @@ export function useAdminProjects(isAuthenticated: boolean) {
   }, [])
 
   useEffect(() => {
-    if (isAuthenticated) {
-      loadProjects()
-    }
+    if (isAuthenticated) loadProjects()
   }, [isAuthenticated, loadProjects])
 
   const handleSyncGithub = async () => {
     setIsSyncing(true)
     setSyncFeedback(null)
-
     try {
       const result = await syncGithubProjects()
       if (result.success && result.data) {
-        const { totalProcessed, createdCount, updatedCount, skippedCount } =
-          result.data
+        const { totalProcessed, createdCount, updatedCount, skippedCount } = result.data
         setSyncFeedback({
           type: 'success',
-          message: `GitHub sync complete: ${createdCount} created, ${updatedCount} updated, ${skippedCount} unchanged (Total evaluated: ${totalProcessed}).`,
+          message: `GitHub sync complete: ${createdCount} created, ${updatedCount} updated, ${skippedCount} unchanged (Evaluated: ${totalProcessed}).`,
         })
         await loadProjects()
       } else {
-        setSyncFeedback({
-          type: 'error',
-          message: result.error || 'GitHub repository synchronization failed.',
-        })
+        setSyncFeedback({ type: 'error', message: result.error || 'GitHub sync failed.' })
       }
     } catch (error) {
-      setSyncFeedback({
-        type: 'error',
-        message:
-          error instanceof Error
-            ? error.message
-            : 'Unexpected synchronization failure.',
-      })
+      setSyncFeedback({ type: 'error', message: error instanceof Error ? error.message : 'Sync failure.' })
     } finally {
       setIsSyncing(false)
     }
@@ -83,57 +62,19 @@ export function useAdminProjects(isAuthenticated: boolean) {
 
   const handleDelete = async (id: string) => {
     if (!confirm('Are you sure you want to delete this project?')) return
-
-    try {
-      const result = await deleteProject(id)
-      if (result.success) {
-        setProjects((prev) => prev.filter((p) => p.id !== id))
-      }
-    } catch (error) {
-      console.error('Error deleting project:', error)
-    }
-  }
-
-  const handleEdit = (project: Project) => {
-    setEditingProject(project)
-    setShowForm(true)
+    const result = await deleteProject(id)
+    if (result.success) setProjects((prev) => prev.filter((p) => p.id !== id))
   }
 
   const handleSave = async (project: Project) => {
-    try {
-      const result = editingProject
-        ? await updateProject(project)
-        : await createProject(project)
-
-      if (result.success && result.data) {
-        if (editingProject) {
-          setProjects((prev) =>
-            prev.map((p) => (p.id === result.data!.id ? result.data! : p))
-          )
-        } else {
-          setProjects((prev) => [...prev, result.data!])
-        }
-
-        setShowForm(false)
-        setEditingProject(null)
-      }
-    } catch (error) {
-      console.error('Error saving project:', error)
+    const result = editingProject ? await updateProject(project) : await createProject(project)
+    if (result.success && result.data) {
+      setProjects((prev) =>
+        editingProject ? prev.map((p) => (p.id === result.data!.id ? result.data! : p)) : [...prev, result.data!]
+      )
+      setShowForm(false)
+      setEditingProject(null)
     }
-  }
-
-  const closeForm = () => {
-    setShowForm(false)
-    setEditingProject(null)
-  }
-
-  const openAddForm = () => {
-    setEditingProject(null)
-    setShowForm(true)
-  }
-
-  const clearSyncFeedback = () => {
-    setSyncFeedback(null)
   }
 
   return {
@@ -145,10 +86,10 @@ export function useAdminProjects(isAuthenticated: boolean) {
     syncFeedback,
     handleSyncGithub,
     handleDelete,
-    handleEdit,
+    handleEdit: (p: Project) => { setEditingProject(p); setShowForm(true); },
     handleSave,
-    closeForm,
-    openAddForm,
-    clearSyncFeedback,
+    closeForm: () => { setShowForm(false); setEditingProject(null); },
+    openAddForm: () => { setEditingProject(null); setShowForm(true); },
+    clearSyncFeedback: () => setSyncFeedback(null),
   }
 }

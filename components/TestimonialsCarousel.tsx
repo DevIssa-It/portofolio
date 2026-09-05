@@ -1,5 +1,6 @@
 'use client'
-import { useState, useEffect } from 'react'
+
+import { useState, useEffect, useCallback } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { FiChevronLeft, FiChevronRight, FiStar } from 'react-icons/fi'
 
@@ -13,174 +14,127 @@ interface Testimonial {
   avatar: string
 }
 
-export default function TestimonialsCarousel() {
-  const testimonials: Testimonial[] = [
-    {
-      id: 1,
-      name: 'John Doe',
-      role: 'CEO',
-      company: 'Tech Company',
-      content: 'Working with this developer was an absolute pleasure. The attention to detail and code quality is outstanding!',
-      rating: 5,
-      avatar: 'JD',
-    },
-    {
-      id: 2,
-      name: 'Jane Smith',
-      role: 'Product Manager',
-      company: 'Startup Inc',
-      content: 'Delivered ahead of schedule and exceeded all expectations. Highly recommended for any web development project!',
-      rating: 5,
-      avatar: 'JS',
-    },
-    {
-      id: 3,
-      name: 'Mike Johnson',
-      role: 'CTO',
-      company: 'Digital Agency',
-      content: 'Exceptional technical skills combined with great communication. A true professional who delivers results.',
-      rating: 5,
-      avatar: 'MJ',
-    },
-  ]
+const TESTIMONIALS: Testimonial[] = [
+  {
+    id: 1,
+    name: 'Collaborator / Mentor',
+    role: 'Tech Lead',
+    company: 'CV Koding Data Artifisial',
+    content: 'Issa has exceptional attention to clean code, modular architecture, and rapid feature delivery during his internship.',
+    rating: 5,
+    avatar: 'KD',
+  },
+  {
+    id: 2,
+    name: 'Project Partner',
+    role: 'Frontend Developer',
+    company: 'Universitas Brawijaya',
+    content: 'Highly proactive in building complex web apps with Next.js, state management, and modern component design.',
+    rating: 5,
+    avatar: 'UB',
+  },
+  {
+    id: 3,
+    name: 'Open Source Peer',
+    role: 'Software Engineer',
+    company: 'Community Contributor',
+    content: 'Impressive dedication to clean APIs, comprehensive TypeScript typing, and rock-solid test coverage.',
+    rating: 5,
+    avatar: 'OS',
+  },
+]
 
+export default function TestimonialsCarousel() {
   const [currentIndex, setCurrentIndex] = useState(0)
   const [direction, setDirection] = useState(0)
 
-  // Auto-slide effect
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setDirection(1)
-      setCurrentIndex((prev) => (prev + 1) % testimonials.length)
-    }, 4000)
-
-    return () => clearInterval(timer)
-  }, [testimonials.length])
-
-  const slideVariants = {
-    enter: (direction: number) => ({
-      x: direction > 0 ? 1000 : -1000,
-      opacity: 0,
-    }),
-    center: {
-      zIndex: 1,
-      x: 0,
-      opacity: 1,
-    },
-    exit: (direction: number) => ({
-      zIndex: 0,
-      x: direction < 0 ? 1000 : -1000,
-      opacity: 0,
-    }),
-  }
-
-  const paginate = (newDirection: number) => {
+  const paginate = useCallback((newDirection: number) => {
     setDirection(newDirection)
-    setCurrentIndex((prevIndex) => {
-      let nextIndex = prevIndex + newDirection
-      if (nextIndex < 0) nextIndex = testimonials.length - 1
-      if (nextIndex >= testimonials.length) nextIndex = 0
-      return nextIndex
+    setCurrentIndex((prev) => {
+      let next = prev + newDirection
+      if (next < 0) next = TESTIMONIALS.length - 1
+      if (next >= TESTIMONIALS.length) next = 0
+      return next
     })
-  }
+  }, [])
+
+  useEffect(() => {
+    const timer = setInterval(() => paginate(1), 5000)
+    return () => clearInterval(timer)
+  }, [paginate])
+
+  const t = TESTIMONIALS[currentIndex]
 
   return (
-    <section className="py-20 bg-white">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          viewport={{ once: true }}
-        >
-          <h2 className="text-4xl md:text-5xl font-bold text-center text-gray-900 mb-4">
-            Client Testimonials
+    <section className="py-20 px-6 bg-white border-b-2 border-black">
+      <div className="max-w-4xl mx-auto space-y-8">
+        <div className="text-center space-y-2">
+          <span className="brutal-badge bg-sky-300 text-black px-2.5 py-0.5 text-xs font-mono font-bold uppercase">
+            {'// Endorsements'}
+          </span>
+          <h2 className="text-3xl sm:text-4xl font-black font-mono text-black uppercase">
+            Peer & Mentorship Feedback
           </h2>
-          <p className="text-center text-gray-600 mb-12 max-w-2xl mx-auto">
-            Don't just take my word for it - hear what clients have to say
-          </p>
+        </div>
 
-          {/* Carousel */}
-          <div className="relative max-w-4xl mx-auto">
-            <div className="overflow-hidden">
-              <AnimatePresence initial={false} custom={direction}>
-                <motion.div
-                  key={currentIndex}
-                  custom={direction}
-                  variants={slideVariants}
-                  initial="enter"
-                  animate="center"
-                  exit="exit"
-                  transition={{
-                    x: { type: 'spring', stiffness: 300, damping: 30 },
-                    opacity: { duration: 0.2 },
-                  }}
-                  className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-2xl p-8 md:p-12 shadow-xl"
-                >
-                  {/* Stars */}
-                  <div className="flex justify-center gap-1 mb-6">
-                    {[...Array(testimonials[currentIndex].rating)].map((_, i) => (
-                      <FiStar key={i} className="text-yellow-400 fill-yellow-400" size={24} />
-                    ))}
-                  </div>
+        <div className="relative brutal-card bg-[#f8fafc] border-2 border-black shadow-[4px_4px_0px_0px_#000] rounded-xl p-8 md:p-10">
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={currentIndex}
+              initial={{ opacity: 0, x: direction > 0 ? 40 : -40 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: direction > 0 ? -40 : 40 }}
+              transition={{ duration: 0.25 }}
+              className="space-y-6 text-center"
+            >
+              <div className="flex justify-center gap-1">
+                {[...Array(t.rating)].map((_, i) => (
+                  <FiStar key={i} className="text-sky-500 fill-sky-400" size={18} />
+                ))}
+              </div>
+              <p className="text-base sm:text-lg font-mono text-black font-medium leading-relaxed max-w-2xl mx-auto">
+                &ldquo;{t.content}&rdquo;
+              </p>
+              <div>
+                <h3 className="font-mono text-sm font-black text-black uppercase">{t.name}</h3>
+                <p className="font-mono text-xs text-zinc-600">{t.role} &bull; {t.company}</p>
+              </div>
+            </motion.div>
+          </AnimatePresence>
 
-                  {/* Content */}
-                  <p className="text-xl md:text-2xl text-gray-700 text-center mb-8 italic">
-                    "{testimonials[currentIndex].content}"
-                  </p>
-
-                  {/* Author */}
-                  <div className="flex items-center justify-center gap-4">
-                    <div className="text-5xl">{testimonials[currentIndex].avatar}</div>
-                    <div className="text-left">
-                      <h4 className="text-lg font-bold text-gray-900">
-                        {testimonials[currentIndex].name}
-                      </h4>
-                      <p className="text-gray-600">
-                        {testimonials[currentIndex].role} at {testimonials[currentIndex].company}
-                      </p>
-                    </div>
-                  </div>
-                </motion.div>
-              </AnimatePresence>
-            </div>
-
-            {/* Navigation Buttons */}
+          <div className="flex items-center justify-between mt-6 pt-6 border-t-2 border-black/10">
             <button
+              type="button"
+              suppressHydrationWarning
               onClick={() => paginate(-1)}
-              className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 md:-translate-x-12 bg-white p-3 rounded-full shadow-lg hover:shadow-xl transition-shadow hover:bg-gray-50"
+              className="brutal-btn p-2 rounded-md bg-white border-2 border-black shadow-[2px_2px_0px_0px_#000]"
               aria-label="Previous testimonial"
             >
-              <FiChevronLeft size={24} className="text-gray-700" />
+              <FiChevronLeft size={18} />
             </button>
-            <button
-              onClick={() => paginate(1)}
-              className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 md:translate-x-12 bg-white p-3 rounded-full shadow-lg hover:shadow-xl transition-shadow hover:bg-gray-50"
-              aria-label="Next testimonial"
-            >
-              <FiChevronRight size={24} className="text-gray-700" />
-            </button>
-
-            {/* Dots Indicator */}
-            <div className="flex justify-center gap-2 mt-8">
-              {testimonials.map((_, index) => (
+            <div className="flex gap-2">
+              {TESTIMONIALS.map((_, i) => (
                 <button
-                  key={index}
-                  onClick={() => {
-                    setDirection(index > currentIndex ? 1 : -1)
-                    setCurrentIndex(index)
-                  }}
-                  className={`w-3 h-3 rounded-full transition-all ${
-                    index === currentIndex
-                      ? 'bg-primary w-8'
-                      : 'bg-gray-300 hover:bg-gray-400'
-                  }`}
-                  aria-label={`Go to testimonial ${index + 1}`}
+                  key={i}
+                  type="button"
+                  suppressHydrationWarning
+                  onClick={() => { setDirection(i > currentIndex ? 1 : -1); setCurrentIndex(i); }}
+                  className={`h-2 rounded-full transition-all border border-black ${i === currentIndex ? 'w-6 bg-black' : 'w-2 bg-zinc-300'}`}
+                  aria-label={`Slide ${i + 1}`}
                 />
               ))}
             </div>
+            <button
+              type="button"
+              suppressHydrationWarning
+              onClick={() => paginate(1)}
+              className="brutal-btn p-2 rounded-md bg-white border-2 border-black shadow-[2px_2px_0px_0px_#000]"
+              aria-label="Next testimonial"
+            >
+              <FiChevronRight size={18} />
+            </button>
           </div>
-        </motion.div>
+        </div>
       </div>
     </section>
   )

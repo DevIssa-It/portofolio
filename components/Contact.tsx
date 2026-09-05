@@ -35,7 +35,7 @@ export default function Contact() {
     <section id="contact" className="py-20 px-6 border-t-2 border-black bg-[#f8fafc]">
       <div className="max-w-7xl mx-auto space-y-10">
         <div className="space-y-2 border-b-2 border-black/10 pb-4">
-          <span className="brutal-badge inline-block bg-pink-300 text-black px-3 py-1 text-xs uppercase tracking-wider font-mono">
+          <span className="brutal-badge inline-block bg-sky-300 text-black px-3 py-1 text-xs uppercase tracking-wider font-mono">
             {'// 04. Get In Touch'}
           </span>
           <h2 className="text-3xl sm:text-4xl font-black tracking-tight text-black uppercase">
@@ -50,12 +50,12 @@ export default function Contact() {
             </p>
 
             <div className="brutal-card bg-sky-100 p-5 space-y-2">
-              <span className="font-mono text-xs font-black uppercase tracking-wider text-black block">
-                Direct Email
-              </span>
+              <span className="font-mono text-xs font-black uppercase tracking-wider text-black block">Direct Email</span>
               <div className="flex items-center justify-between gap-2">
                 <span className="text-sm font-mono font-bold text-black truncate">{email}</span>
                 <button
+                  type="button"
+                  suppressHydrationWarning
                   onClick={copyEmail}
                   className="brutal-btn p-2 rounded bg-white text-black shrink-0"
                   aria-label="Copy email address"
@@ -90,9 +90,7 @@ export default function Contact() {
           <div className="lg:col-span-7">
             <form onSubmit={handleSubmit} className="brutal-card bg-white p-6 sm:p-7 space-y-4">
               <div>
-                <label htmlFor="name" className="block text-xs font-mono font-bold uppercase text-black mb-1.5">
-                  Your Name
-                </label>
+                <label htmlFor="name" className="block text-xs font-mono font-bold uppercase text-black mb-1.5">Your Name</label>
                 <input
                   id="name"
                   name="name"
@@ -104,9 +102,7 @@ export default function Contact() {
               </div>
 
               <div>
-                <label htmlFor="email" className="block text-xs font-mono font-bold uppercase text-black mb-1.5">
-                  Your Email
-                </label>
+                <label htmlFor="email" className="block text-xs font-mono font-bold uppercase text-black mb-1.5">Your Email</label>
                 <input
                   id="email"
                   name="email"
@@ -118,9 +114,7 @@ export default function Contact() {
               </div>
 
               <div>
-                <label htmlFor="message" className="block text-xs font-mono font-bold uppercase text-black mb-1.5">
-                  Message
-                </label>
+                <label htmlFor="message" className="block text-xs font-mono font-bold uppercase text-black mb-1.5">Message</label>
                 <textarea
                   id="message"
                   name="message"
@@ -133,13 +127,10 @@ export default function Contact() {
 
               <button
                 type="submit"
+                suppressHydrationWarning
                 className="brutal-btn w-full py-3 rounded-lg bg-sky-300 hover:bg-sky-400 text-black text-xs font-black uppercase flex items-center justify-center gap-2"
               >
-                {status === 'success' ? (
-                  <>Draft Opened in Mail App <CheckCircle size={15} /></>
-                ) : (
-                  <>Send Message <Send size={15} /></>
-                )}
+                {status === 'success' ? <>Draft Opened in Mail App <CheckCircle size={15} /></> : <>Send Message <Send size={15} /></>}
               </button>
             </form>
           </div>
