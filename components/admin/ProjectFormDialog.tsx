@@ -100,6 +100,30 @@ export function ProjectFormDialog({
             onChange={(field, value) => updateField(field, value)}
           />
 
+          <div className="space-y-2">
+            <Label htmlFor="problemStatement">Architecture & Problem Statement</Label>
+            <Textarea
+              id="problemStatement"
+              value={formData.problemStatement || ''}
+              onChange={(e) => updateField('problemStatement', e.target.value)}
+              placeholder="What core engineering challenge did this solve?"
+              rows={2}
+            />
+          </div>
+
+          <div className="flex items-center gap-2 p-3 bg-zinc-50 border border-black/20 rounded-lg">
+            <input
+              type="checkbox"
+              id="featured"
+              checked={!!formData.featured}
+              onChange={(e) => updateField('featured', e.target.checked)}
+              className="w-4 h-4 accent-black rounded"
+            />
+            <Label htmlFor="featured" className="cursor-pointer text-xs font-mono font-bold">
+              Pin as Featured Project (Display at top with badge)
+            </Label>
+          </div>
+
           <DialogFooter>
             <Button
               type="button"

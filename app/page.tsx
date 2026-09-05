@@ -3,6 +3,7 @@ import Hero from '@/components/Hero'
 import { BentoSection } from '@/components/bento/BentoSection'
 import Projects from '@/components/Projects'
 import Journey from '@/components/Journey'
+import { GuestbookSection } from '@/components/GuestbookSection'
 import Contact from '@/components/Contact'
 import Footer from '@/components/Footer'
 import { CommandPalette } from '@/components/micro/CommandPalette'
@@ -16,6 +17,7 @@ export default function Home() {
         <BentoSection />
         <Projects />
         <Journey />
+        <GuestbookSection />
         <Contact />
       </main>
       <Footer />

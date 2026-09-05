@@ -53,8 +53,33 @@ export default function RootLayout({
         <link rel="preconnect" href="https://opengraph.githubassets.com" />
         <link rel="preconnect" href="https://avatars.githubusercontent.com" />
         <link rel="preconnect" href="https://api.open-meteo.com" />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(function(){try{var t=localStorage.getItem('theme');if(t==='dark'||(!t&&window.matchMedia('(prefers-color-scheme: dark)').matches)){document.documentElement.classList.add('dark');}}catch(e){}})()`,
+          }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              '@context': 'https://schema.org',
+              '@type': 'Person',
+              name: 'A. Issadurrofiq Jaya Utama',
+              jobTitle: 'Frontend & Software Developer',
+              url: 'https://ahmadissadurrofiq.vercel.app',
+              sameAs: [
+                'https://github.com/DevIssa-It',
+                'https://www.linkedin.com/in/ahmad-issadurrofiq-jaya-utama-3558b8277/',
+              ],
+              alumniOf: {
+                '@type': 'CollegeOrUniversity',
+                name: 'Universitas Brawijaya',
+              },
+            }),
+          }}
+        />
       </head>
-      <body suppressHydrationWarning className="font-sans antialiased bg-[#f8fafc] text-black selection:bg-sky-300 selection:text-black">
+      <body suppressHydrationWarning className="font-sans antialiased bg-[#f8fafc] text-black dark:bg-[#07090e] dark:text-[#f8fafc] selection:bg-sky-300 selection:text-black transition-colors duration-150">
         {children}
       </body>
     </html>

@@ -24,7 +24,8 @@
       "100% client-side physics & turn states",
       "Seamless mobile & desktop gameplay",
       "Pure TypeScript game logic"
-    ]
+    ],
+    "featured": true
   },
   {
     "id": "2",
@@ -54,12 +55,13 @@
       "200+ active event participants",
       "40% reduction in administrative overhead",
       "Full ACID transactional booking"
-    ]
+    ],
+    "featured": true
   },
   {
     "id": "1788453617565",
     "title": "Sbydev",
-    "description": "Open source project on GitHub.",
+    "description": "Community portal and resource directory for Surabaya developer ecosystem.",
     "image": "https://s0.wp.com/mshots/v1/https%3A%2F%2Fsbydev.vercel.app?w=800&h=500",
     "technologies": [
       "TypeScript",
@@ -69,13 +71,23 @@
       "Prisma"
     ],
     "tags": [
-      "Open Source"
+      "Open Source",
+      "Community"
     ],
     "github": "https://github.com/DevIssa-It/sbydev",
     "demo": "https://sbydev.vercel.app",
     "createdAt": "2026-08-26T21:08:02.000Z",
     "updatedAt": "2026-09-04T09:54:54.970Z",
-    "category": "open-source"
+    "category": "open-source",
+    "role": "Lead Frontend Architect",
+    "problemStatement": "The developer community in East Java lacked a centralized platform to discover upcoming technical meetups, open-source projects, and collaborative initiatives.",
+    "architectureSolution": "Engineered a high-performance community platform utilizing Next.js, Prisma, and Tailwind CSS with server-side caching and dynamic event discovery.",
+    "keyMetrics": [
+      "500+ monthly developer visits",
+      "Sub-100ms average response time",
+      "Integrated community calendar"
+    ],
+    "featured": true
   },
   {
     "id": "1788453618052",

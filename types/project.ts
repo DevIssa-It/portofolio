@@ -21,6 +21,7 @@ export interface Project {
   problemStatement?: string
   architectureSolution?: string
   keyMetrics?: string[]
+  featured?: boolean
 }
 
 export type CreateProjectInput = Omit<Project, 'id' | 'updatedAt'> & {

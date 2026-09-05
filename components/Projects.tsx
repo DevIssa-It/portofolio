@@ -86,6 +86,7 @@ export default function Projects() {
                 liveUrl={project.demo}
                 githubUrl={project.github}
                 createdAt={project.createdAt}
+                featured={project.featured}
                 onViewCaseStudy={() => setActiveCaseStudy(project)}
               />
             ))}

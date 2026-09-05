@@ -11,6 +11,7 @@ interface ProjectCardProps {
   liveUrl?: string
   githubUrl?: string
   createdAt?: string
+  featured?: boolean
   onViewCaseStudy?: () => void
 }
 
@@ -23,6 +24,7 @@ export function ProjectCard({
   liveUrl,
   githubUrl,
   createdAt,
+  featured,
   onViewCaseStudy,
 }: ProjectCardProps) {
   const { trackEvent } = useAnalyticsTracker()
@@ -57,14 +59,19 @@ export function ProjectCard({
           </div>
         )}
 
-        {/* Repo Creation Date Badge on Top Right */}
-        {formattedDate && (
-          <div className="absolute top-2.5 right-2.5 z-10">
+        {/* Badges on Top Right */}
+        <div className="absolute top-2.5 right-2.5 z-10 flex items-center gap-1.5">
+          {featured && (
+            <span className="brutal-badge text-[10px] font-mono uppercase px-2 py-0.5 rounded bg-emerald-300 text-black font-black border border-black shadow-[1px_1px_0px_0px_#000]">
+              Featured
+            </span>
+          )}
+          {formattedDate && (
             <span className="brutal-badge text-[10px] font-mono px-2 py-0.5 rounded bg-white text-black font-bold shadow-[1px_1px_0px_0px_#000]">
               {formattedDate}
             </span>
-          </div>
-        )}
+          )}
+        </div>
       </div>
 
       {/* Card Content */}

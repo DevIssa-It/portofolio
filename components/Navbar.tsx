@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react'
 import { Menu, X, ArrowUpRight, Command } from 'lucide-react'
 import { useScrollSpy } from '@/lib/hooks/useScrollSpy'
 import { cn } from '@/lib/utils'
+import { ThemeToggle } from '@/components/micro/ThemeToggle'
 
 const NAV_ITEMS = [
   { id: 'hero', label: 'Overview' },
@@ -68,6 +69,7 @@ export default function Navbar() {
         </div>
 
         <div className="flex items-center gap-2">
+          <ThemeToggle />
           <button
             type="button"
             suppressHydrationWarning

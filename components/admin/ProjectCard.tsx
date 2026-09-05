@@ -38,13 +38,18 @@ export function ProjectCard({ project, onEdit, onDelete }: ProjectCardProps) {
           className="object-cover w-full h-full"
         />
 
-        {formattedDate && (
-          <div className="absolute top-2.5 right-2.5 z-10">
+        <div className="absolute top-2.5 right-2.5 z-10 flex items-center gap-1.5">
+          {project.featured && (
+            <span className="brutal-badge text-[10px] font-mono px-2 py-0.5 rounded bg-emerald-300 text-black font-black border border-black shadow-[1px_1px_0px_0px_#000]">
+              Featured
+            </span>
+          )}
+          {formattedDate && (
             <span className="brutal-badge text-[10px] font-mono px-2 py-0.5 rounded bg-white text-black font-bold shadow-[1px_1px_0px_0px_#000]">
               {formattedDate}
             </span>
-          </div>
-        )}
+          )}
+        </div>
       </div>
 
       {/* Details */}

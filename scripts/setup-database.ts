@@ -98,6 +98,21 @@ async function createTables() {
     `;
     console.log('[SUCCESS] ResumeAsset table created\n');
 
+    // Create GuestbookEntry table
+    await sql`
+      CREATE TABLE IF NOT EXISTS "GuestbookEntry" (
+        id TEXT PRIMARY KEY,
+        name TEXT NOT NULL,
+        role TEXT DEFAULT '',
+        message TEXT NOT NULL,
+        "avatarUrl" TEXT DEFAULT '',
+        "githubUsername" TEXT DEFAULT '',
+        status TEXT NOT NULL DEFAULT 'pending',
+        "createdAt" TIMESTAMP NOT NULL DEFAULT NOW()
+      )
+    `;
+    console.log('[SUCCESS] GuestbookEntry table created\n');
+
     console.log('[SUCCESS] All tables created successfully.');
     console.log('\n[INFO] Next step: Run "npm run migrate-data" to import data from JSON files');
   } catch (error) {

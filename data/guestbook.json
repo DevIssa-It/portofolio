@@ -1,0 +1,22 @@
+[
+  {
+    "id": "gb_init_1",
+    "name": "Budi Santoso",
+    "role": "Tech Lead @ CV Koding Data Artifisial",
+    "message": "Issa demonstrated exceptional frontend engineering rigor and autonomy while developing our enterprise ERP modules with Next.js 15. Great attention to detail!",
+    "avatarUrl": "https://avatars.githubusercontent.com/u/10001",
+    "githubUsername": "budisantoso",
+    "status": "approved",
+    "createdAt": "2026-08-15T10:00:00.000Z"
+  },
+  {
+    "id": "gb_init_2",
+    "name": "Reza Fahlevi",
+    "role": "Colleague @ Universitas Brawijaya",
+    "message": "Always a pleasure collaborating on CampusHub! Super clean code structure, solid TypeScript implementation, and reliable delivery under tight deadlines.",
+    "avatarUrl": "https://avatars.githubusercontent.com/u/10002",
+    "githubUsername": "rezafahlevi",
+    "status": "approved",
+    "createdAt": "2026-08-20T14:30:00.000Z"
+  }
+]

@@ -50,6 +50,8 @@ export function usePublicProjects(initialDisplayCount = 6) {
     })
 
     return list.sort((a, b) => {
+      if (a.featured && !b.featured) return -1
+      if (!a.featured && b.featured) return 1
       const timeA = a.createdAt ? new Date(a.createdAt).getTime() : 0
       const timeB = b.createdAt ? new Date(b.createdAt).getTime() : 0
       return sortOrder === 'newest' ? timeB - timeA : timeA - timeB
